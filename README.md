@@ -1,67 +1,138 @@
 # CouponTracker
 
-A native iOS application for tracking and managing coupons.
+A native iOS application for tracking credit card benefits and maximizing their value. Never let another benefit expire unused.
 
-## Project Structure
+## Features
 
-```
-.
-├── docs/                    # Project documentation
-│   ├── architecture/        # Architecture diagrams and decisions
-│   ├── api/                 # API documentation
-│   ├── guides/              # Developer guides
-│   └── decisions/           # Architecture Decision Records (ADRs)
-├── ios/                     # iOS application
-│   ├── CouponTracker/       # Main app target
-│   │   ├── Sources/         # Source code
-│   │   ├── Resources/       # Assets, localization, fonts
-│   │   └── SupportingFiles/ # Info.plist, entitlements
-│   ├── CouponTrackerTests/  # Unit tests
-│   ├── CouponTrackerUITests/# UI tests
-│   └── Packages/            # Local Swift packages
-├── scripts/                 # Build and automation scripts
-└── .github/workflows/       # CI/CD pipelines
-```
+- **Benefit Tracking**: Track all your credit card benefits in one place
+- **Expiration Alerts**: Push notifications for expiring benefits with customizable reminders
+- **Accomplishment Rings**: Apple Fitness-inspired progress visualization
+- **Smart Categories**: 7 organized benefit categories (Travel, Dining, Transportation, Shopping, Entertainment, Business, Lifestyle)
+- **Snooze Support**: Snooze benefits to be reminded later
+- **Period Views**: Track progress by monthly, quarterly, semi-annual, and annual periods
 
-## iOS App Architecture
+## Screenshots
 
-The iOS app follows a modular architecture with clean separation of concerns:
-
-- **App/** - App entry point, app delegate, scene configuration
-- **Features/** - Feature modules (Home, Settings, Onboarding, etc.)
-- **Core/** - Shared infrastructure (Navigation, Extensions, Protocols)
-- **Services/** - Business logic services (Network, Storage, Analytics)
-- **Models/** - Data models and entities
-- **Utils/** - Utility helpers and common functionality
+*Coming soon*
 
 ## Requirements
 
-- Xcode 15.0+
 - iOS 17.0+
+- Xcode 15.0+
 - Swift 5.9+
 
 ## Getting Started
 
 1. Clone the repository
-2. Open `ios/CouponTracker.xcodeproj` in Xcode
-3. Build and run the project
+```bash
+git clone git@github.com:babadudu/coupontracker.git
+```
+
+2. Open the project in Xcode
+```bash
+cd coupontracker
+open ios/CouponTracker.xcodeproj
+```
+
+3. Build and run on simulator or device (`Cmd+R`)
+
+## Architecture
+
+The app follows a modular MVVM architecture with clean separation of concerns:
+
+```
+ios/CouponTracker/Sources/
+├── App/                    # App entry point, delegates, DI container
+├── Features/               # Feature modules
+│   ├── Home/              # Dashboard, Wallet, Card Detail
+│   ├── Settings/          # User preferences
+│   └── Onboarding/        # First-launch experience
+├── Core/                   # Shared infrastructure
+│   ├── Navigation/        # Navigation coordinator
+│   ├── Extensions/        # Swift extensions
+│   └── Protocols/         # Shared protocols
+├── Services/              # Business logic services
+│   ├── NotificationService.swift
+│   ├── BenefitRepository.swift
+│   └── CardRepository.swift
+├── Models/                # Data models
+│   ├── Entities/          # SwiftData models
+│   └── Enums/             # App enumerations
+└── Utils/                 # Utilities (Formatters, Design System)
+```
+
+### Key Technologies
+
+- **SwiftUI** - Declarative UI framework
+- **SwiftData** - Persistence layer
+- **UserNotifications** - Push notification support
+- **Swift Charts** - Data visualization
+
+## Benefit Categories
+
+| Category | Icon | Description |
+|----------|------|-------------|
+| Travel | airplane | Flights, hotels, travel credits |
+| Dining | fork.knife | Restaurants, food delivery |
+| Transportation | car.fill | Rideshare, transit, car services |
+| Shopping | bag.fill | Retail, online shopping |
+| Entertainment | tv.fill | Streaming, events, digital content |
+| Business | briefcase.fill | Office, wireless, professional |
+| Lifestyle | sparkles | Wellness, subscriptions, other perks |
+
+## Testing
+
+Run tests using Xcode (`Cmd+U`) or via CLI:
+
+```bash
+xcodebuild test \
+  -scheme CouponTracker \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
+```
+
+### Test Coverage
+
+- **Unit Tests**: Models, ViewModels, Services
+- **Integration Tests**: Repository operations, SwiftData
+- **135+ tests** covering core functionality
 
 ## Development
 
 ### Code Style
 
-This project follows the [Swift API Design Guidelines](https://swift.org/documentation/api-design-guidelines/).
+- Follows [Swift API Design Guidelines](https://swift.org/documentation/api-design-guidelines/)
+- Uses SwiftLint for code consistency
+- Design System for consistent UI (colors, typography, spacing)
 
-### Testing
+### Adding New Benefits
 
-- Unit tests are located in `CouponTrackerTests/`
-- UI tests are located in `CouponTrackerUITests/`
+1. Update `CardTemplates.json` with new card/benefit data
+2. Ensure category matches one of the 7 defined categories
+3. Run tests to verify template loading
 
-Run tests using `Cmd+U` in Xcode or via CLI:
-```bash
-xcodebuild test -scheme CouponTracker -destination 'platform=iOS Simulator,name=iPhone 15'
+## Project Structure
+
 ```
+.
+├── docs/                    # Documentation
+├── ios/                     # iOS application
+│   ├── CouponTracker/       # Main app target
+│   ├── CouponTrackerTests/  # Unit tests
+│   └── CouponTrackerUITests/# UI tests
+├── scripts/                 # Build scripts
+└── .github/workflows/       # CI/CD pipelines
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-[Add license information]
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for details.
+
+Copyright 2026 babadudu

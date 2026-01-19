@@ -251,13 +251,12 @@ struct HomeTabView: View {
                         }
 
                         // Accomplishment Rings (Period Carousel)
-                        // TODO: Implement DashboardPeriodSection component
-                        // if !viewModel.isEmpty {
-                        //     DashboardPeriodSection(
-                        //         benefits: viewModel.allBenefits,
-                        //         selectedPeriod: $selectedPeriod
-                        //     )
-                        // }
+                        if !viewModel.isEmpty {
+                            DashboardPeriodSection(
+                                benefits: viewModel.allBenefits,
+                                selectedPeriod: $selectedPeriod
+                            )
+                        }
 
                         // Monthly Progress Card
                         MonthlyProgressCardView(

@@ -58,6 +58,9 @@
 		F396EE8CFD737702D990E73F /* CardTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DB495CDEB980D66DEA2DA /* CardTemplate.swift */; };
 		F76B24B529C471E8D4896947 /* WalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B08DA0205E97EF15432F2B9 /* WalletView.swift */; };
 		F8AAAB08C32E291E3E8FF089 /* ExpiringBenefitsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FB60319F7D76FFA9BDE491 /* ExpiringBenefitsSectionView.swift */; };
+		ACHIEVERING0000BUILD001 /* AchievementRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACHIEVERING0000FILERE1 /* AchievementRing.swift */; };
+		ACCOMPLISH0000BUILD0001 /* AccomplishmentRingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCOMPLISH0000FILERE01 /* AccomplishmentRingsView.swift */; };
+		PERIODCARO0000BUILD001 /* PeriodCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = PERIODCARO0000FILERE01 /* PeriodCarouselView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +127,9 @@
 		FAF161B5EA56A3CF548D511B /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
 		FCC84562864B46CAA4C71D9A /* BenefitUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitUsage.swift; sourceTree = "<group>"; };
 		FE8C84A7E9481EC950763438 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ACHIEVERING0000FILERE1 /* AchievementRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementRing.swift; sourceTree = "<group>"; };
+		ACCOMPLISH0000FILERE01 /* AccomplishmentRingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccomplishmentRingsView.swift; sourceTree = "<group>"; };
+		PERIODCARO0000FILERE01 /* PeriodCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodCarouselView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -193,11 +199,14 @@
 		450DC2A09050CCBEE577B8BE /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				ACHIEVERING0000FILERE1 /* AchievementRing.swift */,
+				ACCOMPLISH0000FILERE01 /* AccomplishmentRingsView.swift */,
 				25F5B883213EBE804A6883F3 /* BenefitCategoryChartView.swift */,
 				BEACB256F90E748CD5091166 /* BenefitRowView.swift */,
 				512EB62DAFE6DC3D6B9B4A66 /* CardComponent.swift */,
 				79FB60319F7D76FFA9BDE491 /* ExpiringBenefitsSectionView.swift */,
 				F6A7B8C9D0E1F2A3B4C5D6E7 /* InsightBannerView.swift */,
+				PERIODCARO0000FILERE01 /* PeriodCarouselView.swift */,
 				80F6D85957FAA3FBFCB27BC0 /* MonthlyProgressCardView.swift */,
 			);
 			path = Components;
@@ -500,8 +509,11 @@
 				17C888963B08F592AB1BF269 /* BenefitRowView.swift in Sources */,
 				E080150C5354F7DAE3A3B079 /* BenefitTemplate.swift in Sources */,
 				9B79C64BA0D6919960198FB2 /* BenefitUsage.swift in Sources */,
+				ACHIEVERING0000BUILD001 /* AchievementRing.swift in Sources */,
+				ACCOMPLISH0000BUILD0001 /* AccomplishmentRingsView.swift in Sources */,
 				8624A01DC558018D6594DBC4 /* CardComponent.swift in Sources */,
 				A7838D5B4C6BF01F806E6E56 /* CardDatabase.swift in Sources */,
+				PERIODCARO0000BUILD001 /* PeriodCarouselView.swift in Sources */,
 				577BC5ADC6B660C2151E21B8 /* CardDetailView.swift in Sources */,
 				C34CA3CFB1A9714A3CF22A32 /* CardDetailViewModel.swift in Sources */,
 				4BADBB08DCC4657AC8F4EE04 /* CardRepository.swift in Sources */,

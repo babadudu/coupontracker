@@ -38,7 +38,7 @@ struct CardDetailView: View {
 
     @State private var showRemoveConfirmation = false
     @State private var expandedBenefitId: UUID? = nil
-    // @State private var selectedPeriod: BenefitPeriod = .monthly // TODO: Re-enable when PreviewCardPeriodSection is implemented
+    @State private var selectedPeriod: BenefitPeriod = .monthly
     @Environment(\.dismiss) private var dismiss
 
     // MARK: - Body
@@ -50,15 +50,14 @@ struct CardDetailView: View {
                 cardHeader
 
                 // Accomplishment Rings
-                // TODO: Implement PreviewCardPeriodSection component
-                // if !card.benefits.isEmpty {
-                //     PreviewCardPeriodSection(
-                //         benefits: card.benefits,
-                //         selectedPeriod: $selectedPeriod
-                //     )
-                //     .padding(.horizontal, DesignSystem.Spacing.lg)
-                //     .padding(.top, DesignSystem.Spacing.lg)
-                // }
+                if !card.benefits.isEmpty {
+                    PreviewCardPeriodSection(
+                        benefits: card.benefits,
+                        selectedPeriod: $selectedPeriod
+                    )
+                    .padding(.horizontal, DesignSystem.Spacing.lg)
+                    .padding(.top, DesignSystem.Spacing.lg)
+                }
 
                 // Benefits Sections
                 benefitsSections
