@@ -1,0 +1,784 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 63;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		026D8972D5DD39BCCCF0632C /* CardTemplates.json in Resources */ = {isa = PBXBuildFile; fileRef = D6F2A2BB6B4ACAB75E27EDC4 /* CardTemplates.json */; };
+		069D31CD320AE60F05732728 /* TemplateLoaderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0303E5DBAE98375C21EF5A /* TemplateLoaderProtocol.swift */; };
+		114E3B35DD132242BA7357E8 /* AppIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA34E9FFE4F2FCA182A9454 /* AppIntegrationTests.swift */; };
+		15A6868843F10E688C4005A6 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72ED49A42D2834D3DBD86566 /* UserPreferences.swift */; };
+		17C888963B08F592AB1BF269 /* BenefitRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEACB256F90E748CD5091166 /* BenefitRowView.swift */; };
+		20809301A144FF147B9BA3BB /* DisplayAdapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C01581804BC57F6FBCB986C /* DisplayAdapters.swift */; };
+		25983D87369751FE293828C6 /* BenefitRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6383CA5E10AAD87DC0E954 /* BenefitRepositoryTests.swift */; };
+		BC02CATEG0RY0TEST0BULD /* BenefitCategoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC01CATEG0RY0TEST0FILE /* BenefitCategoryTests.swift */; };
+		2DDBB1215AF0ED387C0ED146 /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72CCEF3837F986E75B3F53A /* HomeViewModelTests.swift */; };
+		2E121BE1121884800ACE3A4B /* Benefit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254736E578BB0838D073A454 /* Benefit.swift */; };
+		304F02ACE4B476BF70466D3B /* TemplateLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0245D0C77F9013564A0ABDDE /* TemplateLoader.swift */; };
+		33DDFDB70545A448BCC969DD /* AddCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BAFF15C5A312EC3B5AADE9 /* AddCardViewModel.swift */; };
+		38B444A49EFA559A921092C5 /* AddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FA40E55CA33962C9EF9BFE /* AddCardView.swift */; };
+		395F8BB83661232BB5BE237C /* CardRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493928B6E9787E43E89C29E6 /* CardRepositoryProtocol.swift */; };
+		3A4A58736B8B68CD2B9803AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE8C84A7E9481EC950763438 /* Assets.xcassets */; };
+		3C064B50953CBD821BA28265 /* CouponTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158BA166DDD21F994ABD1264 /* CouponTrackerApp.swift */; };
+		432280BEC019FE51C29F6C34 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF161B5EA56A3CF548D511B /* DesignSystem.swift */; };
+		4BADBB08DCC4657AC8F4EE04 /* CardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E44E4BA948F880DE0C5B3F8 /* CardRepository.swift */; };
+		55F44CFA7F698F068904D049 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C179A9A8213044AEA3F19D /* ContentView.swift */; };
+		577BC5ADC6B660C2151E21B8 /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897779E2EA378051D5F88E6A /* CardDetailView.swift */; };
+		6610865792430F1FB49661A8 /* ValueSummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EB86AF3ADF159DA31C433B /* ValueSummaryCard.swift */; };
+		6D4F020FAFE9D98FD67A9910 /* CardRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6B2483BF90BC941C23A8BA /* CardRepositoryTests.swift */; };
+		6DEE97BEA6353E69E045739E /* BenefitRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24BDA735B8D5D2DD925B2BE /* BenefitRepository.swift */; };
+		73E503A0CA18F6452A8A4ECA /* PreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C57E2A90D204E9A753C0D4 /* PreviewData.swift */; };
+		74B00860557357C480E2A750 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF03C19FBA3D646774548F9 /* SettingsViewModel.swift */; };
+		7D1461E0C4A4167BDAF2D48A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323F84B427FFD695595C99FC /* HomeViewModel.swift */; };
+		7D42AF902F1DFA2700BA423F /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D42AF8F2F1DFA2700BA423F /* NotificationService.swift */; };
+		7D42AF922F1DFC1D00BA423F /* BUILD_INSTRUCTIONS.md in Resources */ = {isa = PBXBuildFile; fileRef = 7D42AF912F1DFC1D00BA423F /* BUILD_INSTRUCTIONS.md */; };
+		7D42AF942F1DFD7800BA423F /* FINAL_FIX_SUMMARY.md in Resources */ = {isa = PBXBuildFile; fileRef = 7D42AF932F1DFD7800BA423F /* FINAL_FIX_SUMMARY.md */; };
+		7D42AF982F1E027C00BA423F /* RUNTIME_FIX.md in Resources */ = {isa = PBXBuildFile; fileRef = 7D42AF972F1E027C00BA423F /* RUNTIME_FIX.md */; };
+		8624A01DC558018D6594DBC4 /* CardComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512EB62DAFE6DC3D6B9B4A66 /* CardComponent.swift */; };
+		8851669850C24D321C72E8C7 /* BenefitRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB10862F4F8818953D61F492 /* BenefitRepositoryProtocol.swift */; };
+		92762ABB72D25384C2804FB1 /* BenefitCategoryChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F5B883213EBE804A6883F3 /* BenefitCategoryChartView.swift */; };
+		9B79C64BA0D6919960198FB2 /* BenefitUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC84562864B46CAA4C71D9A /* BenefitUsage.swift */; };
+		9C827B5B1D3B5D2BAFFC12A6 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8771D99E6BB132CFE1820DFC /* Repository.swift */; };
+		A1B2C3D4E5F6A7B8C9D0E1F2 /* ExpiringBenefitsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E5F6A7B8C9D0E1F2A3B4C5 /* ExpiringBenefitsListView.swift */; };
+		A7838D5B4C6BF01F806E6E56 /* CardDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C01E57DBC2A3D58AAF19036 /* CardDatabase.swift */; };
+		B2C3D4E5F6A7B8C9D0E1F2A3 /* ValueBreakdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6A7B8C9D0E1F2A3B4C5D6 /* ValueBreakdownView.swift */; };
+		B7C9A460508A0AD351873D7B /* UserCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A163AE2E6DB027C2AE0F01C /* UserCard.swift */; };
+		C34CA3CFB1A9714A3CF22A32 /* CardDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E088EEE7CA79D56546D0BD6 /* CardDetailViewModel.swift */; };
+		C3D4E5F6A7B8C9D0E1F2A3B4 /* InsightBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A7B8C9D0E1F2A3B4C5D6E7 /* InsightBannerView.swift */; };
+		C3E3E377779D70B787DB455C /* BenefitEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = A929208E7A5A5DB85A0FF0C9 /* BenefitEnums.swift */; };
+		C8286FE28C0D020FF54D8BD5 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FFD8A7AF5039F906788DFF /* Formatters.swift */; };
+		D261AB1D754F86719801FEBB /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C25932E958C53791B73F07 /* AppContainer.swift */; };
+		D9E8D22A8F993A0E8A08FBF4 /* DisplayProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75C9AC8BE3EA27BA966BEA2 /* DisplayProtocols.swift */; };
+		DF7D70F799397FF16C800306 /* MonthlyProgressCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F6D85957FAA3FBFCB27BC0 /* MonthlyProgressCardView.swift */; };
+		E080150C5354F7DAE3A3B079 /* BenefitTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB29D4EF00881B19387445C /* BenefitTemplate.swift */; };
+		E0CF9E0171F4FECAE713FA4D /* AddCardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E27E98ED6155FCFFFE5BC8 /* AddCardViewModelTests.swift */; };
+		F396EE8CFD737702D990E73F /* CardTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DB495CDEB980D66DEA2DA /* CardTemplate.swift */; };
+		F76B24B529C471E8D4896947 /* WalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B08DA0205E97EF15432F2B9 /* WalletView.swift */; };
+		F8AAAB08C32E291E3E8FF089 /* ExpiringBenefitsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FB60319F7D76FFA9BDE491 /* ExpiringBenefitsSectionView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B46771550DF20ECBD2FCC18E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6014535975B00C19E39FED7E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B90E4EF9B700DC87F37713BB;
+			remoteInfo = CouponTracker;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0245D0C77F9013564A0ABDDE /* TemplateLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateLoader.swift; sourceTree = "<group>"; };
+		08BAFF15C5A312EC3B5AADE9 /* AddCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardViewModel.swift; sourceTree = "<group>"; };
+		09C179A9A8213044AEA3F19D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0E44E4BA948F880DE0C5B3F8 /* CardRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRepository.swift; sourceTree = "<group>"; };
+		158BA166DDD21F994ABD1264 /* CouponTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponTrackerApp.swift; sourceTree = "<group>"; };
+		1B08DA0205E97EF15432F2B9 /* WalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletView.swift; sourceTree = "<group>"; };
+		1C6B2483BF90BC941C23A8BA /* CardRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRepositoryTests.swift; sourceTree = "<group>"; };
+		254736E578BB0838D073A454 /* Benefit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Benefit.swift; sourceTree = "<group>"; };
+		25F5B883213EBE804A6883F3 /* BenefitCategoryChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitCategoryChartView.swift; sourceTree = "<group>"; };
+		2DF03C19FBA3D646774548F9 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		323F84B427FFD695595C99FC /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		493928B6E9787E43E89C29E6 /* CardRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRepositoryProtocol.swift; sourceTree = "<group>"; };
+		4F2FD609865F055DEB7B6714 /* CouponTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CouponTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		512EB62DAFE6DC3D6B9B4A66 /* CardComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardComponent.swift; sourceTree = "<group>"; };
+		53FA40E55CA33962C9EF9BFE /* AddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardView.swift; sourceTree = "<group>"; };
+		54C25932E958C53791B73F07 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		5B6DB495CDEB980D66DEA2DA /* CardTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTemplate.swift; sourceTree = "<group>"; };
+		65E27E98ED6155FCFFFE5BC8 /* AddCardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardViewModelTests.swift; sourceTree = "<group>"; };
+		66C57E2A90D204E9A753C0D4 /* PreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewData.swift; sourceTree = "<group>"; };
+		6C01E57DBC2A3D58AAF19036 /* CardDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDatabase.swift; sourceTree = "<group>"; };
+		6C0303E5DBAE98375C21EF5A /* TemplateLoaderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateLoaderProtocol.swift; sourceTree = "<group>"; };
+		72ED49A42D2834D3DBD86566 /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
+		79FB60319F7D76FFA9BDE491 /* ExpiringBenefitsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiringBenefitsSectionView.swift; sourceTree = "<group>"; };
+		7C01581804BC57F6FBCB986C /* DisplayAdapters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayAdapters.swift; sourceTree = "<group>"; };
+		7D42AF8F2F1DFA2700BA423F /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		7D42AF912F1DFC1D00BA423F /* BUILD_INSTRUCTIONS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = BUILD_INSTRUCTIONS.md; sourceTree = "<group>"; };
+		7D42AF932F1DFD7800BA423F /* FINAL_FIX_SUMMARY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = FINAL_FIX_SUMMARY.md; sourceTree = "<group>"; };
+		7D42AF972F1E027C00BA423F /* RUNTIME_FIX.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = RUNTIME_FIX.md; sourceTree = "<group>"; };
+		80F6D85957FAA3FBFCB27BC0 /* MonthlyProgressCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyProgressCardView.swift; sourceTree = "<group>"; };
+		8771D99E6BB132CFE1820DFC /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		897779E2EA378051D5F88E6A /* CardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
+		8B6383CA5E10AAD87DC0E954 /* BenefitRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitRepositoryTests.swift; sourceTree = "<group>"; };
+		BC01CATEG0RY0TEST0FILE /* BenefitCategoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitCategoryTests.swift; sourceTree = "<group>"; };
+		8E088EEE7CA79D56546D0BD6 /* CardDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailViewModel.swift; sourceTree = "<group>"; };
+		9A163AE2E6DB027C2AE0F01C /* UserCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCard.swift; sourceTree = "<group>"; };
+		A8FFD8A7AF5039F906788DFF /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
+		A929208E7A5A5DB85A0FF0C9 /* BenefitEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitEnums.swift; sourceTree = "<group>"; };
+		B24BDA735B8D5D2DD925B2BE /* BenefitRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitRepository.swift; sourceTree = "<group>"; };
+		BB10862F4F8818953D61F492 /* BenefitRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitRepositoryProtocol.swift; sourceTree = "<group>"; };
+		BBA34E9FFE4F2FCA182A9454 /* AppIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntegrationTests.swift; sourceTree = "<group>"; };
+		BBB29D4EF00881B19387445C /* BenefitTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitTemplate.swift; sourceTree = "<group>"; };
+		BEACB256F90E748CD5091166 /* BenefitRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitRowView.swift; sourceTree = "<group>"; };
+		C283F73B0DC58B1294B3E812 /* CouponTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CouponTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4E5F6A7B8C9D0E1F2A3B4C5 /* ExpiringBenefitsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiringBenefitsListView.swift; sourceTree = "<group>"; };
+		D6F2A2BB6B4ACAB75E27EDC4 /* CardTemplates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CardTemplates.json; sourceTree = "<group>"; };
+		D72CCEF3837F986E75B3F53A /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
+		E0EB86AF3ADF159DA31C433B /* ValueSummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueSummaryCard.swift; sourceTree = "<group>"; };
+		E5F6A7B8C9D0E1F2A3B4C5D6 /* ValueBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueBreakdownView.swift; sourceTree = "<group>"; };
+		E75C9AC8BE3EA27BA966BEA2 /* DisplayProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayProtocols.swift; sourceTree = "<group>"; };
+		F6A7B8C9D0E1F2A3B4C5D6E7 /* InsightBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightBannerView.swift; sourceTree = "<group>"; };
+		FAF161B5EA56A3CF548D511B /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
+		FCC84562864B46CAA4C71D9A /* BenefitUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitUsage.swift; sourceTree = "<group>"; };
+		FE8C84A7E9481EC950763438 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		01D025DD4F2B0EF954FA3BBF /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				254736E578BB0838D073A454 /* Benefit.swift */,
+				FCC84562864B46CAA4C71D9A /* BenefitUsage.swift */,
+				9A163AE2E6DB027C2AE0F01C /* UserCard.swift */,
+				72ED49A42D2834D3DBD86566 /* UserPreferences.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		142049CCD74F6B53E8A2C436 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				2F09030C5B961B575EDC5E72 /* Common */,
+				204B497669A112968826CCB6 /* Home */,
+				E7B5A078E13693980BD6269E /* Settings */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		189E075F0C763AE519B7B830 /* CouponTrackerTests */ = {
+			isa = PBXGroup;
+			children = (
+				4682418090B0CC153A9469DD /* UnitTests */,
+			);
+			path = CouponTrackerTests;
+			sourceTree = "<group>";
+		};
+		204B497669A112968826CCB6 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				53FA40E55CA33962C9EF9BFE /* AddCardView.swift */,
+				08BAFF15C5A312EC3B5AADE9 /* AddCardViewModel.swift */,
+				897779E2EA378051D5F88E6A /* CardDetailView.swift */,
+				8E088EEE7CA79D56546D0BD6 /* CardDetailViewModel.swift */,
+				D4E5F6A7B8C9D0E1F2A3B4C5 /* ExpiringBenefitsListView.swift */,
+				323F84B427FFD695595C99FC /* HomeViewModel.swift */,
+				E5F6A7B8C9D0E1F2A3B4C5D6 /* ValueBreakdownView.swift */,
+				1B08DA0205E97EF15432F2B9 /* WalletView.swift */,
+				450DC2A09050CCBEE577B8BE /* Components */,
+				717907F7A7D8C534ADE2AC58 /* Views */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		2C85ED342FA38D7F755EB08F /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D6F2A2BB6B4ACAB75E27EDC4 /* CardTemplates.json */,
+			);
+			name = Data;
+			path = CouponTracker/Resources/Data;
+			sourceTree = "<group>";
+		};
+		2F09030C5B961B575EDC5E72 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				E3E8F7C810D348EB6FA81C8D /* Views */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		450DC2A09050CCBEE577B8BE /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				25F5B883213EBE804A6883F3 /* BenefitCategoryChartView.swift */,
+				BEACB256F90E748CD5091166 /* BenefitRowView.swift */,
+				512EB62DAFE6DC3D6B9B4A66 /* CardComponent.swift */,
+				79FB60319F7D76FFA9BDE491 /* ExpiringBenefitsSectionView.swift */,
+				F6A7B8C9D0E1F2A3B4C5D6E7 /* InsightBannerView.swift */,
+				80F6D85957FAA3FBFCB27BC0 /* MonthlyProgressCardView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		4682418090B0CC153A9469DD /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				65E27E98ED6155FCFFFE5BC8 /* AddCardViewModelTests.swift */,
+				BBA34E9FFE4F2FCA182A9454 /* AppIntegrationTests.swift */,
+				8B6383CA5E10AAD87DC0E954 /* BenefitRepositoryTests.swift */,
+				BC01CATEG0RY0TEST0FILE /* BenefitCategoryTests.swift */,
+				1C6B2483BF90BC941C23A8BA /* CardRepositoryTests.swift */,
+				D72CCEF3837F986E75B3F53A /* HomeViewModelTests.swift */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
+		4D58A4E0391A7DDFDF05E564 = {
+			isa = PBXGroup;
+			children = (
+				189E075F0C763AE519B7B830 /* CouponTrackerTests */,
+				2C85ED342FA38D7F755EB08F /* Data */,
+				B9C273555DA2AA3F104C3922 /* Resources */,
+				C49B0113100A97AC24109306 /* Sources */,
+				DADB1B0724849DFA7D910116 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		538229862F6637408F176FDF /* App */ = {
+			isa = PBXGroup;
+			children = (
+				54C25932E958C53791B73F07 /* AppContainer.swift */,
+				09C179A9A8213044AEA3F19D /* ContentView.swift */,
+				158BA166DDD21F994ABD1264 /* CouponTrackerApp.swift */,
+				7D42AF8F2F1DFA2700BA423F /* NotificationService.swift */,
+				7D42AF912F1DFC1D00BA423F /* BUILD_INSTRUCTIONS.md */,
+				7D42AF932F1DFD7800BA423F /* FINAL_FIX_SUMMARY.md */,
+				7D42AF972F1E027C00BA423F /* RUNTIME_FIX.md */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		5A86EFA8191D7201B92B25F7 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				72AA599F8438F5E890965842 /* Storage */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		6851B4C983EDE7A48BDB05EC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				01D025DD4F2B0EF954FA3BBF /* Entities */,
+				B9852CFB8BDFB0C35EA639B6 /* Enums */,
+				C5EA5C2417D0C3953D8C1148 /* Templates */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		717907F7A7D8C534ADE2AC58 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		72AA599F8438F5E890965842 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				B24BDA735B8D5D2DD925B2BE /* BenefitRepository.swift */,
+				0E44E4BA948F880DE0C5B3F8 /* CardRepository.swift */,
+				0245D0C77F9013564A0ABDDE /* TemplateLoader.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		7B4B20EFEA0B3F16668FBAA0 /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				7C01581804BC57F6FBCB986C /* DisplayAdapters.swift */,
+			);
+			path = Adapters;
+			sourceTree = "<group>";
+		};
+		85653E9CF71D247D51E68BA6 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				7B4B20EFEA0B3F16668FBAA0 /* Adapters */,
+				EB204BABB8DAD3F716B0EFA9 /* Extensions */,
+				B964B7A48151451DBD9CBAF7 /* Protocols */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		B964B7A48151451DBD9CBAF7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				BB10862F4F8818953D61F492 /* BenefitRepositoryProtocol.swift */,
+				493928B6E9787E43E89C29E6 /* CardRepositoryProtocol.swift */,
+				E75C9AC8BE3EA27BA966BEA2 /* DisplayProtocols.swift */,
+				8771D99E6BB132CFE1820DFC /* Repository.swift */,
+				6C0303E5DBAE98375C21EF5A /* TemplateLoaderProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		B9852CFB8BDFB0C35EA639B6 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				A929208E7A5A5DB85A0FF0C9 /* BenefitEnums.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		B9C273555DA2AA3F104C3922 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FE8C84A7E9481EC950763438 /* Assets.xcassets */,
+			);
+			name = Resources;
+			path = CouponTracker/Resources;
+			sourceTree = "<group>";
+		};
+		C49B0113100A97AC24109306 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				538229862F6637408F176FDF /* App */,
+				85653E9CF71D247D51E68BA6 /* Core */,
+				142049CCD74F6B53E8A2C436 /* Features */,
+				6851B4C983EDE7A48BDB05EC /* Models */,
+				5A86EFA8191D7201B92B25F7 /* Services */,
+				F26ED9489CB6C15561D0E569 /* Utils */,
+			);
+			name = Sources;
+			path = CouponTracker/Sources;
+			sourceTree = "<group>";
+		};
+		C5EA5C2417D0C3953D8C1148 /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				BBB29D4EF00881B19387445C /* BenefitTemplate.swift */,
+				6C01E57DBC2A3D58AAF19036 /* CardDatabase.swift */,
+				5B6DB495CDEB980D66DEA2DA /* CardTemplate.swift */,
+			);
+			path = Templates;
+			sourceTree = "<group>";
+		};
+		DADB1B0724849DFA7D910116 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4F2FD609865F055DEB7B6714 /* CouponTracker.app */,
+				C283F73B0DC58B1294B3E812 /* CouponTrackerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E3E8F7C810D348EB6FA81C8D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E0EB86AF3ADF159DA31C433B /* ValueSummaryCard.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E7B5A078E13693980BD6269E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				2DF03C19FBA3D646774548F9 /* SettingsViewModel.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		EB204BABB8DAD3F716B0EFA9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FAF161B5EA56A3CF548D511B /* DesignSystem.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F26ED9489CB6C15561D0E569 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				A8FFD8A7AF5039F906788DFF /* Formatters.swift */,
+				66C57E2A90D204E9A753C0D4 /* PreviewData.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A736514902E852DC6676860A /* CouponTrackerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 33DFB8908E5EDC2ADC0B0E19 /* Build configuration list for PBXNativeTarget "CouponTrackerTests" */;
+			buildPhases = (
+				F29F066C1F337419C0621BC5 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				308D3DA6FF4BBD53190B6834 /* PBXTargetDependency */,
+			);
+			name = CouponTrackerTests;
+			packageProductDependencies = (
+			);
+			productName = CouponTrackerTests;
+			productReference = C283F73B0DC58B1294B3E812 /* CouponTrackerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B90E4EF9B700DC87F37713BB /* CouponTracker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0403C1DD141D844F8B208C44 /* Build configuration list for PBXNativeTarget "CouponTracker" */;
+			buildPhases = (
+				F61D3B6BFB55F889200E6128 /* Sources */,
+				4EAE5FA4F994A5460CB1E061 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CouponTracker;
+			packageProductDependencies = (
+			);
+			productName = CouponTracker;
+			productReference = 4F2FD609865F055DEB7B6714 /* CouponTracker.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6014535975B00C19E39FED7E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 2620;
+			};
+			buildConfigurationList = 69EEB54BA863C056E8DE301E /* Build configuration list for PBXProject "CouponTracker" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 4D58A4E0391A7DDFDF05E564;
+			minimizedProjectReferenceProxies = 1;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B90E4EF9B700DC87F37713BB /* CouponTracker */,
+				A736514902E852DC6676860A /* CouponTrackerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4EAE5FA4F994A5460CB1E061 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D42AF942F1DFD7800BA423F /* FINAL_FIX_SUMMARY.md in Resources */,
+				7D42AF922F1DFC1D00BA423F /* BUILD_INSTRUCTIONS.md in Resources */,
+				3A4A58736B8B68CD2B9803AA /* Assets.xcassets in Resources */,
+				026D8972D5DD39BCCCF0632C /* CardTemplates.json in Resources */,
+				7D42AF982F1E027C00BA423F /* RUNTIME_FIX.md in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F29F066C1F337419C0621BC5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0CF9E0171F4FECAE713FA4D /* AddCardViewModelTests.swift in Sources */,
+				114E3B35DD132242BA7357E8 /* AppIntegrationTests.swift in Sources */,
+				25983D87369751FE293828C6 /* BenefitRepositoryTests.swift in Sources */,
+				BC02CATEG0RY0TEST0BULD /* BenefitCategoryTests.swift in Sources */,
+				6D4F020FAFE9D98FD67A9910 /* CardRepositoryTests.swift in Sources */,
+				2DDBB1215AF0ED387C0ED146 /* HomeViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F61D3B6BFB55F889200E6128 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				38B444A49EFA559A921092C5 /* AddCardView.swift in Sources */,
+				33DDFDB70545A448BCC969DD /* AddCardViewModel.swift in Sources */,
+				D261AB1D754F86719801FEBB /* AppContainer.swift in Sources */,
+				2E121BE1121884800ACE3A4B /* Benefit.swift in Sources */,
+				92762ABB72D25384C2804FB1 /* BenefitCategoryChartView.swift in Sources */,
+				C3E3E377779D70B787DB455C /* BenefitEnums.swift in Sources */,
+				6DEE97BEA6353E69E045739E /* BenefitRepository.swift in Sources */,
+				8851669850C24D321C72E8C7 /* BenefitRepositoryProtocol.swift in Sources */,
+				17C888963B08F592AB1BF269 /* BenefitRowView.swift in Sources */,
+				E080150C5354F7DAE3A3B079 /* BenefitTemplate.swift in Sources */,
+				9B79C64BA0D6919960198FB2 /* BenefitUsage.swift in Sources */,
+				8624A01DC558018D6594DBC4 /* CardComponent.swift in Sources */,
+				A7838D5B4C6BF01F806E6E56 /* CardDatabase.swift in Sources */,
+				577BC5ADC6B660C2151E21B8 /* CardDetailView.swift in Sources */,
+				C34CA3CFB1A9714A3CF22A32 /* CardDetailViewModel.swift in Sources */,
+				4BADBB08DCC4657AC8F4EE04 /* CardRepository.swift in Sources */,
+				395F8BB83661232BB5BE237C /* CardRepositoryProtocol.swift in Sources */,
+				F396EE8CFD737702D990E73F /* CardTemplate.swift in Sources */,
+				55F44CFA7F698F068904D049 /* ContentView.swift in Sources */,
+				3C064B50953CBD821BA28265 /* CouponTrackerApp.swift in Sources */,
+				432280BEC019FE51C29F6C34 /* DesignSystem.swift in Sources */,
+				20809301A144FF147B9BA3BB /* DisplayAdapters.swift in Sources */,
+				D9E8D22A8F993A0E8A08FBF4 /* DisplayProtocols.swift in Sources */,
+				F8AAAB08C32E291E3E8FF089 /* ExpiringBenefitsSectionView.swift in Sources */,
+				C8286FE28C0D020FF54D8BD5 /* Formatters.swift in Sources */,
+				7D1461E0C4A4167BDAF2D48A /* HomeViewModel.swift in Sources */,
+				DF7D70F799397FF16C800306 /* MonthlyProgressCardView.swift in Sources */,
+				73E503A0CA18F6452A8A4ECA /* PreviewData.swift in Sources */,
+				7D42AF902F1DFA2700BA423F /* NotificationService.swift in Sources */,
+				9C827B5B1D3B5D2BAFFC12A6 /* Repository.swift in Sources */,
+				74B00860557357C480E2A750 /* SettingsViewModel.swift in Sources */,
+				304F02ACE4B476BF70466D3B /* TemplateLoader.swift in Sources */,
+				069D31CD320AE60F05732728 /* TemplateLoaderProtocol.swift in Sources */,
+				B7C9A460508A0AD351873D7B /* UserCard.swift in Sources */,
+				15A6868843F10E688C4005A6 /* UserPreferences.swift in Sources */,
+				6610865792430F1FB49661A8 /* ValueSummaryCard.swift in Sources */,
+				F76B24B529C471E8D4896947 /* WalletView.swift in Sources */,
+				A1B2C3D4E5F6A7B8C9D0E1F2 /* ExpiringBenefitsListView.swift in Sources */,
+				B2C3D4E5F6A7B8C9D0E1F2A3 /* ValueBreakdownView.swift in Sources */,
+				C3D4E5F6A7B8C9D0E1F2A3B4 /* InsightBannerView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		308D3DA6FF4BBD53190B6834 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B90E4EF9B700DC87F37713BB /* CouponTracker */;
+			targetProxy = B46771550DF20ECBD2FCC18E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		03DE5C4C23155CBDB3729486 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		2F27C564BE64DCA920389401 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		551DE86ECE1602B64CDD4096 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.coupontracker.CouponTrackerTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CouponTracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CouponTracker";
+			};
+			name = Debug;
+		};
+		6708931DA9CF528C98D5CC2F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_KEY_CFBundleDisplayName = CouponTracker;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.coupontracker.app;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A9418056E2D98E394A70B6B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_KEY_CFBundleDisplayName = CouponTracker;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.coupontracker.app;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F18B366A006482A1563AB30F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.coupontracker.CouponTrackerTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CouponTracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CouponTracker";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0403C1DD141D844F8B208C44 /* Build configuration list for PBXNativeTarget "CouponTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6708931DA9CF528C98D5CC2F /* Debug */,
+				A9418056E2D98E394A70B6B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		33DFB8908E5EDC2ADC0B0E19 /* Build configuration list for PBXNativeTarget "CouponTrackerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				551DE86ECE1602B64CDD4096 /* Debug */,
+				F18B366A006482A1563AB30F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		69EEB54BA863C056E8DE301E /* Build configuration list for PBXProject "CouponTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F27C564BE64DCA920389401 /* Debug */,
+				03DE5C4C23155CBDB3729486 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6014535975B00C19E39FED7E /* Project object */;
+}

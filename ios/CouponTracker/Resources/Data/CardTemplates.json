@@ -1,0 +1,479 @@
+{
+  "schemaVersion": 1,
+  "dataVersion": "2026.01.18",
+  "lastUpdated": "2026-01-18T00:00:00Z",
+  "cards": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440001",
+      "name": "Platinum Card",
+      "issuer": "American Express",
+      "artworkAsset": "card_amex_platinum",
+      "annualFee": 895,
+      "primaryColor": "#E5E4E2",
+      "secondaryColor": "#A9A9A9",
+      "isActive": true,
+      "lastUpdated": "2026-01-18T00:00:00Z",
+      "benefits": [
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440101",
+          "name": "Uber Cash",
+          "description": "$15/mo plus $20 bonus in December",
+          "value": 15,
+          "frequency": "monthly",
+          "category": "transportation",
+          "merchant": "Uber",
+          "resetDayOfMonth": 1,
+          "bonusValue": 20,
+          "bonusMonths": [12]
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440102",
+          "name": "Digital Entertainment",
+          "description": "Streaming services (Disney, Hulu, etc.)",
+          "value": 20,
+          "frequency": "monthly",
+          "category": "entertainment",
+          "merchant": null,
+          "resetDayOfMonth": 1
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440103",
+          "name": "Walmart+ Credit",
+          "description": "Monthly membership fee coverage",
+          "value": 12.95,
+          "frequency": "monthly",
+          "category": "shopping",
+          "merchant": "Walmart",
+          "resetDayOfMonth": 1
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440104",
+          "name": "Resy Credit",
+          "description": "$100 per quarter for Resy restaurants",
+          "value": 100,
+          "frequency": "quarterly",
+          "category": "dining",
+          "merchant": "Resy",
+          "resetDayOfMonth": null
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440105",
+          "name": "lululemon Credit",
+          "description": "$75 per quarter for retail/online",
+          "value": 75,
+          "frequency": "quarterly",
+          "category": "shopping",
+          "merchant": "lululemon",
+          "resetDayOfMonth": null
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440106",
+          "name": "Saks Fifth Avenue",
+          "description": "$50 Jan-Jun, $50 Jul-Dec",
+          "value": 50,
+          "frequency": "semiAnnual",
+          "category": "shopping",
+          "merchant": "Saks Fifth Avenue",
+          "resetDayOfMonth": null
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440107",
+          "name": "Hotel Credit",
+          "description": "$300 semi-annually for FHR/Hotel Collection",
+          "value": 300,
+          "frequency": "semiAnnual",
+          "category": "travel",
+          "merchant": null,
+          "resetDayOfMonth": null
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440108",
+          "name": "Airline Fee Credit",
+          "description": "Incidental fees on selected airline",
+          "value": 200,
+          "frequency": "annual",
+          "category": "travel",
+          "merchant": null,
+          "resetDayOfMonth": null
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440109",
+          "name": "CLEAR Plus",
+          "description": "Annual membership credit",
+          "value": 209,
+          "frequency": "annual",
+          "category": "travel",
+          "merchant": "CLEAR",
+          "resetDayOfMonth": null
+        }
+      ]
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440002",
+      "name": "Gold Card",
+      "issuer": "American Express",
+      "artworkAsset": "card_amex_gold",
+      "annualFee": 325,
+      "primaryColor": "#CFB53B",
+      "secondaryColor": "#8B7500",
+      "isActive": true,
+      "lastUpdated": "2026-01-18T00:00:00Z",
+      "benefits": [
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440201",
+          "name": "Uber Cash",
+          "description": "Monthly rideshare or Uber Eats",
+          "value": 10,
+          "frequency": "monthly",
+          "category": "transportation",
+          "merchant": "Uber",
+          "resetDayOfMonth": 1
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440202",
+          "name": "Dining Credit",
+          "description": "Select partners (Grubhub, Cheesecake Factory)",
+          "value": 10,
+          "frequency": "monthly",
+          "category": "dining",
+          "merchant": null,
+          "resetDayOfMonth": 1
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440203",
+          "name": "Dunkin' Credit",
+          "description": "Monthly Dunkin' spend",
+          "value": 7,
+          "frequency": "monthly",
+          "category": "dining",
+          "merchant": "Dunkin'",
+          "resetDayOfMonth": 1
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440204",
+          "name": "Resy Credit",
+          "description": "Statement credits for Resy restaurants",
+          "value": 50,
+          "frequency": "semiAnnual",
+          "category": "dining",
+          "merchant": "Resy",
+          "resetDayOfMonth": null
+        }
+      ]
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440003",
+      "name": "Sapphire Reserve",
+      "issuer": "Chase",
+      "artworkAsset": "card_chase_sapphire_reserve",
+      "annualFee": 795,
+      "primaryColor": "#0f4c75",
+      "secondaryColor": "#1a1a2e",
+      "isActive": true,
+      "lastUpdated": "2026-01-18T00:00:00Z",
+      "benefits": [
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440301",
+          "name": "DoorDash Credit",
+          "description": "Monthly in-app credit (accruable up to $15)",
+          "value": 5,
+          "frequency": "monthly",
+          "category": "dining",
+          "merchant": "DoorDash",
+          "resetDayOfMonth": 1
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440302",
+          "name": "The Edit Credit",
+          "description": "For prepaid hotel bookings through The Edit",
+          "value": 250,
+          "frequency": "semiAnnual",
+          "category": "travel",
+          "merchant": "The Edit",
+          "resetDayOfMonth": null
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440303",
+          "name": "Exclusive Tables",
+          "description": "$150 for Chase dining reservations",
+          "value": 150,
+          "frequency": "semiAnnual",
+          "category": "dining",
+          "merchant": null,
+          "resetDayOfMonth": null
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440304",
+          "name": "Travel Credit",
+          "description": "Broad travel reimbursement",
+          "value": 300,
+          "frequency": "annual",
+          "category": "travel",
+          "merchant": null,
+          "resetDayOfMonth": null
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440305",
+          "name": "StubHub Credit",
+          "description": "Annual credit for ticket purchases",
+          "value": 300,
+          "frequency": "annual",
+          "category": "entertainment",
+          "merchant": "StubHub",
+          "resetDayOfMonth": null
+        }
+      ]
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440004",
+      "name": "Venture X",
+      "issuer": "Capital One",
+      "artworkAsset": "card_capital_one_venture_x",
+      "annualFee": 395,
+      "primaryColor": "#1a1a2e",
+      "secondaryColor": "#4a4e69",
+      "isActive": true,
+      "lastUpdated": "2026-01-18T00:00:00Z",
+      "benefits": [
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440401",
+          "name": "Travel Credit",
+          "description": "Capital One Travel portal credit",
+          "value": 300,
+          "frequency": "annual",
+          "category": "travel",
+          "merchant": null,
+          "resetDayOfMonth": null
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440402",
+          "name": "Anniversary Miles",
+          "description": "10,000 bonus miles (~$100 value)",
+          "value": 100,
+          "frequency": "annual",
+          "category": "travel",
+          "merchant": null,
+          "resetDayOfMonth": null
+        }
+      ]
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440005",
+      "name": "Hilton Honors Aspire",
+      "issuer": "American Express",
+      "artworkAsset": "card_amex_hilton_aspire",
+      "annualFee": 550,
+      "primaryColor": "#002855",
+      "secondaryColor": "#000000",
+      "isActive": true,
+      "lastUpdated": "2026-01-18T00:00:00Z",
+      "benefits": [
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440501",
+          "name": "Flight Credit",
+          "description": "Valid for airline ticket purchases",
+          "value": 50,
+          "frequency": "quarterly",
+          "category": "travel",
+          "merchant": null,
+          "resetDayOfMonth": null
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440502",
+          "name": "Resort Credit",
+          "description": "Statement credit at Hilton Resorts",
+          "value": 200,
+          "frequency": "semiAnnual",
+          "category": "travel",
+          "merchant": "Hilton",
+          "resetDayOfMonth": null
+        }
+      ]
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440006",
+      "name": "Delta SkyMiles Platinum",
+      "issuer": "American Express",
+      "artworkAsset": "card_amex_delta_platinum",
+      "annualFee": 350,
+      "primaryColor": "#00337F",
+      "secondaryColor": "#C41230",
+      "isActive": true,
+      "lastUpdated": "2026-01-18T00:00:00Z",
+      "benefits": [
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440601",
+          "name": "Resy Credit",
+          "description": "Monthly dining statement credit",
+          "value": 10,
+          "frequency": "monthly",
+          "category": "dining",
+          "merchant": "Resy",
+          "resetDayOfMonth": 1
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440602",
+          "name": "Rideshare Credit",
+          "description": "Monthly rideshare (Uber/Lyft)",
+          "value": 10,
+          "frequency": "monthly",
+          "category": "transportation",
+          "merchant": null,
+          "resetDayOfMonth": 1
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440603",
+          "name": "Stay Credit",
+          "description": "Delta Stays portal bookings",
+          "value": 200,
+          "frequency": "annual",
+          "category": "travel",
+          "merchant": "Delta Stays",
+          "resetDayOfMonth": null
+        }
+      ]
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440007",
+      "name": "Marriott Bonvoy Brilliant",
+      "issuer": "American Express",
+      "artworkAsset": "card_amex_marriott_brilliant",
+      "annualFee": 650,
+      "primaryColor": "#870048",
+      "secondaryColor": "#1C1C1C",
+      "isActive": true,
+      "lastUpdated": "2026-01-18T00:00:00Z",
+      "benefits": [
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440701",
+          "name": "Dining Credit",
+          "description": "$25/mo at global restaurants",
+          "value": 25,
+          "frequency": "monthly",
+          "category": "dining",
+          "merchant": null,
+          "resetDayOfMonth": 1
+        }
+      ]
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440008",
+      "name": "Altitude Reserve",
+      "issuer": "U.S. Bank",
+      "artworkAsset": "card_usbank_altitude_reserve",
+      "annualFee": 400,
+      "primaryColor": "#D50032",
+      "secondaryColor": "#002147",
+      "isActive": true,
+      "lastUpdated": "2026-01-18T00:00:00Z",
+      "benefits": [
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440801",
+          "name": "Dining/Travel Credit",
+          "description": "Automatic credit for dining or travel",
+          "value": 325,
+          "frequency": "annual",
+          "category": "travel",
+          "merchant": null,
+          "resetDayOfMonth": null
+        }
+      ]
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440009",
+      "name": "Business Platinum",
+      "issuer": "American Express",
+      "artworkAsset": "card_amex_business_platinum",
+      "annualFee": 695,
+      "primaryColor": "#E5E4E2",
+      "secondaryColor": "#A9A9A9",
+      "isActive": true,
+      "lastUpdated": "2026-01-18T00:00:00Z",
+      "benefits": [
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440901",
+          "name": "Wireless Credit",
+          "description": "U.S. wireless service providers",
+          "value": 10,
+          "frequency": "monthly",
+          "category": "business",
+          "merchant": null,
+          "resetDayOfMonth": 1
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440902",
+          "name": "Indeed Credit",
+          "description": "$90 per quarter for hiring",
+          "value": 90,
+          "frequency": "quarterly",
+          "category": "business",
+          "merchant": "Indeed",
+          "resetDayOfMonth": null
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440903",
+          "name": "Hilton Credit",
+          "description": "$50 per quarter for Hilton stays",
+          "value": 50,
+          "frequency": "quarterly",
+          "category": "travel",
+          "merchant": "Hilton",
+          "resetDayOfMonth": null
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440904",
+          "name": "Dell Technologies",
+          "description": "$200 semi-annually for tech purchases",
+          "value": 200,
+          "frequency": "semiAnnual",
+          "category": "business",
+          "merchant": "Dell",
+          "resetDayOfMonth": null
+        }
+      ]
+    },
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440010",
+      "name": "Delta SkyMiles Reserve",
+      "issuer": "American Express",
+      "artworkAsset": "card_amex_delta_reserve",
+      "annualFee": 650,
+      "primaryColor": "#00337F",
+      "secondaryColor": "#1A1A1A",
+      "isActive": true,
+      "lastUpdated": "2026-01-18T00:00:00Z",
+      "benefits": [
+        {
+          "id": "550e8400-e29b-41d4-a716-446655441001",
+          "name": "Resy Credit",
+          "description": "Monthly dining statement credit",
+          "value": 20,
+          "frequency": "monthly",
+          "category": "dining",
+          "merchant": "Resy",
+          "resetDayOfMonth": 1
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655441002",
+          "name": "Rideshare Credit",
+          "description": "Monthly rideshare (Uber/Lyft)",
+          "value": 10,
+          "frequency": "monthly",
+          "category": "transportation",
+          "merchant": null,
+          "resetDayOfMonth": 1
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655441003",
+          "name": "Stay Credit",
+          "description": "Delta Stays portal bookings",
+          "value": 200,
+          "frequency": "annual",
+          "category": "travel",
+          "merchant": "Delta Stays",
+          "resetDayOfMonth": null
+        }
+      ]
+    }
+  ]
+}
