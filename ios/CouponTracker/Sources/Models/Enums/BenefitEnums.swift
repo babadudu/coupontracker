@@ -361,6 +361,100 @@ enum BenefitPeriod: String, CaseIterable, Identifiable {
         case .annual: return .annual
         }
     }
+
+    /// Checks if a benefit's current period overlaps with this view period.
+    /// - Parameters:
+    ///   - benefitStart: The benefit's currentPeriodStart
+    ///   - benefitEnd: The benefit's currentPeriodEnd
+    ///   - referenceDate: The date to calculate the view period from
+    /// - Returns: True if the benefit period overlaps with this view period
+    func containsBenefitPeriod(
+        benefitStart: Date,
+        benefitEnd: Date,
+        for referenceDate: Date = Date()
+    ) -> Bool {
+        let (viewStart, viewEnd) = periodDates(for: referenceDate)
+        return benefitStart <= viewEnd && benefitEnd >= viewStart
+    }
+
+    /// Calculates how many times a benefit contributes to this period.
+    /// Monthly benefits contribute 3x to quarterly, 12x to annual, etc.
+    /// - Parameter frequency: The benefit's reset frequency
+    /// - Returns: Multiplier for aggregation
+    func aggregationMultiplier(for frequency: BenefitFrequency) -> Int {
+        let viewPeriodsPerYear = correspondingFrequency.periodsPerYear
+        let benefitPeriodsPerYear = frequency.periodsPerYear
+        return max(1, benefitPeriodsPerYear / viewPeriodsPerYear)
+    }
+}
+
+// MARK: - PeriodMetrics
+
+/// Calculates period-scoped metrics for benefits.
+/// Centralizes logic for redeemed/available value calculations by period.
+struct PeriodMetrics {
+    let redeemedValue: Decimal
+    let availableValue: Decimal
+    let totalValue: Decimal
+    let usedCount: Int
+    let availableCount: Int
+    let totalCount: Int
+
+    var percentageUsed: Int {
+        guard totalValue > 0 else { return 0 }
+        return NSDecimalNumber(decimal: redeemedValue / totalValue * 100).intValue
+    }
+
+    var isEmpty: Bool { totalCount == 0 }
+
+    /// Calculates metrics for benefits within a given period.
+    /// - Parameters:
+    ///   - benefits: All benefits to evaluate
+    ///   - period: The view period (monthly/quarterly/annual)
+    ///   - referenceDate: The reference date for period calculation
+    /// - Returns: Aggregated metrics for benefits overlapping the period
+    static func calculate(
+        for benefits: [Benefit],
+        period: BenefitPeriod,
+        referenceDate: Date = Date()
+    ) -> PeriodMetrics {
+        let (viewStart, viewEnd) = period.periodDates(for: referenceDate)
+
+        // Filter benefits whose period overlaps with view period
+        let overlapping = benefits.filter { benefit in
+            benefit.currentPeriodStart <= viewEnd &&
+            benefit.currentPeriodEnd >= viewStart
+        }
+
+        let used = overlapping.filter { $0.status == .used }
+        let available = overlapping.filter { $0.status == .available }
+
+        // Calculate total potential value with aggregation multiplier
+        var totalValue: Decimal = 0
+        var redeemedValue: Decimal = 0
+        var availableValue: Decimal = 0
+
+        for benefit in overlapping {
+            let multiplier = Decimal(period.aggregationMultiplier(for: benefit.frequency))
+            let benefitTotal = benefit.effectiveValue * multiplier
+            totalValue += benefitTotal
+
+            if benefit.status == .used {
+                redeemedValue += benefit.effectiveValue
+            } else if benefit.status == .available {
+                availableValue += benefit.effectiveValue
+            }
+        }
+
+        return PeriodMetrics(
+            redeemedValue: redeemedValue,
+            availableValue: availableValue,
+            totalValue: totalValue,
+            usedCount: used.count,
+            availableCount: available.count,
+            totalCount: overlapping.count
+        )
+    }
 }
 
 // MARK: - BenefitCategory

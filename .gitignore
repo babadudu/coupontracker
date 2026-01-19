@@ -74,5 +74,3 @@ playground.xcworkspace
 coverage/
 *.xcresult
 
-# Claude
-.claude/

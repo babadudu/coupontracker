@@ -31,6 +31,7 @@ struct CardDetailView: View {
     let card: PreviewCard
     var onMarkAsDone: ((PreviewBenefit) -> Void)? = nil
     var onSnooze: ((PreviewBenefit, Int) -> Void)? = nil
+    var onUndo: ((PreviewBenefit) -> Void)? = nil
     var onRemoveCard: (() -> Void)? = nil
     var onEditCard: (() -> Void)? = nil
 
@@ -172,6 +173,7 @@ struct CardDetailView: View {
                     subtitle: usedBenefitsSubtitle,
                     benefits: card.usedBenefits,
                     cardGradient: card.gradient,
+                    onUndo: onUndo,
                     expandedBenefitId: $expandedBenefitId
                 )
             }
@@ -267,6 +269,7 @@ struct BenefitSection: View {
     var cardGradient: DesignSystem.CardGradient = .obsidian
     var onMarkAsDone: ((PreviewBenefit) -> Void)? = nil
     var onSnooze: ((PreviewBenefit, Int) -> Void)? = nil
+    var onUndo: ((PreviewBenefit) -> Void)? = nil
     var isCollapsible: Bool = false
 
     @Binding var expandedBenefitId: UUID?
@@ -287,6 +290,7 @@ struct BenefitSection: View {
                             showCard: false,
                             onMarkAsDone: onMarkAsDone != nil ? { onMarkAsDone?(benefit) } : nil,
                             onSnooze: onSnooze != nil ? { days in onSnooze?(benefit, days) } : nil,
+                            onUndo: onUndo != nil ? { onUndo?(benefit) } : nil,
                             onTap: {
                                 withAnimation(DesignSystem.Animation.quickSpring) {
                                     if expandedBenefitId == benefit.id {
@@ -307,7 +311,8 @@ struct BenefitSection: View {
                             ExpandedBenefitDetail(
                                 benefit: benefit,
                                 onMarkAsDone: onMarkAsDone != nil ? { onMarkAsDone?(benefit) } : nil,
-                                onSnooze: onSnooze != nil ? { days in onSnooze?(benefit, days) } : nil
+                                onSnooze: onSnooze != nil ? { days in onSnooze?(benefit, days) } : nil,
+                                onUndo: onUndo != nil ? { onUndo?(benefit) } : nil
                             )
                             .transition(.asymmetric(
                                 insertion: .move(edge: .top).combined(with: .opacity),
@@ -365,6 +370,7 @@ struct ExpandedBenefitDetail: View {
     let benefit: PreviewBenefit
     var onMarkAsDone: (() -> Void)? = nil
     var onSnooze: ((Int) -> Void)? = nil
+    var onUndo: (() -> Void)? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
@@ -430,6 +436,26 @@ struct ExpandedBenefitDetail: View {
                             )
                         }
                     }
+                }
+            }
+
+            // Actions (for used benefits)
+            if benefit.status == .used, onUndo != nil {
+                Divider()
+
+                Button(action: { onUndo?() }) {
+                    HStack {
+                        Image(systemName: "arrow.uturn.backward.circle.fill")
+                        Text("Undo Mark as Used")
+                    }
+                    .font(DesignSystem.Typography.subhead)
+                    .foregroundStyle(DesignSystem.Colors.primaryFallback)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, DesignSystem.Spacing.sm)
+                    .background(
+                        RoundedRectangle(cornerRadius: DesignSystem.Sizing.buttonCornerRadius)
+                            .strokeBorder(DesignSystem.Colors.primaryFallback, lineWidth: 1)
+                    )
                 }
             }
         }

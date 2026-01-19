@@ -356,6 +356,9 @@ struct HomeTabView: View {
                         onSnooze: { benefit, days in
                             snoozeBenefit(benefit, days: days)
                         },
+                        onUndo: { benefit in
+                            undoMarkBenefitUsed(benefit)
+                        },
                         onRemoveCard: {
                             deleteCard(cardId)
                         },
@@ -395,6 +398,20 @@ struct HomeTabView: View {
                 }
             } catch {
                 print("Failed to snooze benefit: \(error)")
+            }
+        }
+    }
+
+    private func undoMarkBenefitUsed(_ benefit: PreviewBenefit) {
+        Task {
+            do {
+                let allBenefits = try container.benefitRepository.getAllBenefits()
+                if let matchingBenefit = allBenefits.first(where: { $0.id == benefit.id }) {
+                    try container.benefitRepository.undoMarkBenefitUsed(matchingBenefit)
+                    await viewModel?.loadData()
+                }
+            } catch {
+                print("Failed to undo mark benefit as used: \(error)")
             }
         }
     }
@@ -670,6 +687,9 @@ struct WalletTabView: View {
                         onSnooze: { benefit, days in
                             snoozeBenefit(benefit, days: days)
                         },
+                        onUndo: { benefit in
+                            undoMarkBenefitUsed(benefit)
+                        },
                         onRemoveCard: {
                             deleteCard(card)
                         },
@@ -753,6 +773,20 @@ struct WalletTabView: View {
                 }
             } catch {
                 print("Failed to snooze benefit: \(error)")
+            }
+        }
+    }
+
+    private func undoMarkBenefitUsed(_ benefit: PreviewBenefit) {
+        Task {
+            do {
+                let allBenefits = try container.benefitRepository.getAllBenefits()
+                if let matchingBenefit = allBenefits.first(where: { $0.id == benefit.id }) {
+                    try container.benefitRepository.undoMarkBenefitUsed(matchingBenefit)
+                    await viewModel?.loadData()
+                }
+            } catch {
+                print("Failed to undo mark benefit as used: \(error)")
             }
         }
     }

@@ -34,6 +34,7 @@ struct BenefitRowView: View {
     var cardName: String? = nil
     var onMarkAsDone: (() -> Void)? = nil
     var onSnooze: ((Int) -> Void)? = nil
+    var onUndo: (() -> Void)? = nil
     var onTap: (() -> Void)? = nil
 
     // MARK: - State
@@ -64,6 +65,10 @@ struct BenefitRowView: View {
                 }
                 Button("Snooze 1 week") {
                     onSnooze?(7)
+                }
+            } else if benefit.status == .used, onUndo != nil {
+                Button("Undo mark as used") {
+                    onUndo?()
                 }
             }
         }
@@ -379,6 +384,7 @@ struct SwipeableBenefitRowView: View {
     var cardName: String? = nil
     var onMarkAsDone: (() -> Void)? = nil
     var onSnooze: ((Int) -> Void)? = nil
+    var onUndo: (() -> Void)? = nil
     var onTap: (() -> Void)? = nil
 
     var body: some View {
@@ -389,6 +395,7 @@ struct SwipeableBenefitRowView: View {
             cardName: cardName,
             onMarkAsDone: onMarkAsDone,
             onSnooze: onSnooze,
+            onUndo: onUndo,
             onTap: onTap
         )
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
@@ -397,6 +404,11 @@ struct SwipeableBenefitRowView: View {
                     Label("Done", systemImage: "checkmark.circle.fill")
                 }
                 .tint(DesignSystem.Colors.success)
+            } else if benefit.status == .used, onUndo != nil {
+                Button(action: { onUndo?() }) {
+                    Label("Undo", systemImage: "arrow.uturn.backward.circle.fill")
+                }
+                .tint(DesignSystem.Colors.primaryFallback)
             }
         }
         .swipeActions(edge: .leading, allowsFullSwipe: false) {

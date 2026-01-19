@@ -173,13 +173,24 @@ final class HomeViewModel {
         cards.isEmpty
     }
 
-    /// Total value redeemed this month
+    /// Total value redeemed for a specific period (uses date overlap, not frequency filter)
+    func redeemedValue(for period: BenefitPeriod) -> Decimal {
+        PeriodMetrics.calculate(for: allBenefits, period: period).redeemedValue
+    }
+
+    /// Total value redeemed this month (convenience for monthly period)
     var redeemedThisMonth: Decimal {
-        cards.reduce(Decimal.zero) { total, card in
-            total + card.benefits
-                .filter { $0.status == .used }
-                .reduce(Decimal.zero) { $0 + $1.effectiveValue }
-        }
+        redeemedValue(for: .monthly)
+    }
+
+    /// Total value redeemed this quarter
+    var redeemedThisQuarter: Decimal {
+        redeemedValue(for: .quarterly)
+    }
+
+    /// Total value redeemed this year
+    var redeemedThisYear: Decimal {
+        redeemedValue(for: .annual)
     }
 
     /// Count of used benefits
@@ -483,6 +494,7 @@ private final class HomeViewMockTemplateLoader: TemplateLoaderProtocol {
     }
 
     func getTemplate(by id: UUID) throws -> CardTemplate? { nil }
+    func getBenefitTemplate(by id: UUID) throws -> BenefitTemplate? { nil }
     func searchTemplates(query: String) throws -> [CardTemplate] { [] }
     func getActiveTemplates() throws -> [CardTemplate] { [] }
     func getTemplatesByIssuer() throws -> [String: [CardTemplate]] { [:] }
@@ -626,6 +638,10 @@ private final class HomeViewMockBenefitRepository: BenefitRepositoryProtocol {
 
     func snoozeBenefit(_ benefit: Benefit, until date: Date) throws {
         // No-op for mock
+    }
+
+    func undoMarkBenefitUsed(_ benefit: Benefit) throws {
+        benefit.status = .available
     }
 
     private func setupMockData() {

@@ -163,6 +163,27 @@ final class CardDetailViewModel {
         }
     }
 
+    /// Reverts a benefit from used back to available status
+    /// - Parameter benefit: The benefit to undo
+    func undoMarkBenefitUsed(_ benefit: Benefit) {
+        guard benefit.status == .used else {
+            showError("This benefit is not marked as used.")
+            return
+        }
+
+        isLoading = true
+        errorMessage = nil
+
+        do {
+            try benefitRepository.undoMarkBenefitUsed(benefit)
+            // Reload benefits to reflect the change
+            loadBenefits()
+        } catch {
+            isLoading = false
+            handleError(error, context: "undoing benefit usage")
+        }
+    }
+
     /// Shows snooze options for a specific benefit
     /// - Parameter benefit: The benefit to show snooze options for
     func showSnoozeOptions(for benefit: Benefit) {
@@ -305,6 +326,11 @@ final class CardDetailMockBenefitRepository: BenefitRepositoryProtocol {
         if shouldThrowError { throw MockError.operationFailed }
         benefit.lastReminderDate = date
         benefit.updatedAt = Date()
+    }
+
+    func undoMarkBenefitUsed(_ benefit: Benefit) throws {
+        if shouldThrowError { throw MockError.operationFailed }
+        benefit.undoMarkAsUsed()
     }
 }
 

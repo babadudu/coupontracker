@@ -125,6 +125,10 @@ final class CardRepository: CardRepositoryProtocol {
             reminderDaysBefore: 7
         )
 
+        // Denormalize frequency and category from template (Pattern 2: Denormalize at Creation)
+        benefit.customFrequency = template.frequency
+        benefit.customCategory = template.category
+
         return benefit
     }
 }

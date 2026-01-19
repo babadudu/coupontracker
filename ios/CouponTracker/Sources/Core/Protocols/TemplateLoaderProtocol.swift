@@ -13,6 +13,9 @@ protocol TemplateLoaderProtocol {
     /// Get a specific template by ID
     func getTemplate(by id: UUID) throws -> CardTemplate?
 
+    /// Get a specific benefit template by ID
+    func getBenefitTemplate(by id: UUID) throws -> BenefitTemplate?
+
     /// Search templates by query string
     func searchTemplates(query: String) throws -> [CardTemplate]
 

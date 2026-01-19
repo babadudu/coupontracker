@@ -140,6 +140,33 @@ final class BenefitRepository: BenefitRepositoryProtocol {
         try modelContext.save()
     }
 
+    func undoMarkBenefitUsed(_ benefit: Benefit) throws {
+        // Validate that benefit is currently used
+        guard benefit.status == .used else {
+            throw BenefitRepositoryError.invalidStatusTransition(
+                from: benefit.status,
+                to: .available
+            )
+        }
+
+        // Revert the benefit status back to available
+        benefit.undoMarkAsUsed()
+
+        // Remove the most recent usage history record for this period
+        // Find and delete the usage record that matches the current period
+        if let recentUsage = benefit.usageHistory
+            .filter({ usage in
+                usage.periodStart == benefit.currentPeriodStart &&
+                usage.periodEnd == benefit.currentPeriodEnd
+            })
+            .sorted(by: { $0.usedDate > $1.usedDate })
+            .first {
+            modelContext.delete(recentUsage)
+        }
+
+        try modelContext.save()
+    }
+
     // MARK: - Private Helper Methods
 
     /// Infers the benefit frequency from the period length.

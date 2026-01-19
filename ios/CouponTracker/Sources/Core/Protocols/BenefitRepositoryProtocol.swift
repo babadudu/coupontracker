@@ -81,4 +81,15 @@ protocol BenefitRepositoryProtocol {
     ///   - date: The date until which to snooze the reminder
     /// - Throws: Repository error if update fails
     func snoozeBenefit(_ benefit: Benefit, until date: Date) throws
+
+    /// Reverts a benefit from used back to available status.
+    /// This allows users to undo accidentally marking a benefit as used.
+    /// This method will:
+    /// 1. Update the benefit's status back to .available
+    /// 2. Remove the most recent usage history record for this period
+    /// 3. Update timestamps
+    ///
+    /// - Parameter benefit: The benefit to revert
+    /// - Throws: Repository error if update fails or benefit is not used
+    func undoMarkBenefitUsed(_ benefit: Benefit) throws
 }

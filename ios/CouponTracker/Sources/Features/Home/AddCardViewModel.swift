@@ -215,6 +215,10 @@ private final class MockTemplateLoader: TemplateLoaderProtocol {
         mockTemplates.first { $0.id == id }
     }
 
+    func getBenefitTemplate(by id: UUID) throws -> BenefitTemplate? {
+        mockTemplates.flatMap { $0.benefits }.first { $0.id == id }
+    }
+
     func getActiveTemplates() throws -> [CardTemplate] {
         mockTemplates
     }

@@ -128,22 +128,13 @@ struct DashboardPeriodSection: View {
     // MARK: - Progress Calculation
 
     private func calculateProgress(for period: BenefitPeriod) -> RingProgress {
-        // Filter benefits that match this period's frequency
-        let periodBenefits = benefits.filter { $0.frequency == period.correspondingFrequency }
-
-        guard !periodBenefits.isEmpty else {
-            return RingProgress(redeemedValue: 0, totalValue: 0, usedCount: 0, totalCount: 0)
-        }
-
-        let usedBenefits = periodBenefits.filter { $0.status == .used }
-        let redeemedValue = usedBenefits.reduce(Decimal.zero) { $0 + $1.effectiveValue }
-        let totalValue = periodBenefits.reduce(Decimal.zero) { $0 + $1.effectiveValue }
+        let metrics = PeriodMetrics.calculate(for: benefits, period: period)
 
         return RingProgress(
-            redeemedValue: redeemedValue,
-            totalValue: totalValue,
-            usedCount: usedBenefits.count,
-            totalCount: periodBenefits.count
+            redeemedValue: metrics.redeemedValue,
+            totalValue: metrics.totalValue,
+            usedCount: metrics.usedCount,
+            totalCount: metrics.totalCount
         )
     }
 }
@@ -180,8 +171,10 @@ struct CardPeriodSection: View {
 
     @ViewBuilder
     private func cardPeriodContent(for period: BenefitPeriod) -> some View {
-        let periodBenefits = benefits.filter {
-            $0.frequency == period.correspondingFrequency
+        let (viewStart, viewEnd) = period.periodDates()
+        let periodBenefits = benefits.filter { benefit in
+            benefit.currentPeriodStart <= viewEnd &&
+            benefit.currentPeriodEnd >= viewStart
         }
 
         if periodBenefits.isEmpty {

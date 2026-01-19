@@ -544,6 +544,119 @@ final class BenefitRepositoryTests: XCTestCase {
         XCTAssertGreaterThan(benefit.updatedAt, originalUpdateTime, "Updated timestamp should be newer")
     }
 
+    // MARK: undoMarkBenefitUsed Tests
+
+    func testUndoMarkBenefitUsed_RevertsStatusToAvailable() throws {
+        // Given
+        let card = UserCard(nickname: "Test Card")
+        modelContext.insert(card)
+
+        let calendar = Calendar.current
+        let today = Date()
+
+        let benefit = createBenefit(
+            card: card,
+            status: .available,
+            periodEnd: calendar.date(byAdding: .day, value: 10, to: today)!
+        )
+        benefit.customValue = 50
+        modelContext.insert(benefit)
+        try modelContext.save()
+
+        // Mark as used first
+        try repository.markBenefitUsed(benefit)
+        XCTAssertEqual(benefit.status, .used, "Benefit should be marked as used")
+
+        // When
+        try repository.undoMarkBenefitUsed(benefit)
+
+        // Then
+        XCTAssertEqual(benefit.status, .available, "Benefit status should be reverted to available")
+    }
+
+    func testUndoMarkBenefitUsed_RemovesUsageHistory() throws {
+        // Given
+        let card = UserCard(nickname: "Test Card")
+        modelContext.insert(card)
+
+        let calendar = Calendar.current
+        let today = Date()
+
+        let benefit = createBenefit(
+            card: card,
+            status: .available,
+            periodEnd: calendar.date(byAdding: .day, value: 10, to: today)!
+        )
+        benefit.customValue = 50
+        modelContext.insert(benefit)
+        try modelContext.save()
+
+        // Mark as used to create usage history
+        try repository.markBenefitUsed(benefit)
+
+        let usagesAfterMark = try modelContext.fetch(FetchDescriptor<BenefitUsage>())
+        XCTAssertEqual(usagesAfterMark.count, 1, "Should have one usage record after marking as used")
+
+        // When
+        try repository.undoMarkBenefitUsed(benefit)
+
+        // Then
+        let usagesAfterUndo = try modelContext.fetch(FetchDescriptor<BenefitUsage>())
+        XCTAssertEqual(usagesAfterUndo.count, 0, "Usage record should be removed after undo")
+    }
+
+    func testUndoMarkBenefitUsed_WithAvailableBenefit_ThrowsError() throws {
+        // Given
+        let card = UserCard(nickname: "Test Card")
+        modelContext.insert(card)
+
+        let calendar = Calendar.current
+        let today = Date()
+
+        let benefit = createBenefit(
+            card: card,
+            status: .available, // Not used
+            periodEnd: calendar.date(byAdding: .day, value: 10, to: today)!
+        )
+        modelContext.insert(benefit)
+        try modelContext.save()
+
+        // When/Then
+        XCTAssertThrowsError(try repository.undoMarkBenefitUsed(benefit)) { error in
+            XCTAssertTrue(error is BenefitRepositoryError, "Should throw BenefitRepositoryError")
+        }
+    }
+
+    func testUndoMarkBenefitUsed_UpdatesTimestamp() throws {
+        // Given
+        let card = UserCard(nickname: "Test Card")
+        modelContext.insert(card)
+
+        let calendar = Calendar.current
+        let today = Date()
+
+        let benefit = createBenefit(
+            card: card,
+            status: .available,
+            periodEnd: calendar.date(byAdding: .day, value: 10, to: today)!
+        )
+        benefit.customValue = 50
+        modelContext.insert(benefit)
+        try modelContext.save()
+
+        // Mark as used first
+        try repository.markBenefitUsed(benefit)
+
+        let timestampBeforeUndo = benefit.updatedAt
+        Thread.sleep(forTimeInterval: 0.01) // Small delay to ensure timestamp difference
+
+        // When
+        try repository.undoMarkBenefitUsed(benefit)
+
+        // Then
+        XCTAssertGreaterThan(benefit.updatedAt, timestampBeforeUndo, "Updated timestamp should be newer after undo")
+    }
+
     // MARK: Integration Tests
 
     func testIntegration_AddCardAndQueryBenefits() throws {

@@ -150,11 +150,44 @@ final class AppContainer {
 
     /// Performs setup tasks that should run on app launch
     func performStartupTasks() async {
-        // 1. Check for expired benefit periods and reset
+        // 1. Migrate benefits with nil customFrequency (data fix for pre-denormalization cards)
+        await migrateNilFrequencyBenefits()
+
+        // 2. Check for expired benefit periods and reset
         await benefitResetService.processExpiredPeriods()
 
-        // 2. Pre-load templates (cached after first load)
+        // 3. Pre-load templates (cached after first load)
         _ = try? templateLoader.loadAllTemplates()
+    }
+
+    /// Migrates existing benefits that have nil customFrequency by looking up their template.
+    /// This fixes cards added before the denormalization fix was applied.
+    private func migrateNilFrequencyBenefits() async {
+        do {
+            let allBenefits = try benefitRepository.getAllBenefits()
+            var migratedCount = 0
+
+            for benefit in allBenefits {
+                // Only migrate benefits with nil customFrequency
+                guard benefit.customFrequency == nil else { continue }
+
+                // Look up the template to get the correct frequency
+                if let templateId = benefit.templateBenefitId,
+                   let template = try? templateLoader.getBenefitTemplate(by: templateId) {
+                    benefit.customFrequency = template.frequency
+                    benefit.customCategory = template.category
+                    benefit.updatedAt = Date()
+                    migratedCount += 1
+                }
+            }
+
+            if migratedCount > 0 {
+                try modelContext.save()
+                print("✅ Migrated \(migratedCount) benefits with nil customFrequency")
+            }
+        } catch {
+            print("⚠️ Failed to migrate nil frequency benefits: \(error)")
+        }
     }
 }
 
