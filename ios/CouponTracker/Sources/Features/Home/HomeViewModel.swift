@@ -91,6 +91,7 @@ final class HomeViewModel {
     private let cardRepository: CardRepositoryProtocol
     private let benefitRepository: BenefitRepositoryProtocol
     private let templateLoader: TemplateLoaderProtocol
+    private var recommendationService: CardRecommendationServiceProtocol?
 
     // MARK: - State
 
@@ -114,6 +115,9 @@ final class HomeViewModel {
 
     /// Last data refresh timestamp (for pull-to-refresh feedback)
     private(set) var lastRefreshed: Date?
+
+    /// Best card recommendations by category
+    private(set) var categoryRecommendations: [BenefitCategory: RecommendedCard] = [:]
 
     // MARK: - Display Adapters (ADR-001)
 
@@ -218,9 +222,10 @@ final class HomeViewModel {
             card.benefits
                 .filter { $0.status == .available }
                 .map { benefit in
-                    BenefitDisplayAdapter(
+                    let template = benefit.templateBenefitId.flatMap { benefitTemplates[$0] }
+                    return BenefitDisplayAdapter(
                         benefit: benefit,
-                        template: try? templateLoader.getTemplate(by: benefit.templateBenefitId ?? UUID())?.benefits.first { $0.id == benefit.templateBenefitId }
+                        template: template
                     )
                 }
         }
@@ -353,6 +358,11 @@ final class HomeViewModel {
         self.templateLoader = templateLoader
     }
 
+    /// Sets the recommendation service for lazy initialization
+    func setRecommendationService(_ service: CardRecommendationServiceProtocol) {
+        self.recommendationService = service
+    }
+
     // MARK: - Actions
 
     /// Loads initial data (cards, expiring benefits, and templates).
@@ -382,12 +392,16 @@ final class HomeViewModel {
             try await cardsTask
             try await benefitsTask
 
+            // Load recommendations after cards are loaded
+            loadRecommendations()
+
             // Update last refreshed timestamp
             lastRefreshed = Date()
-            
+
             print("✅ HomeViewModel: Data loaded successfully")
             print("  → Cards: \(cards.count)")
             print("  → Expiring benefits: \(expiringBenefits.count)")
+            print("  → Recommendations: \(categoryRecommendations.count) categories")
 
         } catch {
             self.error = error
@@ -461,6 +475,20 @@ final class HomeViewModel {
     /// Loads benefits expiring within 7 days
     private func loadExpiringBenefits() async throws {
         expiringBenefits = try benefitRepository.getExpiringBenefits(within: 7)
+    }
+
+    /// Loads best card recommendations by category
+    private func loadRecommendations() {
+        guard let service = recommendationService else {
+            print("  ⚠️ Recommendation service not available")
+            return
+        }
+
+        do {
+            categoryRecommendations = try service.findBestCardsForAllCategories()
+        } catch {
+            print("  ⚠️ Failed to load recommendations: \(error)")
+        }
     }
 }
 

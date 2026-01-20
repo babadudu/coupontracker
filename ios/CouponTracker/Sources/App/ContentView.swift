@@ -26,7 +26,7 @@ struct ContentView: View {
                 LoadingView()
             } else if !hasCompletedOnboarding {
                 // Show onboarding for new users
-                OnboardingView(onComplete: completeOnboarding)
+                OnboardingFlowView(onComplete: completeOnboarding)
             } else {
                 // Main app content
                 MainTabView()
@@ -108,47 +108,6 @@ struct LoadingView: View {
     }
 }
 
-// MARK: - Onboarding View
-
-/// Onboarding flow for new users (placeholder for Sprint 5)
-struct OnboardingView: View {
-    let onComplete: () -> Void
-
-    var body: some View {
-        VStack(spacing: DesignSystem.Spacing.xl) {
-            Spacer()
-
-            Image(systemName: "creditcard.fill")
-                .font(.system(size: 80))
-                .foregroundStyle(DesignSystem.Colors.primaryFallback)
-
-            Text("Welcome to CouponTracker")
-                .font(DesignSystem.Typography.title1)
-                .foregroundStyle(DesignSystem.Colors.textPrimary)
-
-            Text("Track your credit card benefits\nand never miss a reward again.")
-                .font(DesignSystem.Typography.body)
-                .foregroundStyle(DesignSystem.Colors.textSecondary)
-                .multilineTextAlignment(.center)
-
-            Spacer()
-
-            Button(action: onComplete) {
-                Text("Get Started")
-                    .font(DesignSystem.Typography.headline)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, DesignSystem.Spacing.md)
-                    .background(DesignSystem.Colors.primaryFallback)
-                    .clipShape(RoundedRectangle(cornerRadius: DesignSystem.Sizing.buttonCornerRadius))
-            }
-            .padding(.horizontal, DesignSystem.Spacing.screenPadding)
-            .padding(.bottom, DesignSystem.Spacing.xxl)
-        }
-        .background(DesignSystem.Colors.backgroundPrimary)
-    }
-}
-
 // MARK: - Main Tab View
 
 /// Main tab-based navigation for the app
@@ -157,6 +116,7 @@ struct MainTabView: View {
     @Environment(AppContainer.self) private var container
     @State private var selectedTab: Tab = .home
     @State private var sharedViewModel: HomeViewModel?
+    @State private var deepLinkBenefitId: UUID?
 
     enum Tab: String, CaseIterable {
         case home = "Home"
@@ -204,9 +164,92 @@ struct MainTabView: View {
                     benefitRepository: container.benefitRepository,
                     templateLoader: container.templateLoader
                 )
+                // Set recommendation service for best card features
+                sharedViewModel?.setRecommendationService(container.recommendationService)
                 print("📊 Loading initial data...")
                 await sharedViewModel?.loadData()
                 print("✅ HomeViewModel initialized and data loaded")
+            }
+        }
+        // Deep link handling for notification taps
+        .onReceive(NotificationCenter.default.publisher(for: .navigateToBenefit)) { notification in
+            handleNavigateToBenefit(notification)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .markBenefitUsed)) { notification in
+            handleMarkBenefitUsed(notification)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .snoozeBenefit)) { notification in
+            handleSnoozeBenefit(notification)
+        }
+        .onChange(of: deepLinkBenefitId) { _, newValue in
+            if newValue != nil {
+                // Switch to wallet tab to show the card detail
+                selectedTab = .wallet
+            }
+        }
+    }
+
+    // MARK: - Deep Link Handlers
+
+    private func handleNavigateToBenefit(_ notification: Notification) {
+        guard let benefitId = notification.userInfo?[NotificationUserInfoKey.benefitId] as? UUID else {
+            return
+        }
+
+        Task {
+            // Find the card containing this benefit
+            if let viewModel = sharedViewModel {
+                await viewModel.loadData()
+                for cardAdapter in viewModel.displayCards {
+                    if cardAdapter.benefits.contains(where: { $0.id == benefitId }) {
+                        deepLinkBenefitId = benefitId
+                        // Post to child views that need to navigate
+                        NotificationCenter.default.post(
+                            name: Notification.Name("CouponTracker.selectCard"),
+                            object: nil,
+                            userInfo: ["cardId": cardAdapter.id, "benefitId": benefitId]
+                        )
+                        break
+                    }
+                }
+            }
+        }
+    }
+
+    private func handleMarkBenefitUsed(_ notification: Notification) {
+        guard let benefitId = notification.userInfo?[NotificationUserInfoKey.benefitId] as? UUID else {
+            return
+        }
+
+        Task {
+            do {
+                let allBenefits = try container.benefitRepository.getAllBenefits()
+                if let benefit = allBenefits.first(where: { $0.id == benefitId }) {
+                    try container.benefitRepository.markBenefitUsed(benefit)
+                    await sharedViewModel?.loadData()
+                }
+            } catch {
+                print("Failed to mark benefit as used from notification: \(error)")
+            }
+        }
+    }
+
+    private func handleSnoozeBenefit(_ notification: Notification) {
+        guard let benefitId = notification.userInfo?[NotificationUserInfoKey.benefitId] as? UUID,
+              let days = notification.userInfo?[NotificationUserInfoKey.snoozeDays] as? Int else {
+            return
+        }
+
+        Task {
+            do {
+                let allBenefits = try container.benefitRepository.getAllBenefits()
+                if let benefit = allBenefits.first(where: { $0.id == benefitId }) {
+                    let snoozeDate = Calendar.current.date(byAdding: .day, value: days, to: Date()) ?? Date()
+                    try container.benefitRepository.snoozeBenefit(benefit, until: snoozeDate)
+                    await sharedViewModel?.loadData()
+                }
+            } catch {
+                print("Failed to snooze benefit from notification: \(error)")
             }
         }
     }
@@ -273,7 +316,10 @@ struct HomeTabView: View {
                         // Benefit Category Chart
                         if !viewModel.isEmpty {
                             BenefitCategoryChartView(
-                                benefits: viewModel.allDisplayBenefits
+                                benefits: viewModel.allDisplayBenefits,
+                                onMarkAsDone: { benefit in
+                                    markBenefitAsDoneFromChart(benefit)
+                                }
                             )
                         }
 
@@ -378,10 +424,23 @@ struct HomeTabView: View {
                 if let matchingBenefit = allBenefits.first(where: { $0.id == benefit.id }) {
                     try container.benefitRepository.markBenefitUsed(matchingBenefit)
                     await viewModel?.loadData()
-                    selectedBenefitCardId = nil
                 }
             } catch {
                 print("Failed to mark benefit as done: \(error)")
+            }
+        }
+    }
+
+    private func markBenefitAsDoneFromChart(_ benefit: any BenefitDisplayable) {
+        Task {
+            do {
+                let allBenefits = try container.benefitRepository.getAllBenefits()
+                if let matchingBenefit = allBenefits.first(where: { $0.id == benefit.id }) {
+                    try container.benefitRepository.markBenefitUsed(matchingBenefit)
+                    await viewModel?.loadData()
+                }
+            } catch {
+                print("Failed to mark benefit as done from chart: \(error)")
             }
         }
     }
@@ -394,7 +453,6 @@ struct HomeTabView: View {
                     let snoozeDate = Calendar.current.date(byAdding: .day, value: days, to: Date()) ?? Date()
                     try container.benefitRepository.snoozeBenefit(matchingBenefit, until: snoozeDate)
                     await viewModel?.loadData()
-                    selectedBenefitCardId = nil
                 }
             } catch {
                 print("Failed to snooze benefit: \(error)")
@@ -637,9 +695,11 @@ struct WalletTabView: View {
     @Environment(AppContainer.self) private var container
     @Binding var viewModel: HomeViewModel?
     @State private var selectedCardId: UUID?
+    @State private var highlightedBenefitId: UUID?
     @State private var showAddCard = false
     @State private var showEditCard = false
     @State private var showExpiringList = false
+    @State private var showRecommendationSearch = false
 
     /// Current selected card derived from viewModel (reactive)
     private var selectedCard: PreviewCard? {
@@ -654,6 +714,7 @@ struct WalletTabView: View {
                 if let viewModel = viewModel {
                     WalletView(
                         cards: viewModel.displayCards.map { $0.toPreviewCard() },
+                        categoryRecommendations: viewModel.categoryRecommendations,
                         onCardTap: { card in
                             selectedCardId = card.id
                         },
@@ -665,6 +726,12 @@ struct WalletTabView: View {
                         },
                         onSeeAllExpiring: {
                             showExpiringList = true
+                        },
+                        onSearchRecommendations: {
+                            showRecommendationSearch = true
+                        },
+                        onSelectRecommendedCard: { cardId in
+                            selectedCardId = cardId
                         }
                     )
                 } else {
@@ -739,6 +806,23 @@ struct WalletTabView: View {
                     )
                 }
             }
+            .sheet(isPresented: $showRecommendationSearch) {
+                RecommendationSearchView(
+                    onSelectCard: { cardId in
+                        showRecommendationSearch = false
+                        selectedCardId = cardId
+                    }
+                )
+            }
+            // Listen for deep link navigation from notifications
+            .onReceive(NotificationCenter.default.publisher(for: Notification.Name("CouponTracker.selectCard"))) { notification in
+                if let cardId = notification.userInfo?["cardId"] as? UUID {
+                    selectedCardId = cardId
+                    if let benefitId = notification.userInfo?["benefitId"] as? UUID {
+                        highlightedBenefitId = benefitId
+                    }
+                }
+            }
         }
     }
 
@@ -751,8 +835,6 @@ struct WalletTabView: View {
                 if let matchingBenefit = allBenefits.first(where: { $0.id == benefit.id }) {
                     try container.benefitRepository.markBenefitUsed(matchingBenefit)
                     await viewModel?.loadData()
-                    // Dismiss to show updated card in wallet
-                    selectedCardId = nil
                 }
             } catch {
                 print("Failed to mark benefit as done: \(error)")
@@ -768,8 +850,6 @@ struct WalletTabView: View {
                     let snoozeDate = Calendar.current.date(byAdding: .day, value: days, to: Date()) ?? Date()
                     try container.benefitRepository.snoozeBenefit(matchingBenefit, until: snoozeDate)
                     await viewModel?.loadData()
-                    // Dismiss to show updated card in wallet
-                    selectedCardId = nil
                 }
             } catch {
                 print("Failed to snooze benefit: \(error)")
@@ -885,44 +965,7 @@ struct EditCardSheet: View {
 /// Settings tab for user preferences
 struct SettingsTabView: View {
     var body: some View {
-        NavigationStack {
-            SettingsPlaceholderView()
-                .navigationTitle("Settings")
-        }
-    }
-}
-
-/// Placeholder settings view - to be implemented in later sprint
-private struct SettingsPlaceholderView: View {
-    var body: some View {
-        List {
-            Section("About") {
-                HStack {
-                    Text("Version")
-                    Spacer()
-                    Text("1.0.0")
-                        .foregroundStyle(DesignSystem.Colors.textSecondary)
-                }
-            }
-            
-            Section("Support") {
-                Link(destination: URL(string: "https://example.com/support")!) {
-                    HStack {
-                        Text("Help & Support")
-                        Spacer()
-                        Image(systemName: "arrow.up.forward")
-                            .font(.caption)
-                            .foregroundStyle(DesignSystem.Colors.textTertiary)
-                    }
-                }
-            }
-            
-            Section {
-                Text("More settings coming soon")
-                    .font(DesignSystem.Typography.caption)
-                    .foregroundStyle(DesignSystem.Colors.textSecondary)
-            }
-        }
+        SettingsView()
     }
 }
 

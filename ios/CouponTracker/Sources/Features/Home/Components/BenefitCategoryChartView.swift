@@ -49,6 +49,7 @@ struct BenefitCategoryChartView: View {
     // MARK: - Properties
 
     let benefits: [any BenefitDisplayable]
+    var onMarkAsDone: ((any BenefitDisplayable) -> Void)? = nil
 
     // MARK: - State
 
@@ -94,6 +95,12 @@ struct BenefitCategoryChartView: View {
         !chartData.isEmpty && totalValue > 0
     }
 
+    /// Benefits filtered by selected category
+    private var filteredBenefits: [any BenefitDisplayable] {
+        guard let category = selectedCategory else { return [] }
+        return benefits.filter { $0.category == category }
+    }
+
     // MARK: - Body
 
     var body: some View {
@@ -112,6 +119,12 @@ struct BenefitCategoryChartView: View {
 
                     // Legend
                     categoryLegend
+
+                    // Benefits list for selected category
+                    if selectedCategory != nil {
+                        benefitsList
+                            .transition(.opacity.combined(with: .move(edge: .top)))
+                    }
                 }
             } else {
                 // Empty state
@@ -243,6 +256,86 @@ struct BenefitCategoryChartView: View {
         .padding(.vertical, DesignSystem.Spacing.xl)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("No available benefits to display")
+    }
+
+    // MARK: - Benefits List
+
+    @ViewBuilder
+    private var benefitsList: some View {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.md) {
+            // Section header
+            if let category = selectedCategory {
+                HStack {
+                    Text("\(category.displayName) Benefits")
+                        .font(DesignSystem.Typography.headline)
+                        .foregroundStyle(DesignSystem.Colors.textPrimary)
+
+                    Spacer()
+
+                    Text("\(filteredBenefits.count)")
+                        .font(DesignSystem.Typography.subhead)
+                        .foregroundStyle(DesignSystem.Colors.textSecondary)
+                }
+            }
+
+            // Benefits rows
+            ForEach(filteredBenefits, id: \.id) { benefit in
+                benefitRow(benefit)
+            }
+        }
+        .padding(.top, DesignSystem.Spacing.md)
+    }
+
+    @ViewBuilder
+    private func benefitRow(_ benefit: any BenefitDisplayable) -> some View {
+        HStack(spacing: DesignSystem.Spacing.md) {
+            // Benefit info
+            VStack(alignment: .leading, spacing: 2) {
+                Text(benefit.name)
+                    .font(DesignSystem.Typography.subhead)
+                    .foregroundStyle(DesignSystem.Colors.textPrimary)
+
+                HStack(spacing: DesignSystem.Spacing.sm) {
+                    Text(benefit.formattedValue)
+                        .font(DesignSystem.Typography.caption)
+                        .foregroundStyle(DesignSystem.Colors.textSecondary)
+
+                    Text("•")
+                        .foregroundStyle(DesignSystem.Colors.textTertiary)
+
+                    Text(benefit.urgencyText)
+                        .font(DesignSystem.Typography.caption)
+                        .foregroundStyle(DesignSystem.Colors.urgencyColor(daysRemaining: benefit.daysRemaining))
+                }
+            }
+
+            Spacer()
+
+            // Mark as Done button
+            if onMarkAsDone != nil {
+                Button(action: {
+                    onMarkAsDone?(benefit)
+                }) {
+                    Text("Mark Done")
+                        .font(DesignSystem.Typography.caption)
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, DesignSystem.Spacing.sm)
+                        .padding(.vertical, DesignSystem.Spacing.xs)
+                        .background(
+                            RoundedRectangle(cornerRadius: DesignSystem.Sizing.buttonCornerRadius)
+                                .fill(DesignSystem.Colors.success)
+                        )
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(DesignSystem.Spacing.sm)
+        .background(
+            RoundedRectangle(cornerRadius: DesignSystem.Sizing.buttonCornerRadius)
+                .fill(DesignSystem.Colors.backgroundPrimary)
+        )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(benefit.name), \(benefit.formattedValue), \(benefit.urgencyText)")
     }
 
 }
