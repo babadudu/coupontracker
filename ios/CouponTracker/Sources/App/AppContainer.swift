@@ -67,6 +67,7 @@ final class AppContainer {
 
     private var _notificationService: NotificationService?
     private var _benefitResetService: BenefitResetService?
+    private var _recommendationService: CardRecommendationService?
 
     /// Service for managing notifications
     var notificationService: NotificationService {
@@ -86,6 +87,17 @@ final class AppContainer {
             )
         }
         return _benefitResetService!
+    }
+
+    /// Service for card recommendations
+    var recommendationService: CardRecommendationServiceProtocol {
+        if _recommendationService == nil {
+            _recommendationService = CardRecommendationService(
+                cardRepository: cardRepository,
+                templateLoader: templateLoader
+            )
+        }
+        return _recommendationService!
     }
 
     // MARK: - Initialization
@@ -245,8 +257,8 @@ extension AppContainer {
         // Create sample benefits
         let calendar = Calendar.current
         let now = Date()
-        let periodStart = calendar.date(from: calendar.dateComponents([.year, .month], from: now))!
-        let periodEnd = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: periodStart)!
+        let periodStart = calendar.date(from: calendar.dateComponents([.year, .month], from: now)) ?? now
+        let periodEnd = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: periodStart) ?? now
 
         let benefit1 = Benefit(
             userCard: card,

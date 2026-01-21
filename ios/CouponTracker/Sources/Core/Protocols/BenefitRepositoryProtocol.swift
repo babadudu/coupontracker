@@ -15,6 +15,13 @@ protocol BenefitRepositoryProtocol {
 
     // MARK: - Read Operations
 
+    /// Retrieves a single benefit by its unique identifier.
+    ///
+    /// - Parameter id: The UUID of the benefit to retrieve
+    /// - Returns: The benefit if found, nil otherwise
+    /// - Throws: Repository error if fetch fails
+    func getBenefit(by id: UUID) throws -> Benefit?
+
     /// Retrieves all benefits for a specific user card.
     /// Benefits are sorted by status (available first) and then by expiration date.
     ///
@@ -46,6 +53,18 @@ protocol BenefitRepositoryProtocol {
     /// - Returns: Array of benefits expiring within the specified timeframe
     /// - Throws: Repository error if fetch fails
     func getExpiringBenefits(within days: Int) throws -> [Benefit]
+
+    // MARK: - Historical Queries
+
+    /// Retrieves the total redeemed value from BenefitUsage records for a period.
+    /// Queries actual historical redemptions, not current benefit status.
+    ///
+    /// - Parameters:
+    ///   - period: The view period (monthly/quarterly/semiAnnual/annual)
+    ///   - referenceDate: The reference date for period calculation
+    /// - Returns: Sum of valueRedeemed for non-expired usages in the period
+    /// - Throws: Repository error if fetch fails
+    func getRedeemedValue(for period: BenefitPeriod, referenceDate: Date) throws -> Decimal
 
     // MARK: - Write Operations
 

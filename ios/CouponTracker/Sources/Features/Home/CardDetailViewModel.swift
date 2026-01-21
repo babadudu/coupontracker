@@ -10,6 +10,7 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 import Observation
 
 /// ViewModel for managing card detail state and actions
@@ -21,6 +22,8 @@ final class CardDetailViewModel {
 
     private let cardRepository: CardRepositoryProtocol
     private let benefitRepository: BenefitRepositoryProtocol
+    private let notificationService: NotificationService
+    private let modelContext: ModelContext
 
     // MARK: - State
 
@@ -49,19 +52,18 @@ final class CardDetailViewModel {
 
     /// Benefits that are currently available for use
     var availableBenefits: [Benefit] {
-        benefits
-            .filter { $0.status == .available }
+        benefits.availableBenefits
             .sorted { $0.daysUntilExpiration < $1.daysUntilExpiration }
     }
 
     /// Benefits that have been used in the current period
     var usedBenefits: [Benefit] {
-        benefits.filter { $0.status == .used }
+        benefits.usedBenefits
     }
 
     /// Benefits that have expired without being used
     var expiredBenefits: [Benefit] {
-        benefits.filter { $0.status == .expired }
+        benefits.expiredBenefits
     }
 
     /// Total monetary value of all available benefits
@@ -84,14 +86,20 @@ final class CardDetailViewModel {
     ///   - card: The user card to display
     ///   - cardRepository: Repository for card operations
     ///   - benefitRepository: Repository for benefit operations
+    ///   - notificationService: Service for managing benefit reminders
+    ///   - modelContext: SwiftData context for fetching user preferences
     init(
         card: UserCard,
         cardRepository: CardRepositoryProtocol,
-        benefitRepository: BenefitRepositoryProtocol
+        benefitRepository: BenefitRepositoryProtocol,
+        notificationService: NotificationService,
+        modelContext: ModelContext
     ) {
         self.card = card
         self.cardRepository = cardRepository
         self.benefitRepository = benefitRepository
+        self.notificationService = notificationService
+        self.modelContext = modelContext
     }
 
     // MARK: - Actions
@@ -123,6 +131,10 @@ final class CardDetailViewModel {
 
         do {
             try benefitRepository.markBenefitUsed(benefit)
+
+            // Cancel pending notifications for this benefit
+            notificationService.cancelNotifications(for: benefit)
+
             // Reload benefits to reflect the change
             loadBenefits()
         } catch {
@@ -155,6 +167,16 @@ final class CardDetailViewModel {
 
         do {
             try benefitRepository.snoozeBenefit(benefit, until: snoozeUntil)
+
+            // Schedule snoozed notification
+            if let preferences = fetchUserPreferences() {
+                notificationService.scheduleSnoozedNotification(
+                    for: benefit,
+                    snoozeDate: snoozeUntil,
+                    preferences: preferences
+                )
+            }
+
             // Reload benefits to reflect the change
             loadBenefits()
         } catch {
@@ -176,6 +198,16 @@ final class CardDetailViewModel {
 
         do {
             try benefitRepository.undoMarkBenefitUsed(benefit)
+
+            // Reschedule notifications for the restored benefit
+            Task {
+                guard let preferences = fetchUserPreferences() else { return }
+                await notificationService.scheduleNotifications(
+                    for: benefit,
+                    preferences: preferences
+                )
+            }
+
             // Reload benefits to reflect the change
             loadBenefits()
         } catch {
@@ -202,6 +234,12 @@ final class CardDetailViewModel {
     func deleteCard() throws {
         isLoading = true
         errorMessage = nil
+
+        // Cancel notifications for all benefits before deletion
+        notificationService.cancelNotifications(
+            forCardId: card.id,
+            benefits: Array(card.benefits)
+        )
 
         do {
             try cardRepository.deleteCard(card)
@@ -235,184 +273,45 @@ final class CardDetailViewModel {
         showingError = false
         errorMessage = nil
     }
-}
 
-// MARK: - Preview Mock Repository
+    // MARK: - Private Helpers
 
-#if DEBUG
-
-/// Mock card repository for SwiftUI previews
-final class CardDetailMockCardRepository: CardRepositoryProtocol {
-    var cards: [UserCard] = []
-    var shouldThrowError = false
-
-    func getAllCards() throws -> [UserCard] {
-        if shouldThrowError { throw MockError.operationFailed }
-        return cards
-    }
-
-    func getCard(by id: UUID) throws -> UserCard? {
-        if shouldThrowError { throw MockError.operationFailed }
-        return cards.first { $0.id == id }
-    }
-
-    func addCard(from template: CardTemplate, nickname: String?) throws -> UserCard {
-        if shouldThrowError { throw MockError.operationFailed }
-        let card = UserCard(
-            cardTemplateId: template.id,
-            nickname: nickname,
-            isCustom: false,
-            sortOrder: cards.count
-        )
-        cards.append(card)
-        return card
-    }
-
-    func deleteCard(_ card: UserCard) throws {
-        if shouldThrowError { throw MockError.operationFailed }
-        cards.removeAll { $0.id == card.id }
-    }
-
-    func updateCard(_ card: UserCard) throws {
-        if shouldThrowError { throw MockError.operationFailed }
-        // In a real implementation, this would persist changes
-    }
-}
-
-/// Mock benefit repository for SwiftUI previews
-final class CardDetailMockBenefitRepository: BenefitRepositoryProtocol {
-    var benefits: [Benefit] = []
-    var shouldThrowError = false
-
-    func getBenefits(for card: UserCard) throws -> [Benefit] {
-        if shouldThrowError { throw MockError.operationFailed }
-        return benefits.filter { $0.userCard?.id == card.id }
-    }
-
-    func getAllBenefits() throws -> [Benefit] {
-        if shouldThrowError { throw MockError.operationFailed }
-        return benefits
-    }
-
-    func getAvailableBenefits() throws -> [Benefit] {
-        if shouldThrowError { throw MockError.operationFailed }
-        return benefits.filter { $0.status == .available }
-    }
-
-    func getExpiringBenefits(within days: Int) throws -> [Benefit] {
-        if shouldThrowError { throw MockError.operationFailed }
-        return benefits.filter { benefit in
-            benefit.status == .available && benefit.daysUntilExpiration <= days
-        }
-    }
-
-    func markBenefitUsed(_ benefit: Benefit) throws {
-        if shouldThrowError { throw MockError.operationFailed }
-        benefit.markAsUsed()
-    }
-
-    func resetBenefitForNewPeriod(_ benefit: Benefit) throws {
-        if shouldThrowError { throw MockError.operationFailed }
-        let frequency = benefit.customFrequency ?? .monthly
-        let dates = frequency.calculatePeriodDates()
-        benefit.resetToNewPeriod(
-            periodStart: dates.start,
-            periodEnd: dates.end,
-            nextReset: dates.nextReset
-        )
-    }
-
-    func snoozeBenefit(_ benefit: Benefit, until date: Date) throws {
-        if shouldThrowError { throw MockError.operationFailed }
-        benefit.lastReminderDate = date
-        benefit.updatedAt = Date()
-    }
-
-    func undoMarkBenefitUsed(_ benefit: Benefit) throws {
-        if shouldThrowError { throw MockError.operationFailed }
-        benefit.undoMarkAsUsed()
-    }
-}
-
-/// Mock error for testing
-enum MockError: LocalizedError {
-    case operationFailed
-
-    var errorDescription: String? {
-        switch self {
-        case .operationFailed:
-            return "The operation failed"
-        }
+    /// Fetches the singleton UserPreferences from SwiftData
+    private func fetchUserPreferences() -> UserPreferences? {
+        let descriptor = FetchDescriptor<UserPreferences>()
+        return try? modelContext.fetch(descriptor).first
     }
 }
 
 // MARK: - Preview Helper
 
+#if DEBUG
 extension CardDetailViewModel {
     /// Creates a mock view model for previews
+    @MainActor
     static var preview: CardDetailViewModel {
-        let card = UserCard(
-            cardTemplateId: UUID(),
-            nickname: "Personal Platinum",
-            isCustom: false,
-            sortOrder: 0
-        )
+        let card = MockDataFactory.makeCard(nickname: "Personal Platinum", benefitCount: 4)
 
-        let cardRepo = CardDetailMockCardRepository()
+        let cardRepo = MockCardRepository()
         cardRepo.cards = [card]
 
-        let benefitRepo = CardDetailMockBenefitRepository()
+        let benefitRepo = MockBenefitRepository()
+        benefitRepo.benefits = card.benefits
 
-        // Create mock benefits
-        let calendar = Calendar.current
-        let today = Date()
+        // Customize benefit statuses for variety
+        if card.benefits.count >= 4 {
+            card.benefits[2].status = .used
+            card.benefits[3].status = .expired
+        }
 
-        // Available benefit expiring soon
-        let uberCredit = Benefit(
-            userCard: card,
-            customName: "Uber Credit",
-            customValue: 15,
-            status: .available,
-            currentPeriodStart: calendar.startOfDay(for: today),
-            currentPeriodEnd: calendar.date(byAdding: .day, value: 3, to: today)!
-        )
-
-        // Available benefit with more time
-        let airlineCredit = Benefit(
-            userCard: card,
-            customName: "Airline Fee Credit",
-            customValue: 200,
-            status: .available,
-            currentPeriodStart: calendar.startOfDay(for: today),
-            currentPeriodEnd: calendar.date(byAdding: .day, value: 90, to: today)!
-        )
-
-        // Used benefit
-        let entertainmentCredit = Benefit(
-            userCard: card,
-            customName: "Entertainment Credit",
-            customValue: 20,
-            status: .used,
-            currentPeriodStart: calendar.startOfDay(for: today),
-            currentPeriodEnd: calendar.date(byAdding: .day, value: 15, to: today)!
-        )
-
-        // Expired benefit
-        let hotelCredit = Benefit(
-            userCard: card,
-            customName: "Hotel Credit",
-            customValue: 100,
-            status: .expired,
-            currentPeriodStart: calendar.date(byAdding: .day, value: -30, to: today)!,
-            currentPeriodEnd: calendar.date(byAdding: .day, value: -1, to: today)!
-        )
-
-        benefitRepo.benefits = [uberCredit, airlineCredit, entertainmentCredit, hotelCredit]
+        let container = AppContainer.preview
 
         let viewModel = CardDetailViewModel(
             card: card,
             cardRepository: cardRepo,
-            benefitRepository: benefitRepo
+            benefitRepository: benefitRepo,
+            notificationService: container.notificationService,
+            modelContext: container.modelContext
         )
 
         viewModel.loadBenefits()
@@ -420,5 +319,4 @@ extension CardDetailViewModel {
         return viewModel
     }
 }
-
 #endif

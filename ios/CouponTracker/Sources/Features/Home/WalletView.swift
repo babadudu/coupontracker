@@ -19,6 +19,11 @@
 //  - Tap on card navigates to CardDetailView
 //  - Empty state shows "Add Card" button
 //
+//  COMPONENTS:
+//  - CardStackView: See CardStackView.swift
+//  - HorizontalCardCarousel: See CardStackView.swift
+//  - WalletListView: See WalletListView.swift
+//
 
 import SwiftUI
 
@@ -30,10 +35,13 @@ struct WalletView: View {
     // MARK: - Properties
 
     let cards: [PreviewCard]
+    var categoryRecommendations: [BenefitCategory: RecommendedCard] = [:]
     var onCardTap: ((PreviewCard) -> Void)? = nil
     var onAddCard: (() -> Void)? = nil
     var onBenefitMarkAsDone: ((PreviewBenefit) -> Void)? = nil
     var onSeeAllExpiring: (() -> Void)? = nil
+    var onSearchRecommendations: (() -> Void)? = nil
+    var onSelectRecommendedCard: ((UUID) -> Void)? = nil
 
     // MARK: - State
 
@@ -265,109 +273,6 @@ struct ExpiringBenefitItem: Identifiable {
     var id: UUID { benefit.id }
 }
 
-// MARK: - Card Stack View
-
-/// A stacked display of credit cards with offset positioning
-struct CardStackView: View {
-
-    let cards: [PreviewCard]
-    var maxVisibleCards: Int = 4
-    var onCardTap: ((PreviewCard) -> Void)? = nil
-
-    var body: some View {
-        ZStack(alignment: .top) {
-            ForEach(Array(cards.prefix(maxVisibleCards).enumerated().reversed()), id: \.element.id) { index, card in
-                CardComponent(card: card, showShadow: true)
-                    .offset(y: CGFloat(index) * DesignSystem.Spacing.cardStackOffset)
-                    .zIndex(Double(maxVisibleCards - index))
-                    .onTapGesture {
-                        onCardTap?(card)
-                    }
-                    .opacity(opacityForIndex(index))
-                    .scaleEffect(scaleForIndex(index), anchor: .top)
-            }
-        }
-        .padding(.bottom, CGFloat(min(cards.count, maxVisibleCards) - 1) * DesignSystem.Spacing.cardStackOffset)
-    }
-
-    private func opacityForIndex(_ index: Int) -> Double {
-        switch index {
-        case 0: return 1.0
-        case 1: return 0.95
-        case 2: return 0.9
-        default: return 0.85
-        }
-    }
-
-    private func scaleForIndex(_ index: Int) -> CGFloat {
-        // Slight scale reduction for cards behind
-        let reduction = CGFloat(index) * 0.02
-        return 1.0 - reduction
-    }
-}
-
-// MARK: - Alternative: Scrollable Card Stack
-
-/// An alternative layout using horizontal scroll for card browsing
-struct HorizontalCardCarousel: View {
-
-    let cards: [PreviewCard]
-    var onCardTap: ((PreviewCard) -> Void)? = nil
-
-    @State private var currentIndex: Int = 0
-
-    var body: some View {
-        TabView(selection: $currentIndex) {
-            ForEach(Array(cards.enumerated()), id: \.element.id) { index, card in
-                CardComponent(card: card, showShadow: true)
-                    .padding(.horizontal, DesignSystem.Spacing.lg)
-                    .tag(index)
-                    .onTapGesture {
-                        onCardTap?(card)
-                    }
-            }
-        }
-        .tabViewStyle(.page(indexDisplayMode: .automatic))
-        .frame(height: 240)
-    }
-}
-
-// MARK: - Wallet View Variant: List Style
-
-/// An alternative wallet view using a list layout instead of stack
-struct WalletListView: View {
-
-    let cards: [PreviewCard]
-    var onCardTap: ((PreviewCard) -> Void)? = nil
-    var onDeleteCard: ((PreviewCard) -> Void)? = nil
-
-    var body: some View {
-        List {
-            ForEach(cards) { card in
-                CardComponent(card: card, size: .regular, showShadow: false)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(
-                        top: DesignSystem.Spacing.sm,
-                        leading: DesignSystem.Spacing.md,
-                        bottom: DesignSystem.Spacing.sm,
-                        trailing: DesignSystem.Spacing.md
-                    ))
-                    .onTapGesture {
-                        onCardTap?(card)
-                    }
-                    .swipeActions(edge: .trailing) {
-                        Button(role: .destructive) {
-                            onDeleteCard?(card)
-                        } label: {
-                            Label("Delete", systemImage: "trash")
-                        }
-                    }
-            }
-        }
-        .listStyle(.plain)
-    }
-}
-
 // MARK: - Previews
 
 #Preview("Wallet View - With Cards") {
@@ -404,46 +309,6 @@ struct WalletListView: View {
             cards: [PreviewData.amexPlatinum],
             onCardTap: { _ in }
         )
-    }
-}
-
-#Preview("Card Stack Only") {
-    VStack {
-        CardStackView(
-            cards: PreviewData.sampleCards,
-            onCardTap: { card in
-                print("Tapped: \(card.name)")
-            }
-        )
-    }
-    .padding()
-    .background(DesignSystem.Colors.backgroundSecondary)
-}
-
-#Preview("Horizontal Card Carousel") {
-    VStack {
-        HorizontalCardCarousel(
-            cards: PreviewData.sampleCards,
-            onCardTap: { card in
-                print("Tapped: \(card.name)")
-            }
-        )
-    }
-    .background(DesignSystem.Colors.backgroundSecondary)
-}
-
-#Preview("Wallet List View") {
-    NavigationStack {
-        WalletListView(
-            cards: PreviewData.sampleCards,
-            onCardTap: { card in
-                print("Tapped: \(card.name)")
-            },
-            onDeleteCard: { card in
-                print("Delete: \(card.name)")
-            }
-        )
-        .navigationTitle("My Cards")
     }
 }
 

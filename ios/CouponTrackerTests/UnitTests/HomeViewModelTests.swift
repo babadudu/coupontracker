@@ -22,6 +22,7 @@ final class HomeViewModelTests: XCTestCase {
     var cardRepository: CardRepository!
     var benefitRepository: BenefitRepository!
     var templateLoader: HomeViewModelMockTemplateLoader!
+    var notificationService: NotificationService!
     var viewModel: HomeViewModel!
 
     // MARK: - Setup & Teardown
@@ -33,7 +34,8 @@ final class HomeViewModelTests: XCTestCase {
         let schema = Schema([
             UserCard.self,
             Benefit.self,
-            BenefitUsage.self
+            BenefitUsage.self,
+            UserPreferences.self
         ])
 
         let modelConfiguration = ModelConfiguration(
@@ -50,17 +52,20 @@ final class HomeViewModelTests: XCTestCase {
         cardRepository = CardRepository(modelContext: modelContext)
         benefitRepository = BenefitRepository(modelContext: modelContext)
         templateLoader = HomeViewModelMockTemplateLoader()
+        notificationService = NotificationService()
 
         viewModel = HomeViewModel(
             cardRepository: cardRepository,
             benefitRepository: benefitRepository,
-            templateLoader: templateLoader
+            templateLoader: templateLoader,
+            notificationService: notificationService
         )
     }
 
     override func tearDown() async throws {
         viewModel = nil
         templateLoader = nil
+        notificationService = nil
         benefitRepository = nil
         cardRepository = nil
         modelContext = nil
@@ -826,6 +831,15 @@ final class HomeViewModelMockTemplateLoader: TemplateLoaderProtocol {
 
     func getTemplate(by id: UUID) throws -> CardTemplate? {
         templates.first { $0.id == id }
+    }
+
+    func getBenefitTemplate(by id: UUID) throws -> BenefitTemplate? {
+        for card in templates {
+            if let benefit = card.benefits.first(where: { $0.id == id }) {
+                return benefit
+            }
+        }
+        return nil
     }
 
     func searchTemplates(query: String) throws -> [CardTemplate] {

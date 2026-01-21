@@ -55,6 +55,97 @@ final class CardRepositoryTests: XCTestCase {
 
     // MARK: - Test Cases
 
+    // MARK: Diagnostic Tests
+
+    func testDiagnostic_SimpleArrayInStruct() throws {
+        // Create a simple struct inline with an array
+        struct TestStruct {
+            let items: [String]
+        }
+
+        let array = ["a", "b", "c"]
+        XCTAssertEqual(array.count, 3, "Array should have 3 elements")
+
+        let test = TestStruct(items: array)
+        XCTAssertEqual(test.items.count, 3, "TestStruct.items should have 3 elements, got \(test.items.count)")
+    }
+
+    func testDiagnostic_BenefitTemplateInitWorks() throws {
+        // Given
+        let benefitTemplate = BenefitTemplate(
+            id: UUID(),
+            name: "Test Benefit",
+            description: "A test benefit",
+            value: 50,
+            frequency: .monthly,
+            category: .travel,
+            merchant: nil,
+            resetDayOfMonth: nil
+        )
+
+        // Then
+        XCTAssertEqual(benefitTemplate.name, "Test Benefit", "BenefitTemplate should init correctly")
+        XCTAssertEqual(benefitTemplate.value, 50, "Value should be 50")
+    }
+
+    func testDiagnostic_CardTemplateInitWithBenefits() throws {
+        // Given - Create benefits array directly
+        let benefit1 = BenefitTemplate(
+            id: UUID(),
+            name: "Benefit 1",
+            description: "First benefit",
+            value: 15,
+            frequency: .monthly,
+            category: .transportation,
+            merchant: nil,
+            resetDayOfMonth: 1
+        )
+
+        let benefit2 = BenefitTemplate(
+            id: UUID(),
+            name: "Benefit 2",
+            description: "Second benefit",
+            value: 200,
+            frequency: .annual,
+            category: .travel,
+            merchant: nil,
+            resetDayOfMonth: nil
+        )
+
+        // Verify each benefit is valid
+        XCTAssertEqual(benefit1.name, "Benefit 1", "Benefit1 should have name")
+        XCTAssertEqual(benefit2.name, "Benefit 2", "Benefit2 should have name")
+
+        let benefits: [BenefitTemplate] = [benefit1, benefit2]
+        XCTAssertEqual(benefits.count, 2, "Benefits array should have 2 elements")
+        XCTAssertEqual(benefits[0].name, "Benefit 1", "First element should be benefit1")
+
+        // Check type of CardTemplate
+        let cardTemplateType = type(of: CardTemplate.self)
+        print("CardTemplate type: \(cardTemplateType)")
+
+        // When - Create template using explicit initialization
+        let templateId = UUID()
+        let template = CardTemplate(
+            id: templateId,
+            name: "Test Card",
+            issuer: "Test Bank",
+            artworkAsset: "test",
+            annualFee: 100,
+            primaryColorHex: "#000000",
+            secondaryColorHex: "#FFFFFF",
+            isActive: true,
+            lastUpdated: Date(),
+            benefits: benefits
+        )
+
+        // Then
+        XCTAssertEqual(template.id, templateId, "ID should match")
+        XCTAssertEqual(template.name, "Test Card", "Name should be Test Card")
+        XCTAssertEqual(template.issuer, "Test Bank", "Issuer should be Test Bank")
+        XCTAssertEqual(template.benefits.count, 2, "CardTemplate should have 2 benefits after init, got \(template.benefits.count). Benefits: \(template.benefits.map { $0.name })")
+    }
+
     // MARK: getAllCards Tests
 
     func testGetAllCards_WhenEmpty_ReturnsEmptyArray() throws {
@@ -120,6 +211,9 @@ final class CardRepositoryTests: XCTestCase {
         // Given
         let template = createMockCardTemplate()
 
+        // DIAGNOSTIC: Verify template has benefits before using it
+        XCTAssertEqual(template.benefits.count, 2, "Template should have 2 benefits, got \(template.benefits.count)")
+
         // When
         let card = try repository.addCard(from: template, nickname: "My Platinum")
 
@@ -129,7 +223,7 @@ final class CardRepositoryTests: XCTestCase {
         XCTAssertEqual(card.nickname, "My Platinum", "Should set nickname")
         XCTAssertFalse(card.isCustom, "Should not be custom card")
         XCTAssertEqual(card.sortOrder, 0, "Should be first card")
-        XCTAssertEqual(card.benefits.count, template.benefits.count, "Should create all benefits from template")
+        XCTAssertEqual(card.benefits.count, 2, "Should create 2 benefits from template")
     }
 
     func testAddCard_WithNilNickname_CreatesCardSuccessfully() throws {

@@ -124,19 +124,21 @@ enum BenefitFrequency: String, Codable, CaseIterable, Identifiable {
                     periodStart = potentialStart
                 } else {
                     // Go to previous month
-                    periodStart = calendar.date(byAdding: .month, value: -1, to: calendar.date(from: startComponents)!)!
+                    let startDate = calendar.date(from: startComponents) ?? today
+                    periodStart = calendar.date(byAdding: .month, value: -1, to: startDate) ?? today
                 }
 
-                periodEnd = calendar.date(byAdding: .month, value: 1, to: periodStart)!
+                periodEnd = calendar.date(byAdding: .month, value: 1, to: periodStart) ?? today
             } else {
                 // Use calendar month
                 let components = calendar.dateComponents([.year, .month], from: today)
-                periodStart = calendar.date(from: components)!
-                periodEnd = calendar.date(byAdding: .month, value: 1, to: periodStart)!
+                periodStart = calendar.date(from: components) ?? today
+                periodEnd = calendar.date(byAdding: .month, value: 1, to: periodStart) ?? today
             }
 
             let nextReset = periodEnd
-            return (periodStart, calendar.date(byAdding: .day, value: -1, to: periodEnd)!, nextReset)
+            let adjustedEnd = calendar.date(byAdding: .day, value: -1, to: periodEnd) ?? periodEnd
+            return (periodStart, adjustedEnd, nextReset)
 
         case .quarterly:
             // Quarters: Jan-Mar, Apr-Jun, Jul-Sep, Oct-Dec
@@ -147,11 +149,12 @@ enum BenefitFrequency: String, Codable, CaseIterable, Identifiable {
             startComponents.month = quarterStartMonth
             startComponents.day = 1
 
-            let periodStart = calendar.date(from: startComponents)!
-            let periodEnd = calendar.date(byAdding: .month, value: 3, to: periodStart)!
+            let periodStart = calendar.date(from: startComponents) ?? today
+            let periodEnd = calendar.date(byAdding: .month, value: 3, to: periodStart) ?? today
             let nextReset = periodEnd
+            let adjustedEnd = calendar.date(byAdding: .day, value: -1, to: periodEnd) ?? periodEnd
 
-            return (periodStart, calendar.date(byAdding: .day, value: -1, to: periodEnd)!, nextReset)
+            return (periodStart, adjustedEnd, nextReset)
 
         case .semiAnnual:
             // Semi-annual: Jan-Jun, Jul-Dec
@@ -162,11 +165,12 @@ enum BenefitFrequency: String, Codable, CaseIterable, Identifiable {
             startComponents.month = halfStartMonth
             startComponents.day = 1
 
-            let periodStart = calendar.date(from: startComponents)!
-            let periodEnd = calendar.date(byAdding: .month, value: 6, to: periodStart)!
+            let periodStart = calendar.date(from: startComponents) ?? today
+            let periodEnd = calendar.date(byAdding: .month, value: 6, to: periodStart) ?? today
             let nextReset = periodEnd
+            let adjustedEnd = calendar.date(byAdding: .day, value: -1, to: periodEnd) ?? periodEnd
 
-            return (periodStart, calendar.date(byAdding: .day, value: -1, to: periodEnd)!, nextReset)
+            return (periodStart, adjustedEnd, nextReset)
 
         case .annual:
             // Calendar year: Jan 1 - Dec 31
@@ -176,11 +180,12 @@ enum BenefitFrequency: String, Codable, CaseIterable, Identifiable {
             startComponents.month = 1
             startComponents.day = 1
 
-            let periodStart = calendar.date(from: startComponents)!
-            let periodEnd = calendar.date(byAdding: .year, value: 1, to: periodStart)!
+            let periodStart = calendar.date(from: startComponents) ?? today
+            let periodEnd = calendar.date(byAdding: .year, value: 1, to: periodStart) ?? today
             let nextReset = periodEnd
+            let adjustedEnd = calendar.date(byAdding: .day, value: -1, to: periodEnd) ?? periodEnd
 
-            return (periodStart, calendar.date(byAdding: .day, value: -1, to: periodEnd)!, nextReset)
+            return (periodStart, adjustedEnd, nextReset)
         }
     }
 }
@@ -315,8 +320,8 @@ enum BenefitPeriod: String, CaseIterable, Identifiable {
         switch self {
         case .monthly:
             let components = calendar.dateComponents([.year, .month], from: date)
-            let start = calendar.date(from: components)!
-            let end = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: start)!
+            let start = calendar.date(from: components) ?? date
+            let end = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: start) ?? date
             return (start, end)
 
         case .quarterly:
@@ -326,8 +331,8 @@ enum BenefitPeriod: String, CaseIterable, Identifiable {
             startComponents.year = year
             startComponents.month = quarterStartMonth
             startComponents.day = 1
-            let start = calendar.date(from: startComponents)!
-            let end = calendar.date(byAdding: DateComponents(month: 3, day: -1), to: start)!
+            let start = calendar.date(from: startComponents) ?? date
+            let end = calendar.date(byAdding: DateComponents(month: 3, day: -1), to: start) ?? date
             return (start, end)
 
         case .semiAnnual:
@@ -337,8 +342,8 @@ enum BenefitPeriod: String, CaseIterable, Identifiable {
             startComponents.year = year
             startComponents.month = halfStartMonth
             startComponents.day = 1
-            let start = calendar.date(from: startComponents)!
-            let end = calendar.date(byAdding: DateComponents(month: 6, day: -1), to: start)!
+            let start = calendar.date(from: startComponents) ?? date
+            let end = calendar.date(byAdding: DateComponents(month: 6, day: -1), to: start) ?? date
             return (start, end)
 
         case .annual:
@@ -346,8 +351,8 @@ enum BenefitPeriod: String, CaseIterable, Identifiable {
             startComponents.year = year
             startComponents.month = 1
             startComponents.day = 1
-            let start = calendar.date(from: startComponents)!
-            let end = calendar.date(byAdding: DateComponents(year: 1, day: -1), to: start)!
+            let start = calendar.date(from: startComponents) ?? date
+            let end = calendar.date(byAdding: DateComponents(year: 1, day: -1), to: start) ?? date
             return (start, end)
         }
     }
@@ -448,6 +453,56 @@ struct PeriodMetrics {
 
         return PeriodMetrics(
             redeemedValue: redeemedValue,
+            availableValue: availableValue,
+            totalValue: totalValue,
+            usedCount: used.count,
+            availableCount: available.count,
+            totalCount: overlapping.count
+        )
+    }
+
+    /// Calculates metrics using pre-fetched historical redeemed value.
+    /// Use this for quarterly/annual views that need actual BenefitUsage records.
+    ///
+    /// - Parameters:
+    ///   - benefits: All benefits to evaluate for totalValue calculation
+    ///   - historicalRedeemed: Pre-fetched sum from BenefitUsage records
+    ///   - period: The view period (monthly/quarterly/annual)
+    ///   - referenceDate: The reference date for period calculation
+    /// - Returns: Metrics with historical redeemedValue instead of current status
+    static func calculateWithHistory(
+        for benefits: [Benefit],
+        historicalRedeemed: Decimal,
+        period: BenefitPeriod,
+        referenceDate: Date = Date()
+    ) -> PeriodMetrics {
+        let (viewStart, viewEnd) = period.periodDates(for: referenceDate)
+
+        // Filter benefits whose period overlaps with view period
+        let overlapping = benefits.filter { benefit in
+            benefit.currentPeriodStart <= viewEnd &&
+            benefit.currentPeriodEnd >= viewStart
+        }
+
+        let used = overlapping.filter { $0.status == .used }
+        let available = overlapping.filter { $0.status == .available }
+
+        // Calculate total potential value with aggregation multiplier
+        var totalValue: Decimal = 0
+        var availableValue: Decimal = 0
+
+        for benefit in overlapping {
+            let multiplier = Decimal(period.aggregationMultiplier(for: benefit.frequency))
+            let benefitTotal = benefit.effectiveValue * multiplier
+            totalValue += benefitTotal
+
+            if benefit.status == .available {
+                availableValue += benefit.effectiveValue
+            }
+        }
+
+        return PeriodMetrics(
+            redeemedValue: historicalRedeemed,
             availableValue: availableValue,
             totalValue: totalValue,
             usedCount: used.count,

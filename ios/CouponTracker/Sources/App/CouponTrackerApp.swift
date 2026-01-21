@@ -57,6 +57,9 @@ struct CouponTrackerApp: App {
             // Set up notification delegate
             UNUserNotificationCenter.current().delegate = container.notificationService
 
+            // Wire notification action callbacks
+            Self.setupNotificationCallbacks(container: container)
+
             // Configure appearance and global settings
             Self.configureAppearance()
 
@@ -83,6 +86,60 @@ struct CouponTrackerApp: App {
     }
 
     // MARK: - Configuration
+
+    /// Sets up notification action callbacks to handle user interactions
+    @MainActor
+    private static func setupNotificationCallbacks(container: AppContainer) {
+        // Mark benefit as used from notification action
+        container.notificationService.onMarkAsUsed = { benefitId in
+            Task { @MainActor in
+                do {
+                    if let benefit = try container.benefitRepository.getBenefit(by: benefitId) {
+                        try container.benefitRepository.markBenefitUsed(benefit)
+                        container.notificationService.cancelNotifications(for: benefit)
+                    }
+                } catch {
+                    print("⚠️ Failed to mark benefit as used from notification: \(error)")
+                }
+            }
+        }
+
+        // Snooze benefit from notification action
+        container.notificationService.onSnooze = { benefitId, days in
+            Task { @MainActor in
+                do {
+                    if let benefit = try container.benefitRepository.getBenefit(by: benefitId) {
+                        let snoozeDate = Calendar.current.date(
+                            byAdding: .day,
+                            value: days,
+                            to: Date()
+                        ) ?? Date()
+
+                        try container.benefitRepository.snoozeBenefit(benefit, until: snoozeDate)
+
+                        // Schedule snoozed notification
+                        let descriptor = FetchDescriptor<UserPreferences>()
+                        if let preferences = try? container.modelContext.fetch(descriptor).first {
+                            container.notificationService.scheduleSnoozedNotification(
+                                for: benefit,
+                                snoozeDate: snoozeDate,
+                                preferences: preferences
+                            )
+                        }
+                    }
+                } catch {
+                    print("⚠️ Failed to snooze benefit from notification: \(error)")
+                }
+            }
+        }
+
+        // Open benefit detail when tapping notification
+        container.notificationService.onOpenBenefit = { benefitId in
+            // TODO: Navigate to benefit detail view
+            // This requires deep linking which will be implemented separately
+            print("📱 User tapped notification for benefit: \(benefitId)")
+        }
+    }
 
     /// Configures global appearance settings for navigation and tab bars
     private static func configureAppearance() {

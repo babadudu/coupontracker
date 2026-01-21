@@ -30,6 +30,33 @@ struct CardTemplate: Codable, Identifiable, Hashable {
         !artworkAsset.isEmpty
     }
 
+    // MARK: - Memberwise Init
+    /// Explicit memberwise initializer for programmatic creation.
+    /// This replaces the synthesized memberwise init.
+    init(
+        id: UUID,
+        name: String,
+        issuer: String,
+        artworkAsset: String,
+        annualFee: Decimal?,
+        primaryColorHex: String,
+        secondaryColorHex: String,
+        isActive: Bool,
+        lastUpdated: Date,
+        benefits: [BenefitTemplate]
+    ) {
+        self.id = id
+        self.name = name
+        self.issuer = issuer
+        self.artworkAsset = artworkAsset
+        self.annualFee = annualFee
+        self.primaryColorHex = primaryColorHex
+        self.secondaryColorHex = secondaryColorHex
+        self.isActive = isActive
+        self.lastUpdated = lastUpdated
+        self.benefits = benefits
+    }
+
     // MARK: - Hashable
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)

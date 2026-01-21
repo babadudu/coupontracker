@@ -162,7 +162,8 @@ struct MainTabView: View {
                 sharedViewModel = HomeViewModel(
                     cardRepository: container.cardRepository,
                     benefitRepository: container.benefitRepository,
-                    templateLoader: container.templateLoader
+                    templateLoader: container.templateLoader,
+                    notificationService: container.notificationService
                 )
                 // Set recommendation service for best card features
                 sharedViewModel?.setRecommendationService(container.recommendationService)
@@ -297,7 +298,10 @@ struct HomeTabView: View {
                         if !viewModel.isEmpty {
                             DashboardPeriodSection(
                                 benefits: viewModel.allBenefits,
-                                selectedPeriod: $selectedPeriod
+                                selectedPeriod: $selectedPeriod,
+                                historicalRedeemedValue: { period in
+                                    viewModel.redeemedValue(for: period)
+                                }
                             )
                         }
 
@@ -360,7 +364,9 @@ struct HomeTabView: View {
                 AddCardView(
                     viewModel: AddCardViewModel(
                         cardRepository: container.cardRepository,
-                        templateLoader: container.templateLoader
+                        templateLoader: container.templateLoader,
+                        notificationService: container.notificationService,
+                        modelContext: container.modelContext
                     )
                 )
             }
@@ -423,6 +429,8 @@ struct HomeTabView: View {
                 let allBenefits = try container.benefitRepository.getAllBenefits()
                 if let matchingBenefit = allBenefits.first(where: { $0.id == benefit.id }) {
                     try container.benefitRepository.markBenefitUsed(matchingBenefit)
+                    // Cancel pending notifications for this benefit
+                    container.notificationService.cancelNotifications(for: matchingBenefit)
                     await viewModel?.loadData()
                 }
             } catch {
@@ -437,6 +445,8 @@ struct HomeTabView: View {
                 let allBenefits = try container.benefitRepository.getAllBenefits()
                 if let matchingBenefit = allBenefits.first(where: { $0.id == benefit.id }) {
                     try container.benefitRepository.markBenefitUsed(matchingBenefit)
+                    // Cancel pending notifications for this benefit
+                    container.notificationService.cancelNotifications(for: matchingBenefit)
                     await viewModel?.loadData()
                 }
             } catch {
@@ -452,6 +462,14 @@ struct HomeTabView: View {
                 if let matchingBenefit = allBenefits.first(where: { $0.id == benefit.id }) {
                     let snoozeDate = Calendar.current.date(byAdding: .day, value: days, to: Date()) ?? Date()
                     try container.benefitRepository.snoozeBenefit(matchingBenefit, until: snoozeDate)
+                    // Schedule snoozed notification
+                    if let preferences = fetchUserPreferences() {
+                        container.notificationService.scheduleSnoozedNotification(
+                            for: matchingBenefit,
+                            snoozeDate: snoozeDate,
+                            preferences: preferences
+                        )
+                    }
                     await viewModel?.loadData()
                 }
             } catch {
@@ -466,6 +484,13 @@ struct HomeTabView: View {
                 let allBenefits = try container.benefitRepository.getAllBenefits()
                 if let matchingBenefit = allBenefits.first(where: { $0.id == benefit.id }) {
                     try container.benefitRepository.undoMarkBenefitUsed(matchingBenefit)
+                    // Reschedule notifications for the restored benefit
+                    if let preferences = fetchUserPreferences() {
+                        await container.notificationService.scheduleNotifications(
+                            for: matchingBenefit,
+                            preferences: preferences
+                        )
+                    }
                     await viewModel?.loadData()
                 }
             } catch {
@@ -483,6 +508,11 @@ struct HomeTabView: View {
             do {
                 let allCards = try container.cardRepository.getAllCards()
                 if let matchingCard = allCards.first(where: { $0.id == cardId }) {
+                    // Cancel notifications for all benefits on this card
+                    container.notificationService.cancelNotifications(
+                        forCardId: matchingCard.id,
+                        benefits: Array(matchingCard.benefits)
+                    )
                     try container.cardRepository.deleteCard(matchingCard)
                     await viewModel?.loadData()
                 }
@@ -490,6 +520,12 @@ struct HomeTabView: View {
                 print("Failed to delete card: \(error)")
             }
         }
+    }
+
+    /// Fetches the singleton UserPreferences from SwiftData
+    private func fetchUserPreferences() -> UserPreferences? {
+        let descriptor = FetchDescriptor<UserPreferences>()
+        return try? container.modelContext.fetch(descriptor).first
     }
 
     @ViewBuilder
@@ -774,7 +810,9 @@ struct WalletTabView: View {
                 AddCardView(
                     viewModel: AddCardViewModel(
                         cardRepository: container.cardRepository,
-                        templateLoader: container.templateLoader
+                        templateLoader: container.templateLoader,
+                        notificationService: container.notificationService,
+                        modelContext: container.modelContext
                     )
                 )
             }
@@ -834,6 +872,8 @@ struct WalletTabView: View {
                 let allBenefits = try container.benefitRepository.getAllBenefits()
                 if let matchingBenefit = allBenefits.first(where: { $0.id == benefit.id }) {
                     try container.benefitRepository.markBenefitUsed(matchingBenefit)
+                    // Cancel pending notifications for this benefit
+                    container.notificationService.cancelNotifications(for: matchingBenefit)
                     await viewModel?.loadData()
                 }
             } catch {
@@ -849,6 +889,14 @@ struct WalletTabView: View {
                 if let matchingBenefit = allBenefits.first(where: { $0.id == benefit.id }) {
                     let snoozeDate = Calendar.current.date(byAdding: .day, value: days, to: Date()) ?? Date()
                     try container.benefitRepository.snoozeBenefit(matchingBenefit, until: snoozeDate)
+                    // Schedule snoozed notification
+                    if let preferences = fetchUserPreferences() {
+                        container.notificationService.scheduleSnoozedNotification(
+                            for: matchingBenefit,
+                            snoozeDate: snoozeDate,
+                            preferences: preferences
+                        )
+                    }
                     await viewModel?.loadData()
                 }
             } catch {
@@ -863,6 +911,13 @@ struct WalletTabView: View {
                 let allBenefits = try container.benefitRepository.getAllBenefits()
                 if let matchingBenefit = allBenefits.first(where: { $0.id == benefit.id }) {
                     try container.benefitRepository.undoMarkBenefitUsed(matchingBenefit)
+                    // Reschedule notifications for the restored benefit
+                    if let preferences = fetchUserPreferences() {
+                        await container.notificationService.scheduleNotifications(
+                            for: matchingBenefit,
+                            preferences: preferences
+                        )
+                    }
                     await viewModel?.loadData()
                 }
             } catch {
@@ -886,6 +941,11 @@ struct WalletTabView: View {
             do {
                 let allCards = try container.cardRepository.getAllCards()
                 if let matchingCard = allCards.first(where: { $0.id == cardIdToDelete }) {
+                    // Cancel notifications for all benefits on this card
+                    container.notificationService.cancelNotifications(
+                        forCardId: matchingCard.id,
+                        benefits: Array(matchingCard.benefits)
+                    )
                     try container.cardRepository.deleteCard(matchingCard)
                     await viewModel?.loadData()
                 }
@@ -893,6 +953,12 @@ struct WalletTabView: View {
                 print("Failed to delete card: \(error)")
             }
         }
+    }
+
+    /// Fetches the singleton UserPreferences from SwiftData
+    private func fetchUserPreferences() -> UserPreferences? {
+        let descriptor = FetchDescriptor<UserPreferences>()
+        return try? container.modelContext.fetch(descriptor).first
     }
 }
 

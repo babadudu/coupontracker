@@ -10,22 +10,42 @@ import SwiftData
 
 /// SwiftData implementation of BenefitRepositoryProtocol.
 /// Provides operations for managing Benefit entities and their lifecycle.
+///
+/// Note: Business logic for state transitions is delegated to BenefitStateService.
+/// The repository handles persistence and coordination only.
 @MainActor
 final class BenefitRepository: BenefitRepositoryProtocol {
 
     // MARK: - Properties
 
     private let modelContext: ModelContext
+    private let stateService: BenefitStateServiceProtocol
 
     // MARK: - Initialization
 
     /// Initializes the repository with a SwiftData model context.
-    /// - Parameter modelContext: The SwiftData model context for persistence operations
-    init(modelContext: ModelContext) {
+    /// - Parameters:
+    ///   - modelContext: The SwiftData model context for persistence operations
+    ///   - stateService: Service for benefit state logic (defaults to BenefitStateService)
+    init(
+        modelContext: ModelContext,
+        stateService: BenefitStateServiceProtocol = BenefitStateService()
+    ) {
         self.modelContext = modelContext
+        self.stateService = stateService
     }
 
     // MARK: - BenefitRepositoryProtocol Implementation
+
+    func getBenefit(by id: UUID) throws -> Benefit? {
+        let benefitId = id
+        let descriptor = FetchDescriptor<Benefit>(
+            predicate: #Predicate<Benefit> { benefit in
+                benefit.id == benefitId
+            }
+        )
+        return try modelContext.fetch(descriptor).first
+    }
 
     func getBenefits(for card: UserCard) throws -> [Benefit] {
         let descriptor = FetchDescriptor<Benefit>(
@@ -61,7 +81,8 @@ final class BenefitRepository: BenefitRepositoryProtocol {
 
     func getExpiringBenefits(within days: Int) throws -> [Benefit] {
         let calendar = Calendar.current
-        let threshold = calendar.date(byAdding: .day, value: days, to: Date())!
+        let now = Date()
+        let threshold = calendar.date(byAdding: .day, value: days, to: now) ?? now
 
         let descriptor = FetchDescriptor<Benefit>(
             sortBy: [SortDescriptor(\.currentPeriodEnd, order: .forward)]
@@ -73,8 +94,8 @@ final class BenefitRepository: BenefitRepositoryProtocol {
     }
 
     func markBenefitUsed(_ benefit: Benefit) throws {
-        // Validate that benefit is available
-        guard benefit.status == .available else {
+        // Validate that benefit is available using state service
+        guard stateService.canMarkAsUsed(benefit) else {
             throw BenefitRepositoryError.invalidStatusTransition(
                 from: benefit.status,
                 to: .used
@@ -102,24 +123,14 @@ final class BenefitRepository: BenefitRepositoryProtocol {
     }
 
     func resetBenefitForNewPeriod(_ benefit: Benefit) throws {
-        // Get the frequency from custom override or infer from period length
-        let frequency = benefit.customFrequency ?? inferFrequencyFromPeriod(benefit)
-
-        // Calculate next period dates using the day after current period end
-        let calendar = Calendar.current
-        let nextStart = calendar.date(byAdding: .day, value: 1, to: benefit.currentPeriodEnd)!
-
-        // Use the BenefitFrequency enum's built-in period calculation
-        let (newPeriodStart, newPeriodEnd, nextReset) = frequency.calculatePeriodDates(
-            from: nextStart,
-            resetDayOfMonth: nil // Use calendar boundaries for resets
-        )
+        // Calculate next period dates using state service
+        let periodDates = stateService.calculateNextPeriod(for: benefit)
 
         // Reset the benefit
         benefit.status = .available
-        benefit.currentPeriodStart = newPeriodStart
-        benefit.currentPeriodEnd = newPeriodEnd
-        benefit.nextResetDate = nextReset
+        benefit.currentPeriodStart = periodDates.start
+        benefit.currentPeriodEnd = periodDates.end
+        benefit.nextResetDate = periodDates.nextReset
         benefit.lastReminderDate = nil
         benefit.scheduledNotificationId = nil
         benefit.updatedAt = Date()
@@ -141,8 +152,8 @@ final class BenefitRepository: BenefitRepositoryProtocol {
     }
 
     func undoMarkBenefitUsed(_ benefit: Benefit) throws {
-        // Validate that benefit is currently used
-        guard benefit.status == .used else {
+        // Validate that benefit is currently used using state service
+        guard stateService.canUndo(benefit) else {
             throw BenefitRepositoryError.invalidStatusTransition(
                 from: benefit.status,
                 to: .available
@@ -167,36 +178,23 @@ final class BenefitRepository: BenefitRepositoryProtocol {
         try modelContext.save()
     }
 
-    // MARK: - Private Helper Methods
+    // MARK: - Historical Queries
 
-    /// Infers the benefit frequency from the period length.
-    /// This is used when custom frequency is not set and template lookup is unavailable.
-    /// - Parameter benefit: The benefit to infer frequency for
-    /// - Returns: The inferred benefit frequency
-    private func inferFrequencyFromPeriod(_ benefit: Benefit) -> BenefitFrequency {
-        let calendar = Calendar.current
-        let components = calendar.dateComponents(
-            [.month],
-            from: benefit.currentPeriodStart,
-            to: benefit.currentPeriodEnd
+    func getRedeemedValue(for period: BenefitPeriod, referenceDate: Date = Date()) throws -> Decimal {
+        let (viewStart, viewEnd) = period.periodDates(for: referenceDate)
+
+        let descriptor = FetchDescriptor<BenefitUsage>(
+            predicate: #Predicate { usage in
+                !usage.wasAutoExpired &&
+                usage.periodStart >= viewStart &&
+                usage.periodStart <= viewEnd
+            }
         )
 
-        guard let months = components.month else {
-            return .monthly // Default fallback
-        }
-
-        // Infer based on period length
-        switch months {
-        case 0...1:
-            return .monthly
-        case 2...4:
-            return .quarterly
-        case 5...7:
-            return .semiAnnual
-        default:
-            return .annual
-        }
+        let usages = try modelContext.fetch(descriptor)
+        return usages.reduce(Decimal.zero) { $0 + $1.valueRedeemed }
     }
+
 }
 
 // MARK: - Error Types

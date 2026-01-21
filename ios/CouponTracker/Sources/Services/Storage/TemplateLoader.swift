@@ -6,7 +6,18 @@
 
 import Foundation
 
-/// Service responsible for loading card templates from bundled JSON resources
+/// TemplateLoader
+///
+/// Responsibilities:
+/// - Load and parse CardTemplates.json from bundle resources
+/// - Provide fallback templates when JSON file is unavailable
+/// - Cache loaded templates for performance
+/// - Search and filter card templates by various criteria
+///
+/// Dependencies:
+/// - Bundle for accessing bundled JSON resources
+///
+/// Thread Safety: Not thread-safe (use from main thread or synchronize access)
 final class TemplateLoader: TemplateLoaderProtocol {
 
     // MARK: - Error Types

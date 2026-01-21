@@ -21,6 +21,7 @@ final class AddCardViewModelTests: XCTestCase {
     var modelContext: ModelContext!
     var cardRepository: CardRepository!
     var templateLoader: AddCardViewModelTestTemplateLoader!
+    var notificationService: NotificationService!
     var viewModel: AddCardViewModel!
 
     // MARK: - Setup & Teardown
@@ -32,7 +33,8 @@ final class AddCardViewModelTests: XCTestCase {
         let schema = Schema([
             UserCard.self,
             Benefit.self,
-            BenefitUsage.self
+            BenefitUsage.self,
+            UserPreferences.self
         ])
 
         let modelConfiguration = ModelConfiguration(
@@ -48,16 +50,20 @@ final class AddCardViewModelTests: XCTestCase {
         modelContext = ModelContext(modelContainer)
         cardRepository = CardRepository(modelContext: modelContext)
         templateLoader = AddCardViewModelTestTemplateLoader()
+        notificationService = NotificationService()
 
         viewModel = AddCardViewModel(
             cardRepository: cardRepository,
-            templateLoader: templateLoader
+            templateLoader: templateLoader,
+            notificationService: notificationService,
+            modelContext: modelContext
         )
     }
 
     override func tearDown() async throws {
         viewModel = nil
         templateLoader = nil
+        notificationService = nil
         cardRepository = nil
         modelContext = nil
         modelContainer = nil
@@ -567,6 +573,18 @@ final class AddCardViewModelTestTemplateLoader: TemplateLoaderProtocol {
             throw NSError(domain: "TestError", code: 1)
         }
         return templates.first { $0.id == id }
+    }
+
+    func getBenefitTemplate(by id: UUID) throws -> BenefitTemplate? {
+        if shouldThrowError {
+            throw NSError(domain: "TestError", code: 1)
+        }
+        for card in templates {
+            if let benefit = card.benefits.first(where: { $0.id == id }) {
+                return benefit
+            }
+        }
+        return nil
     }
 
     func getActiveTemplates() throws -> [CardTemplate] {

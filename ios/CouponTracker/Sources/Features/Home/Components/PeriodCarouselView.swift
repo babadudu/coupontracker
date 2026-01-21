@@ -85,6 +85,9 @@ struct DashboardPeriodSection: View {
 
     let benefits: [Benefit]
     @Binding var selectedPeriod: BenefitPeriod
+    /// Optional closure to fetch historical redeemed value for a period.
+    /// If provided, uses actual BenefitUsage records instead of current status.
+    var historicalRedeemedValue: ((BenefitPeriod) -> Decimal)?
 
     // MARK: - Body
 
@@ -128,7 +131,16 @@ struct DashboardPeriodSection: View {
     // MARK: - Progress Calculation
 
     private func calculateProgress(for period: BenefitPeriod) -> RingProgress {
-        let metrics = PeriodMetrics.calculate(for: benefits, period: period)
+        let metrics: PeriodMetrics
+        if let historicalRedeemed = historicalRedeemedValue?(period) {
+            metrics = PeriodMetrics.calculateWithHistory(
+                for: benefits,
+                historicalRedeemed: historicalRedeemed,
+                period: period
+            )
+        } else {
+            metrics = PeriodMetrics.calculate(for: benefits, period: period)
+        }
 
         return RingProgress(
             redeemedValue: metrics.redeemedValue,

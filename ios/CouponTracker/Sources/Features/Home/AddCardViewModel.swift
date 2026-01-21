@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 import Observation
 
 /// ViewModel for managing the card addition flow.
@@ -25,6 +26,8 @@ final class AddCardViewModel {
 
     private let cardRepository: CardRepositoryProtocol
     private let templateLoader: TemplateLoaderProtocol
+    private let notificationService: NotificationService
+    private let modelContext: ModelContext
 
     // MARK: - State
 
@@ -42,8 +45,23 @@ final class AddCardViewModel {
     /// Currently selected template for adding a card
     var selectedTemplate: CardTemplate?
 
+    /// Maximum allowed nickname length
+    static let maxNicknameLength = 50
+
     /// Optional user-provided nickname for the card being added
-    var nickname: String = ""
+    var nickname: String = "" {
+        didSet {
+            // Truncate to max length if exceeded
+            if nickname.count > Self.maxNicknameLength {
+                nickname = String(nickname.prefix(Self.maxNicknameLength))
+            }
+        }
+    }
+
+    /// Whether the nickname is at max length (for UI feedback)
+    var isNicknameAtMaxLength: Bool {
+        nickname.count >= Self.maxNicknameLength
+    }
 
     /// Indicates if templates are currently being loaded
     private(set) var isLoading = false
@@ -69,12 +87,18 @@ final class AddCardViewModel {
     /// - Parameters:
     ///   - cardRepository: Repository for managing user cards
     ///   - templateLoader: Service for loading card templates
+    ///   - notificationService: Service for scheduling benefit reminders
+    ///   - modelContext: SwiftData context for fetching user preferences
     init(
         cardRepository: CardRepositoryProtocol,
-        templateLoader: TemplateLoaderProtocol
+        templateLoader: TemplateLoaderProtocol,
+        notificationService: NotificationService,
+        modelContext: ModelContext
     ) {
         self.cardRepository = cardRepository
         self.templateLoader = templateLoader
+        self.notificationService = notificationService
+        self.modelContext = modelContext
     }
 
     // MARK: - Actions
@@ -104,22 +128,10 @@ final class AddCardViewModel {
 
     /// Filter templates based on current search query
     ///
-    /// Filters by card name or issuer name (case-insensitive).
+    /// Uses the Searchable protocol to filter templates.
     /// If search query is empty, shows all templates.
     func filterTemplates() {
-        let trimmedQuery = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
-
-        guard !trimmedQuery.isEmpty else {
-            filteredTemplates = allTemplates
-            return
-        }
-
-        let lowercasedQuery = trimmedQuery.lowercased()
-
-        filteredTemplates = allTemplates.filter { template in
-            template.name.lowercased().contains(lowercasedQuery) ||
-            template.issuer.lowercased().contains(lowercasedQuery)
-        }
+        filteredTemplates = allTemplates.filtered(by: searchQuery)
     }
 
     /// Select a template for card creation
@@ -133,8 +145,9 @@ final class AddCardViewModel {
     /// This method will:
     /// 1. Validate that a template is selected
     /// 2. Create a new user card using the repository
-    /// 3. Reset the view model state on success
-    /// 4. Return the created card
+    /// 3. Schedule notifications for all benefits
+    /// 4. Reset the view model state on success
+    /// 5. Return the created card
     ///
     /// - Returns: The newly created UserCard, or nil if creation fails
     func addCard() -> UserCard? {
@@ -154,6 +167,9 @@ final class AddCardViewModel {
                 nickname: finalNickname
             )
 
+            // Schedule notifications for all benefits on the new card
+            scheduleNotificationsForCard(newCard)
+
             // Reset state after successful creation
             reset()
 
@@ -162,6 +178,25 @@ final class AddCardViewModel {
             self.error = error
             return nil
         }
+    }
+
+    /// Schedules notifications for all benefits on a card
+    private func scheduleNotificationsForCard(_ card: UserCard) {
+        Task {
+            guard let preferences = fetchUserPreferences() else { return }
+            for benefit in card.benefits {
+                await notificationService.scheduleNotifications(
+                    for: benefit,
+                    preferences: preferences
+                )
+            }
+        }
+    }
+
+    /// Fetches the singleton UserPreferences from SwiftData
+    private func fetchUserPreferences() -> UserPreferences? {
+        let descriptor = FetchDescriptor<UserPreferences>()
+        return try? modelContext.fetch(descriptor).first
     }
 
     /// Reset the view model to initial state
@@ -186,86 +221,19 @@ extension AddCardViewModel {
     /// Create a view model with mock data for previews
     /// - Parameter templates: Optional array of templates to use (defaults to mock templates)
     /// - Returns: Configured view model for previews
+    @MainActor
     static func preview(templates: [CardTemplate]? = nil) -> AddCardViewModel {
-        let mockRepository = AddCardMockCardRepository()
+        let mockRepository = MockCardRepository()
         let mockLoader = MockTemplateLoader(templates: templates ?? CardTemplate.mockTemplates)
+        let container = AppContainer.preview
         let viewModel = AddCardViewModel(
             cardRepository: mockRepository,
-            templateLoader: mockLoader
+            templateLoader: mockLoader,
+            notificationService: container.notificationService,
+            modelContext: container.modelContext
         )
         viewModel.loadTemplates()
         return viewModel
-    }
-}
-
-// MARK: - Mock Template Loader
-
-private final class MockTemplateLoader: TemplateLoaderProtocol {
-    private let mockTemplates: [CardTemplate]
-
-    init(templates: [CardTemplate]) {
-        self.mockTemplates = templates
-    }
-
-    func loadAllTemplates() throws -> CardDatabase {
-        CardDatabase(schemaVersion: 1, dataVersion: "1.0", lastUpdated: Date(), cards: mockTemplates)
-    }
-
-    func getTemplate(by id: UUID) throws -> CardTemplate? {
-        mockTemplates.first { $0.id == id }
-    }
-
-    func getBenefitTemplate(by id: UUID) throws -> BenefitTemplate? {
-        mockTemplates.flatMap { $0.benefits }.first { $0.id == id }
-    }
-
-    func getActiveTemplates() throws -> [CardTemplate] {
-        mockTemplates
-    }
-
-    func searchTemplates(query: String) throws -> [CardTemplate] {
-        guard !query.isEmpty else { return mockTemplates }
-        let lowercasedQuery = query.lowercased()
-        return mockTemplates.filter { template in
-            template.name.lowercased().contains(lowercasedQuery) ||
-            template.issuer.lowercased().contains(lowercasedQuery)
-        }
-    }
-
-    func getTemplatesByIssuer() throws -> [String: [CardTemplate]] {
-        Dictionary(grouping: mockTemplates, by: { $0.issuer })
-    }
-}
-
-// MARK: - Mock Card Repository
-
-private final class AddCardMockCardRepository: CardRepositoryProtocol {
-    private var cards: [UserCard] = []
-
-    func getAllCards() throws -> [UserCard] {
-        return cards
-    }
-
-    func getCard(by id: UUID) throws -> UserCard? {
-        return cards.first { $0.id == id }
-    }
-
-    func addCard(from template: CardTemplate, nickname: String?) throws -> UserCard {
-        let card = UserCard(
-            cardTemplateId: template.id,
-            nickname: nickname,
-            sortOrder: cards.count
-        )
-        cards.append(card)
-        return card
-    }
-
-    func deleteCard(_ card: UserCard) throws {
-        cards.removeAll { $0.id == card.id }
-    }
-
-    func updateCard(_ card: UserCard) throws {
-        // Mock implementation - in real repository this would persist changes
     }
 }
 

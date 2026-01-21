@@ -25,14 +25,20 @@ enum NotificationCategory {
 
 // MARK: - NotificationService
 
-/// Service for managing local notifications for benefit reminders.
+/// NotificationService
 ///
 /// Responsibilities:
-/// - Request notification permissions
-/// - Schedule notifications based on ExpirationUrgency levels
-/// - Handle notification actions (mark used, snooze)
+/// - Request notification permissions from the user
+/// - Schedule notifications based on ExpirationUrgency levels and user preferences
+/// - Handle notification actions (mark used, snooze 1/3 days)
 /// - Cancel notifications when benefits are used/deleted
-/// - Group notifications when multiple benefits expire same day
+/// - Reconcile scheduled notifications with current benefit state
+///
+/// Dependencies:
+/// - UNUserNotificationCenter for scheduling and managing notifications
+/// - UserPreferences for notification timing and enabled states
+///
+/// Thread Safety: MainActor
 @MainActor
 final class NotificationService: NSObject {
 
@@ -88,13 +94,22 @@ final class NotificationService: NSObject {
     /// - Parameters:
     ///   - benefit: The benefit to schedule notifications for
     ///   - preferences: User preferences containing notification settings
+    ///
+    /// - Note: This method checks authorization status before scheduling.
+    ///         No notifications will be scheduled if permissions are denied.
     func scheduleNotifications(
         for benefit: Benefit,
         preferences: UserPreferences
-    ) {
+    ) async {
+        // Check notification authorization before attempting to schedule
+        guard await checkAuthorizationStatus() else {
+            print("⚠️ NotificationService: Cannot schedule - notifications not authorized")
+            return
+        }
+
         guard preferences.notificationsEnabled else { return }
         guard benefit.status == .available else { return }
-        guard let periodEnd = benefit.currentPeriodEnd else { return }
+        let periodEnd = benefit.currentPeriodEnd
 
         let daysRemaining = benefit.daysUntilExpiration
 
@@ -251,7 +266,7 @@ final class NotificationService: NSObject {
         cancelAllNotifications()
 
         for benefit in benefits where benefit.status == .available {
-            scheduleNotifications(for: benefit, preferences: preferences)
+            await scheduleNotifications(for: benefit, preferences: preferences)
         }
     }
 

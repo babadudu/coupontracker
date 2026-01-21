@@ -91,7 +91,9 @@ final class HomeViewModel {
     private let cardRepository: CardRepositoryProtocol
     private let benefitRepository: BenefitRepositoryProtocol
     private let templateLoader: TemplateLoaderProtocol
+    private let notificationService: NotificationService
     private var recommendationService: CardRecommendationServiceProtocol?
+    private let insightResolver = DashboardInsightResolver()
 
     // MARK: - State
 
@@ -177,9 +179,14 @@ final class HomeViewModel {
         cards.isEmpty
     }
 
-    /// Total value redeemed for a specific period (uses date overlap, not frequency filter)
+    /// Total value redeemed for a specific period (queries historical BenefitUsage records)
     func redeemedValue(for period: BenefitPeriod) -> Decimal {
-        PeriodMetrics.calculate(for: allBenefits, period: period).redeemedValue
+        do {
+            return try benefitRepository.getRedeemedValue(for: period, referenceDate: Date())
+        } catch {
+            // Fallback to current status-based calculation
+            return PeriodMetrics.calculate(for: allBenefits, period: period).redeemedValue
+        }
     }
 
     /// Total value redeemed this month (convenience for monthly period)
@@ -316,29 +323,13 @@ final class HomeViewModel {
 
     /// Current dashboard insight to display
     var currentInsight: DashboardInsight? {
-        // Priority 1: Urgent expiring benefits (today)
-        let todayCount = benefitsExpiringToday.count
-        if todayCount > 0 {
-            let todayValue = benefitsExpiringToday.reduce(Decimal.zero) { $0 + $1.value }
-            return .urgentExpiring(value: todayValue, count: todayCount)
-        }
-
-        // Priority 2: High value available
-        if totalAvailableValue > 100 {
-            return .availableValue(value: totalAvailableValue)
-        }
-
-        // Priority 3: Monthly success (high redemption rate)
-        if !isEmpty && usedBenefitsCount > totalBenefitsCount / 2 {
-            return .monthlySuccess(value: redeemedThisMonth)
-        }
-
-        // Priority 4: Onboarding
-        if isEmpty {
-            return .onboarding
-        }
-
-        return nil
+        insightResolver.resolve(
+            benefitsExpiringToday: benefitsExpiringToday,
+            totalAvailableValue: totalAvailableValue,
+            usedCount: usedBenefitsCount,
+            totalCount: totalBenefitsCount,
+            redeemedThisMonth: redeemedThisMonth
+        )
     }
 
     // MARK: - Initialization
@@ -348,14 +339,17 @@ final class HomeViewModel {
     ///   - cardRepository: Repository for card operations
     ///   - benefitRepository: Repository for benefit operations
     ///   - templateLoader: Loader for card and benefit templates
+    ///   - notificationService: Service for managing benefit reminders
     init(
         cardRepository: CardRepositoryProtocol,
         benefitRepository: BenefitRepositoryProtocol,
-        templateLoader: TemplateLoaderProtocol
+        templateLoader: TemplateLoaderProtocol,
+        notificationService: NotificationService
     ) {
         self.cardRepository = cardRepository
         self.benefitRepository = benefitRepository
         self.templateLoader = templateLoader
+        self.notificationService = notificationService
     }
 
     /// Sets the recommendation service for lazy initialization
@@ -444,6 +438,12 @@ final class HomeViewModel {
         // CRITICAL: Remove from in-memory state FIRST to prevent UI accessing deleted objects
         removeCardFromState(card.id)
 
+        // Cancel notifications for all benefits on this card
+        notificationService.cancelNotifications(
+            forCardId: card.id,
+            benefits: Array(card.benefits)
+        )
+
         do {
             try cardRepository.deleteCard(card)
 
@@ -494,17 +494,26 @@ final class HomeViewModel {
 
 // MARK: - Preview Support
 
+#if DEBUG
 extension HomeViewModel {
 
     /// Creates a preview instance with mock data
+    @MainActor
     static var preview: HomeViewModel {
-        let mockCardRepo = HomeViewMockCardRepository()
-        let mockBenefitRepo = HomeViewMockBenefitRepository()
-        let mockTemplateLoader = HomeViewMockTemplateLoader()
+        let mockCardRepo = MockCardRepository()
+        mockCardRepo.cards = MockDataFactory.makeWallet()
+
+        let mockBenefitRepo = MockBenefitRepository()
+        mockBenefitRepo.benefits = mockCardRepo.cards.flatMap { $0.benefits }
+
+        let mockTemplateLoader = MockTemplateLoader()
+        let container = AppContainer.preview
+
         let viewModel = HomeViewModel(
             cardRepository: mockCardRepo,
             benefitRepository: mockBenefitRepo,
-            templateLoader: mockTemplateLoader
+            templateLoader: mockTemplateLoader,
+            notificationService: container.notificationService
         )
         Task { @MainActor in
             await viewModel.loadData()
@@ -512,193 +521,4 @@ extension HomeViewModel {
         return viewModel
     }
 }
-
-// MARK: - Mock Template Loader for Preview
-
-@MainActor
-private final class HomeViewMockTemplateLoader: TemplateLoaderProtocol {
-    func loadAllTemplates() throws -> CardDatabase {
-        CardDatabase(schemaVersion: 1, dataVersion: "1.0", lastUpdated: Date(), cards: [])
-    }
-
-    func getTemplate(by id: UUID) throws -> CardTemplate? { nil }
-    func getBenefitTemplate(by id: UUID) throws -> BenefitTemplate? { nil }
-    func searchTemplates(query: String) throws -> [CardTemplate] { [] }
-    func getActiveTemplates() throws -> [CardTemplate] { [] }
-    func getTemplatesByIssuer() throws -> [String: [CardTemplate]] { [:] }
-}
-
-// MARK: - Mock Repositories for Preview
-
-/// Mock card repository for SwiftUI previews
-@MainActor
-private final class HomeViewMockCardRepository: CardRepositoryProtocol {
-
-    private var mockCards: [UserCard] = []
-
-    init() {
-        setupMockData()
-    }
-
-    func getAllCards() throws -> [UserCard] {
-        mockCards
-    }
-
-    func getCard(by id: UUID) throws -> UserCard? {
-        mockCards.first { $0.id == id }
-    }
-
-    func addCard(from template: CardTemplate, nickname: String?) throws -> UserCard {
-        fatalError("Not implemented in mock")
-    }
-
-    func deleteCard(_ card: UserCard) throws {
-        mockCards.removeAll { $0.id == card.id }
-    }
-
-    func updateCard(_ card: UserCard) throws {
-        // No-op for mock
-    }
-
-    private func setupMockData() {
-        // Create mock card 1
-        let card1 = UserCard(
-            cardTemplateId: UUID(uuidString: "550e8400-e29b-41d4-a716-446655440001"),
-            nickname: "Personal",
-            isCustom: false,
-            sortOrder: 0
-        )
-
-        // Create mock card 2
-        let card2 = UserCard(
-            cardTemplateId: UUID(uuidString: "550e8400-e29b-41d4-a716-446655440002"),
-            nickname: "Business",
-            isCustom: false,
-            sortOrder: 1
-        )
-
-        // Add benefits to card 1
-        let calendar = Calendar.current
-        let now = Date()
-        let periodStart = calendar.date(from: calendar.dateComponents([.year, .month], from: now))!
-        let periodEnd = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: periodStart)!
-
-        let benefit1 = Benefit(
-            userCard: card1,
-            templateBenefitId: UUID(uuidString: "550e8400-e29b-41d4-a716-446655440101"),
-            customName: "Uber Credits",
-            customValue: 15,
-            status: .available,
-            currentPeriodStart: periodStart,
-            currentPeriodEnd: periodEnd
-        )
-
-        let benefit2 = Benefit(
-            userCard: card1,
-            templateBenefitId: UUID(uuidString: "550e8400-e29b-41d4-a716-446655440102"),
-            customName: "Dining Credit",
-            customValue: 10,
-            status: .used,
-            currentPeriodStart: periodStart,
-            currentPeriodEnd: periodEnd
-        )
-
-        // Add benefits to card 2
-        let benefit3 = Benefit(
-            userCard: card2,
-            templateBenefitId: UUID(uuidString: "550e8400-e29b-41d4-a716-446655440201"),
-            customName: "Travel Credit",
-            customValue: 300,
-            status: .available,
-            currentPeriodStart: periodStart,
-            currentPeriodEnd: periodEnd
-        )
-
-        card1.benefits = [benefit1, benefit2]
-        card2.benefits = [benefit3]
-
-        mockCards = [card1, card2]
-    }
-}
-
-/// Mock benefit repository for SwiftUI previews
-@MainActor
-private final class HomeViewMockBenefitRepository: BenefitRepositoryProtocol {
-
-    private var mockBenefits: [Benefit] = []
-
-    init() {
-        setupMockData()
-    }
-
-    func getBenefits(for card: UserCard) throws -> [Benefit] {
-        mockBenefits.filter { $0.userCard?.id == card.id }
-    }
-
-    func getAllBenefits() throws -> [Benefit] {
-        mockBenefits
-    }
-
-    func getAvailableBenefits() throws -> [Benefit] {
-        mockBenefits.filter { $0.status == .available }
-    }
-
-    func getExpiringBenefits(within days: Int) throws -> [Benefit] {
-        let threshold = Calendar.current.date(
-            byAdding: .day,
-            value: days,
-            to: Date()
-        ) ?? Date()
-
-        return mockBenefits.filter { benefit in
-            benefit.status == .available &&
-            benefit.currentPeriodEnd <= threshold
-        }
-    }
-
-    func markBenefitUsed(_ benefit: Benefit) throws {
-        benefit.markAsUsed()
-    }
-
-    func resetBenefitForNewPeriod(_ benefit: Benefit) throws {
-        // No-op for mock
-    }
-
-    func snoozeBenefit(_ benefit: Benefit, until date: Date) throws {
-        // No-op for mock
-    }
-
-    func undoMarkBenefitUsed(_ benefit: Benefit) throws {
-        benefit.status = .available
-    }
-
-    private func setupMockData() {
-        let calendar = Calendar.current
-        let now = Date()
-        let periodStart = calendar.date(from: calendar.dateComponents([.year, .month], from: now))!
-
-        // Benefit expiring in 5 days
-        let expiringDate1 = calendar.date(byAdding: .day, value: 5, to: now)!
-        let benefit1 = Benefit(
-            templateBenefitId: UUID(uuidString: "550e8400-e29b-41d4-a716-446655440101"),
-            customName: "Uber Credits",
-            customValue: 15,
-            status: .available,
-            currentPeriodStart: periodStart,
-            currentPeriodEnd: expiringDate1
-        )
-
-        // Benefit expiring in 2 days
-        let expiringDate2 = calendar.date(byAdding: .day, value: 2, to: now)!
-        let benefit2 = Benefit(
-            templateBenefitId: UUID(uuidString: "550e8400-e29b-41d4-a716-446655440102"),
-            customName: "Dining Credit",
-            customValue: 10,
-            status: .available,
-            currentPeriodStart: periodStart,
-            currentPeriodEnd: expiringDate2
-        )
-
-        mockBenefits = [benefit1, benefit2]
-    }
-}
+#endif

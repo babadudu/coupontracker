@@ -20,31 +20,149 @@
 
 import SwiftUI
 
+// MARK: - Benefit Row Style
+
+/// Defines the visual style and behavior of a BenefitRowView.
+///
+/// - standard: Full-featured row with status icons, expiration badges, and all actions
+/// - compact: Simplified layout for dashboard displays with minimal chrome
+/// - swipeable: Standard style with swipe actions enabled (use SwipeableBenefitRowView)
+enum BenefitRowStyle {
+    case standard
+    case compact
+    case swipeable
+}
+
+// MARK: - Benefit Row Configuration
+
+/// Configuration for BenefitRowView appearance and behavior.
+///
+/// Use static factory methods for common configurations:
+/// - `.standard` - Default full-featured row
+/// - `.compact(cardName:cardGradient:)` - Dashboard compact style
+struct BenefitRowConfiguration {
+    let style: BenefitRowStyle
+    let showCard: Bool
+    let cardGradient: DesignSystem.CardGradient?
+    let cardName: String?
+    let onMarkAsDone: (() -> Void)?
+    let onSnooze: ((Int) -> Void)?
+    let onUndo: (() -> Void)?
+    let onTap: (() -> Void)?
+
+    /// Standard configuration with all options available
+    static let standard = BenefitRowConfiguration(
+        style: .standard,
+        showCard: false,
+        cardGradient: nil,
+        cardName: nil,
+        onMarkAsDone: nil,
+        onSnooze: nil,
+        onUndo: nil,
+        onTap: nil
+    )
+
+    /// Compact configuration for dashboard displays
+    static func compact(
+        cardName: String,
+        cardGradient: DesignSystem.CardGradient? = nil,
+        onMarkAsDone: (() -> Void)? = nil,
+        onTap: (() -> Void)? = nil
+    ) -> BenefitRowConfiguration {
+        BenefitRowConfiguration(
+            style: .compact,
+            showCard: true,
+            cardGradient: cardGradient,
+            cardName: cardName,
+            onMarkAsDone: onMarkAsDone,
+            onSnooze: nil,
+            onUndo: nil,
+            onTap: onTap
+        )
+    }
+}
+
 // MARK: - Benefit Row View
 
 /// A list row displaying a single benefit with status, value, and actions.
-/// Supports swipe actions for quick interactions.
+/// Supports multiple styles via configuration for different contexts.
+///
+/// Usage:
+/// ```swift
+/// // Standard style (default)
+/// BenefitRowView(benefit: myBenefit, onMarkAsDone: { ... })
+///
+/// // With configuration
+/// BenefitRowView(benefit: myBenefit, configuration: .compact(cardName: "Amex"))
+/// ```
 struct BenefitRowView: View {
 
     // MARK: - Properties
 
     let benefit: PreviewBenefit
-    var cardGradient: DesignSystem.CardGradient? = nil
-    var showCard: Bool = false
-    var cardName: String? = nil
-    var onMarkAsDone: (() -> Void)? = nil
-    var onSnooze: ((Int) -> Void)? = nil
-    var onUndo: (() -> Void)? = nil
-    var onTap: (() -> Void)? = nil
+    let configuration: BenefitRowConfiguration
+
+    // Legacy initializer properties (for backwards compatibility)
+    private var cardGradient: DesignSystem.CardGradient? { configuration.cardGradient }
+    private var showCard: Bool { configuration.showCard }
+    private var cardName: String? { configuration.cardName }
+    private var onMarkAsDone: (() -> Void)? { configuration.onMarkAsDone }
+    private var onSnooze: ((Int) -> Void)? { configuration.onSnooze }
+    private var onUndo: (() -> Void)? { configuration.onUndo }
+    private var onTap: (() -> Void)? { configuration.onTap }
 
     // MARK: - State
 
     @State private var isPressed = false
     @State private var showSnoozeOptions = false
 
+    // MARK: - Initializers
+
+    /// Creates a benefit row with full configuration control.
+    init(benefit: PreviewBenefit, configuration: BenefitRowConfiguration) {
+        self.benefit = benefit
+        self.configuration = configuration
+    }
+
+    /// Legacy initializer for backwards compatibility.
+    init(
+        benefit: PreviewBenefit,
+        cardGradient: DesignSystem.CardGradient? = nil,
+        showCard: Bool = false,
+        cardName: String? = nil,
+        onMarkAsDone: (() -> Void)? = nil,
+        onSnooze: ((Int) -> Void)? = nil,
+        onUndo: (() -> Void)? = nil,
+        onTap: (() -> Void)? = nil
+    ) {
+        self.benefit = benefit
+        self.configuration = BenefitRowConfiguration(
+            style: .standard,
+            showCard: showCard,
+            cardGradient: cardGradient,
+            cardName: cardName,
+            onMarkAsDone: onMarkAsDone,
+            onSnooze: onSnooze,
+            onUndo: onUndo,
+            onTap: onTap
+        )
+    }
+
     // MARK: - Body
 
     var body: some View {
+        switch configuration.style {
+        case .standard, .swipeable:
+            standardBody
+        case .compact:
+            compactBody
+        }
+    }
+
+    // MARK: - Standard Body
+
+    @ViewBuilder
+    private var standardBody: some View {
         Button(action: { onTap?() }) {
             rowContent
         }
@@ -80,6 +198,86 @@ struct BenefitRowView: View {
         } message: {
             Text("Snooze the reminder for this benefit?")
         }
+    }
+
+    // MARK: - Compact Body
+
+    @ViewBuilder
+    private var compactBody: some View {
+        HStack(spacing: DesignSystem.Spacing.md) {
+            // Card mini icon
+            if let gradient = cardGradient {
+                RoundedRectangle(cornerRadius: 3)
+                    .fill(gradient.gradient)
+                    .frame(width: 24, height: 16)
+            }
+
+            // Benefit info
+            VStack(alignment: .leading, spacing: 2) {
+                HStack {
+                    Text(benefit.name)
+                        .font(DesignSystem.Typography.subhead)
+                        .foregroundStyle(DesignSystem.Colors.textPrimary)
+                        .lineLimit(1)
+
+                    Spacer()
+
+                    Text(benefit.formattedValue)
+                        .font(DesignSystem.Typography.valueSmall)
+                        .foregroundStyle(DesignSystem.Colors.textPrimary)
+                }
+
+                HStack {
+                    if let cardName {
+                        Text(cardName)
+                            .font(DesignSystem.Typography.caption)
+                            .foregroundStyle(DesignSystem.Colors.textTertiary)
+                            .lineLimit(1)
+                    }
+
+                    Spacer()
+
+                    Text(benefit.urgencyText)
+                        .font(DesignSystem.Typography.caption)
+                        .foregroundStyle(
+                            DesignSystem.Colors.urgencyColor(daysRemaining: benefit.daysRemaining)
+                        )
+                }
+            }
+
+            // Action button
+            if onMarkAsDone != nil {
+                Button(action: { onMarkAsDone?() }) {
+                    Image(systemName: "checkmark.circle")
+                        .font(.system(size: 22))
+                        .foregroundStyle(DesignSystem.Colors.primaryFallback)
+                }
+                .buttonStyle(.plain)
+                .frame(width: DesignSystem.Sizing.minTouchTarget,
+                       height: DesignSystem.Sizing.minTouchTarget)
+            }
+        }
+        .padding(.horizontal, DesignSystem.Spacing.lg)
+        .padding(.vertical, DesignSystem.Spacing.md)
+        .background(
+            RoundedRectangle(cornerRadius: DesignSystem.Sizing.buttonCornerRadius)
+                .fill(DesignSystem.Colors.backgroundTertiary)
+        )
+        .onTapGesture {
+            onTap?()
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(compactAccessibilityLabel)
+        .accessibilityHint("Double tap to view details")
+    }
+
+    private var compactAccessibilityLabel: String {
+        var label = "\(benefit.formattedValue) \(benefit.name)"
+        if let cardName {
+            label += " from \(cardName)"
+        }
+        label += ", \(benefit.urgencyText)"
+        return label
     }
 
     // MARK: - Row Content
@@ -429,7 +627,10 @@ struct SwipeableBenefitRowView: View {
 
 // MARK: - Compact Benefit Row
 
-/// A more compact version of the benefit row for dashboard displays
+/// A more compact version of the benefit row for dashboard displays.
+///
+/// This is a convenience wrapper around BenefitRowView with compact configuration.
+/// Prefer using `BenefitRowView(benefit:configuration:)` with `.compact(...)` directly.
 struct CompactBenefitRowView: View {
     let benefit: PreviewBenefit
     let cardName: String
@@ -438,73 +639,104 @@ struct CompactBenefitRowView: View {
     var onTap: (() -> Void)? = nil
 
     var body: some View {
-        HStack(spacing: DesignSystem.Spacing.md) {
-            // Card mini icon
-            if let gradient = cardGradient {
-                RoundedRectangle(cornerRadius: 3)
-                    .fill(gradient.gradient)
-                    .frame(width: 24, height: 16)
-            }
-
-            // Benefit info
-            VStack(alignment: .leading, spacing: 2) {
-                HStack {
-                    Text(benefit.name)
-                        .font(DesignSystem.Typography.subhead)
-                        .foregroundStyle(DesignSystem.Colors.textPrimary)
-                        .lineLimit(1)
-
-                    Spacer()
-
-                    Text(benefit.formattedValue)
-                        .font(DesignSystem.Typography.valueSmall)
-                        .foregroundStyle(DesignSystem.Colors.textPrimary)
-                }
-
-                HStack {
-                    Text(cardName)
-                        .font(DesignSystem.Typography.caption)
-                        .foregroundStyle(DesignSystem.Colors.textTertiary)
-                        .lineLimit(1)
-
-                    Spacer()
-
-                    Text(benefit.urgencyText)
-                        .font(DesignSystem.Typography.caption)
-                        .foregroundStyle(
-                            DesignSystem.Colors.urgencyColor(daysRemaining: benefit.daysRemaining)
-                        )
-                }
-            }
-
-            // Action button
-            if onMarkAsDone != nil {
-                Button(action: { onMarkAsDone?() }) {
-                    Image(systemName: "checkmark.circle")
-                        .font(.system(size: 22))
-                        .foregroundStyle(DesignSystem.Colors.primaryFallback)
-                }
-                .buttonStyle(.plain)
-                .frame(width: DesignSystem.Sizing.minTouchTarget,
-                       height: DesignSystem.Sizing.minTouchTarget)
-            }
-        }
-        .padding(.horizontal, DesignSystem.Spacing.lg)
-        .padding(.vertical, DesignSystem.Spacing.md)
-        .background(
-            RoundedRectangle(cornerRadius: DesignSystem.Sizing.buttonCornerRadius)
-                .fill(DesignSystem.Colors.backgroundTertiary)
+        BenefitRowView(
+            benefit: benefit,
+            configuration: .compact(
+                cardName: cardName,
+                cardGradient: cardGradient,
+                onMarkAsDone: onMarkAsDone,
+                onTap: onTap
+            )
         )
-        .onTapGesture {
-            onTap?()
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(benefit.formattedValue) \(benefit.name) from \(cardName), \(benefit.urgencyText)")
-        .accessibilityHint("Double tap to view details")
     }
 }
 
 // MARK: - Previews
+
+#Preview("Unified - All 3 Styles") {
+    let sampleBenefit = PreviewBenefit.expiring(in: 5, value: 50, name: "Travel Credit")
+
+    ScrollView {
+        VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
+            // Standard Style
+            Text("Standard Style")
+                .font(DesignSystem.Typography.headline)
+                .padding(.horizontal)
+
+            BenefitRowView(
+                benefit: sampleBenefit,
+                configuration: BenefitRowConfiguration(
+                    style: .standard,
+                    showCard: true,
+                    cardGradient: .platinum,
+                    cardName: "Amex Platinum",
+                    onMarkAsDone: { print("Done") },
+                    onSnooze: nil,
+                    onUndo: nil,
+                    onTap: { print("Tap") }
+                )
+            )
+            .padding(.horizontal)
+
+            Divider()
+                .padding(.vertical)
+
+            // Compact Style (using configuration)
+            Text("Compact Style (via configuration)")
+                .font(DesignSystem.Typography.headline)
+                .padding(.horizontal)
+
+            BenefitRowView(
+                benefit: sampleBenefit,
+                configuration: .compact(
+                    cardName: "Amex Platinum",
+                    cardGradient: .platinum,
+                    onMarkAsDone: { print("Done") },
+                    onTap: { print("Tap") }
+                )
+            )
+            .padding(.horizontal)
+
+            Divider()
+                .padding(.vertical)
+
+            // Compact Style (using wrapper)
+            Text("Compact Style (via wrapper)")
+                .font(DesignSystem.Typography.headline)
+                .padding(.horizontal)
+
+            CompactBenefitRowView(
+                benefit: sampleBenefit,
+                cardName: "Sapphire Reserve",
+                cardGradient: .sapphire,
+                onMarkAsDone: { print("Done") }
+            )
+            .padding(.horizontal)
+
+            Divider()
+                .padding(.vertical)
+
+            // Swipeable (shown in List)
+            Text("Swipeable Style (swipe to see actions)")
+                .font(DesignSystem.Typography.headline)
+                .padding(.horizontal)
+
+            List {
+                SwipeableBenefitRowView(
+                    benefit: sampleBenefit,
+                    cardGradient: .gold,
+                    showCard: true,
+                    cardName: "Amex Gold",
+                    onMarkAsDone: { print("Done") },
+                    onSnooze: { days in print("Snooze \(days)") }
+                )
+            }
+            .listStyle(.plain)
+            .frame(height: 100)
+        }
+        .padding(.vertical)
+    }
+}
 
 #Preview("Benefit Row - All States") {
     List {
