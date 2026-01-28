@@ -16,6 +16,9 @@ extension Notification.Name {
 
     /// Posted when user taps "Snooze" from notification action
     static let snoozeBenefit = Notification.Name("CouponTracker.snoozeBenefit")
+
+    /// Posted when user preferences are changed (appearance, notifications, etc.)
+    static let userPreferencesChanged = Notification.Name("CouponTracker.userPreferencesChanged")
 }
 
 // MARK: - Notification UserInfo Keys

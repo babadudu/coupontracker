@@ -204,7 +204,7 @@ struct BenefitCategoryChartView: View {
 
                     Image(systemName: data.category.iconName)
                         .font(.system(size: 14, weight: .semibold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(DesignSystem.Colors.onColor)
                 }
 
                 // Category name
@@ -318,7 +318,7 @@ struct BenefitCategoryChartView: View {
                 }) {
                     Text("Mark Done")
                         .font(DesignSystem.Typography.caption)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(DesignSystem.Colors.onColor)
                         .padding(.horizontal, DesignSystem.Spacing.sm)
                         .padding(.vertical, DesignSystem.Spacing.xs)
                         .background(

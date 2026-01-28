@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 import UserNotifications
+import os
 
 /// Main application entry point for CouponTracker.
 ///
@@ -77,10 +78,8 @@ struct CouponTrackerApp: App {
                 .environment(appContainer)
                 .modelContainer(modelContainer)
                 .task {
-                    print("🚀 CouponTracker: App launched, performing startup tasks...")
                     // Perform startup tasks (benefit reset, template preload)
                     await appContainer.performStartupTasks()
-                    print("✅ CouponTracker: Startup tasks completed successfully")
                 }
         }
     }
@@ -99,7 +98,7 @@ struct CouponTrackerApp: App {
                         container.notificationService.cancelNotifications(for: benefit)
                     }
                 } catch {
-                    print("⚠️ Failed to mark benefit as used from notification: \(error)")
+                    AppLogger.benefits.error("Failed to mark benefit as used from notification action: \(error.localizedDescription)")
                 }
             }
         }
@@ -128,16 +127,18 @@ struct CouponTrackerApp: App {
                         }
                     }
                 } catch {
-                    print("⚠️ Failed to snooze benefit from notification: \(error)")
+                    AppLogger.benefits.error("Failed to snooze benefit from notification action: \(error.localizedDescription)")
                 }
             }
         }
 
         // Open benefit detail when tapping notification
         container.notificationService.onOpenBenefit = { benefitId in
-            // TODO: Navigate to benefit detail view
-            // This requires deep linking which will be implemented separately
-            print("📱 User tapped notification for benefit: \(benefitId)")
+            NotificationCenter.default.post(
+                name: .navigateToBenefit,
+                object: nil,
+                userInfo: [NotificationUserInfoKey.benefitId: benefitId]
+            )
         }
     }
 

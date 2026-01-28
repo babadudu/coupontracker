@@ -1,8 +1,9 @@
+---
+name: add-swift-file
+description: Run when creating any new .swift file in the ios/ directory to register it in the Xcode project
+---
+
 # Add Swift File to Xcode Project
-
-> **AUTO-INVOKE**: When creating any new `.swift` file in the `ios/` directory, automatically follow this procedure after writing the file.
-
-## Problem
 
 New Swift files won't compile until added to `project.pbxproj`. Missing entries cause:
 ```
@@ -20,7 +21,7 @@ Declares the file exists. Add in alphabetical order within the section.
 ```
 
 ### 2. PBXBuildFile
-Links file to compilation. Add in the section.
+Links file to compilation.
 ```
 {ID2} /* FileName.swift in Sources */ = {isa = PBXBuildFile; fileRef = {ID1} /* FileName.swift */; };
 ```
@@ -35,28 +36,16 @@ Add build file ID to the correct target's `files` array:
 
 ## ID Generation
 
-Use unique 24-character uppercase hex IDs. Pattern for readability:
+Use unique 24-character uppercase hex IDs. Pattern:
 ```
 XXXX1234567890ABCDEF0001  (source file)
 XXXX1234567890ABCDEF0002  (build file)
 ```
-
 Where XXXX is a 4-char prefix based on filename (e.g., `BSVC` for BenefitStateService).
 
 ## Verification
 
-After adding entries, run:
 ```bash
 xcodebuild -project ios/CouponTracker.xcodeproj -scheme CouponTracker -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build 2>&1 | tail -5
 ```
-
 Expect: `** BUILD SUCCEEDED **`
-
-## Common Mistakes
-
-| Mistake | Symptom | Fix |
-|---------|---------|-----|
-| Missing PBXFileReference | "No such file" | Add file reference |
-| Missing PBXBuildFile | "Cannot find in scope" | Add build file entry |
-| Wrong PBXGroup | File not visible in Xcode | Move to correct group |
-| Wrong target | Tests can't import | Add to test target's build phase |

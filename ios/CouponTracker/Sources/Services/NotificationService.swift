@@ -9,6 +9,7 @@
 import Foundation
 import UserNotifications
 import SwiftData
+import os
 
 // MARK: - NotificationCategory
 
@@ -75,7 +76,7 @@ final class NotificationService: NSObject {
             )
             return granted
         } catch {
-            print("Failed to request notification permission: \(error)")
+            AppLogger.notifications.error("Failed to request notification permission: \(error.localizedDescription)")
             return false
         }
     }
@@ -103,7 +104,6 @@ final class NotificationService: NSObject {
     ) async {
         // Check notification authorization before attempting to schedule
         guard await checkAuthorizationStatus() else {
-            print("⚠️ NotificationService: Cannot schedule - notifications not authorized")
             return
         }
 
@@ -175,11 +175,7 @@ final class NotificationService: NSObject {
             trigger: trigger
         )
 
-        center.add(request) { error in
-            if let error = error {
-                print("Failed to schedule notification: \(error)")
-            }
-        }
+        center.add(request)
     }
 
     /// Schedules a snoozed notification for a specific date/time.

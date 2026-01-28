@@ -391,6 +391,24 @@ enum BenefitPeriod: String, CaseIterable, Identifiable {
         let benefitPeriodsPerYear = frequency.periodsPerYear
         return max(1, benefitPeriodsPerYear / viewPeriodsPerYear)
     }
+
+    /// Returns frequencies included in this period view (cumulative roll-up).
+    /// - Monthly: only monthly
+    /// - Quarterly: monthly + quarterly
+    /// - SemiAnnual: monthly + quarterly + semiAnnual
+    /// - Annual: all frequencies
+    var includedFrequencies: Set<BenefitFrequency> {
+        switch self {
+        case .monthly:
+            return [.monthly]
+        case .quarterly:
+            return [.monthly, .quarterly]
+        case .semiAnnual:
+            return [.monthly, .quarterly, .semiAnnual]
+        case .annual:
+            return [.monthly, .quarterly, .semiAnnual, .annual]
+        }
+    }
 }
 
 // MARK: - PeriodMetrics
@@ -417,11 +435,14 @@ struct PeriodMetrics {
     ///   - benefits: All benefits to evaluate
     ///   - period: The view period (monthly/quarterly/annual)
     ///   - referenceDate: The reference date for period calculation
+    ///   - applyMultiplier: Whether to apply aggregation multiplier for smaller-frequency benefits.
+    ///     Set to false when using cumulative roll-up with pre-filtered benefit instances.
     /// - Returns: Aggregated metrics for benefits overlapping the period
     static func calculate(
         for benefits: [Benefit],
         period: BenefitPeriod,
-        referenceDate: Date = Date()
+        referenceDate: Date = Date(),
+        applyMultiplier: Bool = true
     ) -> PeriodMetrics {
         let (viewStart, viewEnd) = period.periodDates(for: referenceDate)
 
@@ -434,13 +455,15 @@ struct PeriodMetrics {
         let used = overlapping.filter { $0.status == .used }
         let available = overlapping.filter { $0.status == .available }
 
-        // Calculate total potential value with aggregation multiplier
+        // Calculate total potential value (with optional aggregation multiplier)
         var totalValue: Decimal = 0
         var redeemedValue: Decimal = 0
         var availableValue: Decimal = 0
 
         for benefit in overlapping {
-            let multiplier = Decimal(period.aggregationMultiplier(for: benefit.frequency))
+            let multiplier = applyMultiplier
+                ? Decimal(period.aggregationMultiplier(for: benefit.frequency))
+                : 1
             let benefitTotal = benefit.effectiveValue * multiplier
             totalValue += benefitTotal
 
@@ -509,6 +532,79 @@ struct PeriodMetrics {
             availableCount: available.count,
             totalCount: overlapping.count
         )
+    }
+}
+
+// MARK: - TimePeriodFilter
+
+/// Represents time periods for the ValueBreakdown drill-down views.
+/// Maps to the 3 rows in "By Time Period" section.
+enum TimePeriodFilter: String, CaseIterable, Identifiable {
+    var id: String { rawValue }
+
+    case thisWeek       // 0-7 days remaining
+    case thisMonth      // 8-30 days remaining
+    case later          // 30+ days remaining
+
+    /// Display title for navigation and headers
+    var displayTitle: String {
+        switch self {
+        case .thisWeek: return "This Week"
+        case .thisMonth: return "This Month"
+        case .later: return "Later"
+        }
+    }
+
+    /// Subtitle describing the time range
+    var subtitle: String {
+        switch self {
+        case .thisWeek: return "Expires within 7 days"
+        case .thisMonth: return "Expires within 8-30 days"
+        case .later: return "Expires in 30+ days"
+        }
+    }
+
+    /// Color for the period indicator
+    var color: Color {
+        switch self {
+        case .thisWeek: return DesignSystem.Colors.danger
+        case .thisMonth: return DesignSystem.Colors.warning
+        case .later: return DesignSystem.Colors.success
+        }
+    }
+
+    /// Icon name for the period
+    var iconName: String {
+        switch self {
+        case .thisWeek: return "exclamationmark.circle.fill"
+        case .thisMonth: return "clock.fill"
+        case .later: return "calendar"
+        }
+    }
+
+    /// Day range boundaries for this period
+    var dayRange: ClosedRange<Int> {
+        switch self {
+        case .thisWeek: return 0...7
+        case .thisMonth: return 8...30
+        case .later: return 31...Int.max
+        }
+    }
+
+    /// Checks if a benefit with given days remaining falls into this period
+    /// - Parameter daysRemaining: Number of days until benefit expires
+    /// - Returns: true if the benefit belongs to this period
+    func contains(daysRemaining: Int) -> Bool {
+        dayRange.contains(daysRemaining)
+    }
+
+    /// Determines which period a benefit belongs to based on days remaining
+    static func from(daysRemaining: Int) -> TimePeriodFilter {
+        switch daysRemaining {
+        case ...7: return .thisWeek
+        case 8...30: return .thisMonth
+        default: return .later
+        }
     }
 }
 

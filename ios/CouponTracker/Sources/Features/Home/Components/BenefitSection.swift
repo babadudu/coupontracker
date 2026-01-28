@@ -24,6 +24,7 @@ struct BenefitSection: View {
     var onSnooze: ((PreviewBenefit, Int) -> Void)? = nil
     var onUndo: ((PreviewBenefit) -> Void)? = nil
     var isCollapsible: Bool = false
+    var highlightedBenefitId: UUID? = nil
 
     @Binding var expandedBenefitId: UUID?
     @State private var isExpanded: Bool = true
@@ -58,6 +59,12 @@ struct BenefitSection: View {
                             RoundedRectangle(cornerRadius: DesignSystem.Sizing.buttonCornerRadius)
                                 .fill(DesignSystem.Colors.backgroundSecondary)
                         )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: DesignSystem.Sizing.buttonCornerRadius)
+                                .stroke(DesignSystem.Colors.primaryFallback, lineWidth: 2)
+                                .opacity(highlightedBenefitId == benefit.id ? 1 : 0)
+                        )
+                        .id(benefit.id)
 
                         // Expanded detail (if this benefit is expanded)
                         if expandedBenefitId == benefit.id {

@@ -1,20 +1,23 @@
-// MonthlyProgressCardView.swift
+// ProgressCardView.swift
 // CouponTracker
 //
 // Created: January 17, 2026
 //
-// Purpose: A dashboard card that displays monthly benefit redemption progress.
-//          Shows the current month name, total value redeemed, total available value,
+// Purpose: A swipeable dashboard card displaying benefit redemption progress across
+//          multiple time periods (monthly, quarterly, semi-annual, annual).
+//          Shows period label, total value redeemed, total available value,
 //          a progress bar visualization, and count of benefits used vs total.
 //
 // ACCESSIBILITY:
 // - Clear accessibility labels for VoiceOver
 // - Progress information conveyed through both visual and text
 // - Semantic colors for progress states
+// - Swipe gesture support with page indicators
 //
 // DESIGN NOTES:
+// - TabView with page-style navigation for period selection
 // - Card with rounded corners and subtle shadow
-// - Month name header
+// - Dynamic period label (e.g., "January 2026", "Q1 2026")
 // - Large currency value display for redeemed amount
 // - Progress bar showing percentage used
 // - Stats row showing count of used vs total benefits
@@ -22,13 +25,14 @@
 
 import SwiftUI
 
-// MARK: - Monthly Progress Card View
+// MARK: - Progress Card View
 
-/// A card component displaying monthly benefit redemption progress
-struct MonthlyProgressCardView: View {
+/// A swipeable card component displaying benefit redemption progress for multiple periods
+struct ProgressCardView: View {
 
     // MARK: - Properties
 
+    @Binding var selectedPeriod: BenefitPeriod
     let redeemedValue: Decimal
     let totalValue: Decimal
     let usedCount: Int
@@ -36,11 +40,6 @@ struct MonthlyProgressCardView: View {
     var onTap: (() -> Void)?
 
     // MARK: - Computed Properties
-
-    /// Current month name (e.g., "January 2026")
-    private var currentMonthName: String {
-        Formatters.monthYear.string(from: Date())
-    }
 
     /// Progress percentage (0.0 to 1.0)
     private var progressPercentage: Double {
@@ -71,23 +70,52 @@ struct MonthlyProgressCardView: View {
         }
     }
 
+    /// Dynamic redeemed label based on selected period
+    private var redeemedLabel: String {
+        switch selectedPeriod {
+        case .monthly:
+            return "Redeemed This Month"
+        case .quarterly:
+            return "Redeemed This Quarter"
+        case .semiAnnual:
+            return "Redeemed This Half"
+        case .annual:
+            return "Redeemed This Year"
+        }
+    }
+
     /// Accessibility label for the entire card
     private var accessibilityLabel: String {
         let percentFormatted = String(format: "%.0f", progressPercentage * 100)
-        return "\(currentMonthName). Redeemed \(formattedRedeemedValue) of \(formattedTotalValue). \(usedCount) of \(totalCount) benefits used. \(percentFormatted) percent progress."
+        let periodLabel = selectedPeriod.periodLabel()
+        return "\(periodLabel). Redeemed \(formattedRedeemedValue) of \(formattedTotalValue). \(usedCount) of \(totalCount) benefits used. \(percentFormatted) percent progress."
     }
 
     // MARK: - Body
 
     var body: some View {
+        TabView(selection: $selectedPeriod) {
+            ForEach(BenefitPeriod.allCases) { period in
+                cardContent(for: period)
+                    .tag(period)
+            }
+        }
+        .tabViewStyle(.page(indexDisplayMode: .always))
+        .frame(height: 210)
+    }
+
+    // MARK: - Card Content
+
+    @ViewBuilder
+    private func cardContent(for period: BenefitPeriod) -> some View {
         Group {
             if let onTap = onTap {
                 Button(action: onTap) {
-                    cardContent
+                    cardBody
                 }
                 .buttonStyle(.plain)
             } else {
-                cardContent
+                cardBody
             }
         }
         .accessibilityElement(children: .ignore)
@@ -97,10 +125,10 @@ struct MonthlyProgressCardView: View {
     }
 
     @ViewBuilder
-    private var cardContent: some View {
+    private var cardBody: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.lg) {
-            // Header: Month name
-            monthHeader
+            // Header: Period label
+            periodHeader
 
             // Main content: Value display
             valueSection
@@ -119,12 +147,12 @@ struct MonthlyProgressCardView: View {
         .cardShadow()
     }
 
-    // MARK: - Month Header
+    // MARK: - Period Header
 
     @ViewBuilder
-    private var monthHeader: some View {
+    private var periodHeader: some View {
         HStack {
-            Text(currentMonthName)
+            Text(selectedPeriod.periodLabel())
                 .font(DesignSystem.Typography.title3)
                 .foregroundStyle(DesignSystem.Colors.textPrimary)
 
@@ -142,7 +170,7 @@ struct MonthlyProgressCardView: View {
     private var valueSection: some View {
         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
             // Label
-            Text("Redeemed This Month")
+            Text(redeemedLabel)
                 .font(DesignSystem.Typography.callout)
                 .foregroundStyle(DesignSystem.Colors.textSecondary)
 
@@ -209,10 +237,13 @@ struct MonthlyProgressCardView: View {
 
 // MARK: - Previews
 
-#Preview("Monthly Progress Card - Normal") {
+#Preview("Progress Card - Normal") {
+    @Previewable @State var selectedPeriod: BenefitPeriod = .monthly
+
     VStack(spacing: DesignSystem.Spacing.lg) {
         // 50% progress
-        MonthlyProgressCardView(
+        ProgressCardView(
+            selectedPeriod: $selectedPeriod,
             redeemedValue: 500,
             totalValue: 1000,
             usedCount: 3,
@@ -225,7 +256,13 @@ struct MonthlyProgressCardView: View {
     .background(DesignSystem.Colors.backgroundPrimary)
 }
 
-#Preview("Monthly Progress Card - States") {
+#Preview("Progress Card - States") {
+    @Previewable @State var selectedPeriod1: BenefitPeriod = .monthly
+    @Previewable @State var selectedPeriod2: BenefitPeriod = .quarterly
+    @Previewable @State var selectedPeriod3: BenefitPeriod = .semiAnnual
+    @Previewable @State var selectedPeriod4: BenefitPeriod = .monthly
+    @Previewable @State var selectedPeriod5: BenefitPeriod = .annual
+
     ScrollView {
         VStack(spacing: DesignSystem.Spacing.xl) {
             // Low progress (< 50%)
@@ -234,7 +271,8 @@ struct MonthlyProgressCardView: View {
                     .font(DesignSystem.Typography.headline)
                     .foregroundStyle(DesignSystem.Colors.textPrimary)
 
-                MonthlyProgressCardView(
+                ProgressCardView(
+                    selectedPeriod: $selectedPeriod1,
                     redeemedValue: 250,
                     totalValue: 1000,
                     usedCount: 2,
@@ -248,7 +286,8 @@ struct MonthlyProgressCardView: View {
                     .font(DesignSystem.Typography.headline)
                     .foregroundStyle(DesignSystem.Colors.textPrimary)
 
-                MonthlyProgressCardView(
+                ProgressCardView(
+                    selectedPeriod: $selectedPeriod2,
                     redeemedValue: 650,
                     totalValue: 1000,
                     usedCount: 5,
@@ -262,7 +301,8 @@ struct MonthlyProgressCardView: View {
                     .font(DesignSystem.Typography.headline)
                     .foregroundStyle(DesignSystem.Colors.textPrimary)
 
-                MonthlyProgressCardView(
+                ProgressCardView(
+                    selectedPeriod: $selectedPeriod3,
                     redeemedValue: 900,
                     totalValue: 1000,
                     usedCount: 7,
@@ -276,7 +316,8 @@ struct MonthlyProgressCardView: View {
                     .font(DesignSystem.Typography.headline)
                     .foregroundStyle(DesignSystem.Colors.textPrimary)
 
-                MonthlyProgressCardView(
+                ProgressCardView(
+                    selectedPeriod: $selectedPeriod4,
                     redeemedValue: 0,
                     totalValue: 1000,
                     usedCount: 0,
@@ -290,7 +331,8 @@ struct MonthlyProgressCardView: View {
                     .font(DesignSystem.Typography.headline)
                     .foregroundStyle(DesignSystem.Colors.textPrimary)
 
-                MonthlyProgressCardView(
+                ProgressCardView(
+                    selectedPeriod: $selectedPeriod5,
                     redeemedValue: 1000,
                     totalValue: 1000,
                     usedCount: 8,
@@ -303,9 +345,12 @@ struct MonthlyProgressCardView: View {
     .background(DesignSystem.Colors.backgroundPrimary)
 }
 
-#Preview("Monthly Progress Card - Dark Mode") {
+#Preview("Progress Card - Dark Mode") {
+    @Previewable @State var selectedPeriod: BenefitPeriod = .quarterly
+
     VStack(spacing: DesignSystem.Spacing.lg) {
-        MonthlyProgressCardView(
+        ProgressCardView(
+            selectedPeriod: $selectedPeriod,
             redeemedValue: 750,
             totalValue: 1200,
             usedCount: 5,
@@ -319,7 +364,11 @@ struct MonthlyProgressCardView: View {
     .preferredColorScheme(.dark)
 }
 
-#Preview("Monthly Progress Card - Edge Cases") {
+#Preview("Progress Card - Edge Cases") {
+    @Previewable @State var selectedPeriod1: BenefitPeriod = .monthly
+    @Previewable @State var selectedPeriod2: BenefitPeriod = .annual
+    @Previewable @State var selectedPeriod3: BenefitPeriod = .semiAnnual
+
     ScrollView {
         VStack(spacing: DesignSystem.Spacing.xl) {
             // Zero total value (edge case handling)
@@ -328,7 +377,8 @@ struct MonthlyProgressCardView: View {
                     .font(DesignSystem.Typography.headline)
                     .foregroundStyle(DesignSystem.Colors.textPrimary)
 
-                MonthlyProgressCardView(
+                ProgressCardView(
+                    selectedPeriod: $selectedPeriod1,
                     redeemedValue: 0,
                     totalValue: 0,
                     usedCount: 0,
@@ -342,7 +392,8 @@ struct MonthlyProgressCardView: View {
                     .font(DesignSystem.Typography.headline)
                     .foregroundStyle(DesignSystem.Colors.textPrimary)
 
-                MonthlyProgressCardView(
+                ProgressCardView(
+                    selectedPeriod: $selectedPeriod2,
                     redeemedValue: 15000,
                     totalValue: 20000,
                     usedCount: 15,
@@ -356,7 +407,8 @@ struct MonthlyProgressCardView: View {
                     .font(DesignSystem.Typography.headline)
                     .foregroundStyle(DesignSystem.Colors.textPrimary)
 
-                MonthlyProgressCardView(
+                ProgressCardView(
+                    selectedPeriod: $selectedPeriod3,
                     redeemedValue: 100,
                     totalValue: 100,
                     usedCount: 1,

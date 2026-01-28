@@ -16,6 +16,7 @@
 		07C6625487ECDF61EEABE442 /* AchievementRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4501261DC61C2E532545564C /* AchievementRing.swift */; };
 		0A156F5AAEA68F76BAEF60F3 /* BUILD_INSTRUCTIONS.md in Resources */ = {isa = PBXBuildFile; fileRef = C7BBBEE6568878E3759D4396 /* BUILD_INSTRUCTIONS.md */; };
 		0BCBE93F6878DBF661C85347 /* AccomplishmentRingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79D4B8197EDD2CA84B373EF /* AccomplishmentRingsView.swift */; };
+		APPM1234567890ABCDEF0002 /* AppearanceMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPM1234567890ABCDEF0001 /* AppearanceMode.swift */; };
 		114E3B35DD132242BA7357E8 /* AppIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA34E9FFE4F2FCA182A9454 /* AppIntegrationTests.swift */; };
 		15A6868843F10E688C4005A6 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72ED49A42D2834D3DBD86566 /* UserPreferences.swift */; };
 		17C888963B08F592AB1BF269 /* BenefitRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEACB256F90E748CD5091166 /* BenefitRowView.swift */; };
@@ -74,6 +75,8 @@
 		E1A8B9C7D3F6E5A84C2D1F60 /* SearchableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5F3C8A2B4D7E61F8A93C50 /* SearchableTests.swift */; };
 		EBEC715D01FFDE1859951636 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84408477EA6713CBEC771E1E /* OnboardingView.swift */; };
 		EE5C5A57FC8CF5AF9EB09941 /* PeriodMetricsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACADBD6E3A2135985B05675 /* PeriodMetricsTests.swift */; };
+		40101F66D24A460384DA082F /* AppLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20517F53F17D4326B05BBD2C /* AppLoggerTests.swift */; };
+		PROG1234567890ABCDEF0002 /* ProgressCardViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = PROG1234567890ABCDEF0001 /* ProgressCardViewTests.swift */; };
 		EE79D5396E16D4F16AC9F43E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EC2BD7A2EA7B8E9F114B0D /* SettingsView.swift */; };
 		F0F648B40DF4B3C9AFD27408 /* NotificationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677CF1D787A44E95E6FE4CCE /* NotificationExtensions.swift */; };
 		SWDT1234567890ABCDEF0002 /* SwiftDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = SWDT1234567890ABCDEF0001 /* SwiftDataHelpers.swift */; };
@@ -92,6 +95,23 @@
 		CSTK1234567890ABCDEF0002 /* CardStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CSTK1234567890ABCDEF0001 /* CardStackView.swift */; };
 		EXPD1234567890ABCDEF0002 /* ExpandedBenefitDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EXPD1234567890ABCDEF0001 /* ExpandedBenefitDetail.swift */; };
 		WLST1234567890ABCDEF0002 /* WalletListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = WLST1234567890ABCDEF0001 /* WalletListView.swift */; };
+		LNCH1234567890ABCDEF0002 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = LNCH1234567890ABCDEF0001 /* LaunchScreen.storyboard */; };
+		BRCFTEST567890ABCDEF0002 /* BenefitRowConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BRCFTEST567890ABCDEF0001 /* BenefitRowConfigurationTests.swift */; };
+		TABVTEST567890ABCDEF0002 /* TabViewActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TABVTEST567890ABCDEF0001 /* TabViewActionsTests.swift */; };
+		BRPV1234567890ABCDEF0002 /* BenefitRowView+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = BRPV1234567890ABCDEF0001 /* BenefitRowView+Previews.swift */; };
+		BRCF1234567890ABCDEF0002 /* BenefitRowConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BRCF1234567890ABCDEF0001 /* BenefitRowConfiguration.swift */; };
+		BRBS1234567890ABCDEF0002 /* BenefitRowButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BRBS1234567890ABCDEF0001 /* BenefitRowButtonStyle.swift */; };
+		SBRV1234567890ABCDEF0002 /* SwipeableBenefitRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SBRV1234567890ABCDEF0001 /* SwipeableBenefitRowView.swift */; };
+		LDVW1234567890ABCDEF0002 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = LDVW1234567890ABCDEF0001 /* LoadingView.swift */; };
+		STCD1234567890ABCDEF0002 /* StatCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = STCD1234567890ABCDEF0001 /* StatCard.swift */; };
+		EDCS1234567890ABCDEF0002 /* EditCardSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCS1234567890ABCDEF0001 /* EditCardSheet.swift */; };
+		HTBV1234567890ABCDEF0002 /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = HTBV1234567890ABCDEF0001 /* HomeTabView.swift */; };
+		WTBV1234567890ABCDEF0002 /* WalletTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = WTBV1234567890ABCDEF0001 /* WalletTabView.swift */; };
+		APLG1234567890ABCDEF0002 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = APLG1234567890ABCDEF0001 /* AppLogger.swift */; };
+		CATB1234567890ABCDEF0002 /* CategoryBenefitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CATB1234567890ABCDEF0001 /* CategoryBenefitsView.swift */; };
+		PERB1234567890ABCDEF0002 /* PeriodBenefitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = PERB1234567890ABCDEF0001 /* PeriodBenefitsView.swift */; };
+		BBCS1234567890ABCDEF0002 /* BenefitsByCardSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCS1234567890ABCDEF0001 /* BenefitsByCardSection.swift */; };
+		BBUS1234567890ABCDEF0002 /* BenefitsByUrgencySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBUS1234567890ABCDEF0001 /* BenefitsByUrgencySection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +133,8 @@
 		08BAFF15C5A312EC3B5AADE9 /* AddCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardViewModel.swift; sourceTree = "<group>"; };
 		09C179A9A8213044AEA3F19D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0ACADBD6E3A2135985B05675 /* PeriodMetricsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodMetricsTests.swift; sourceTree = "<group>"; };
+		20517F53F17D4326B05BBD2C /* AppLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLoggerTests.swift; sourceTree = "<group>"; };
+		PROG1234567890ABCDEF0001 /* ProgressCardViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCardViewTests.swift; sourceTree = "<group>"; };
 		0E44E4BA948F880DE0C5B3F8 /* CardRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRepository.swift; sourceTree = "<group>"; };
 		11C15127D4C99E82B62A03D5 /* ValueBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueBreakdownView.swift; sourceTree = "<group>"; };
 		158BA166DDD21F994ABD1264 /* CouponTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponTrackerApp.swift; sourceTree = "<group>"; };
@@ -131,6 +153,7 @@
 		512EB62DAFE6DC3D6B9B4A66 /* CardComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardComponent.swift; sourceTree = "<group>"; };
 		53FA40E55CA33962C9EF9BFE /* AddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardView.swift; sourceTree = "<group>"; };
 		54C25932E958C53791B73F07 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		APPM1234567890ABCDEF0001 /* AppearanceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceMode.swift; sourceTree = "<group>"; };
 		5B6DB495CDEB980D66DEA2DA /* CardTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTemplate.swift; sourceTree = "<group>"; };
 		63CB676B1164CCD02FF1FAE6 /* BenefitCategoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitCategoryTests.swift; sourceTree = "<group>"; };
 		3C98BD262E549B9F4734262E /* DateExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionsTests.swift; sourceTree = "<group>"; };
@@ -192,6 +215,23 @@
 		CSTK1234567890ABCDEF0001 /* CardStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStackView.swift; sourceTree = "<group>"; };
 		EXPD1234567890ABCDEF0001 /* ExpandedBenefitDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedBenefitDetail.swift; sourceTree = "<group>"; };
 		WLST1234567890ABCDEF0001 /* WalletListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletListView.swift; sourceTree = "<group>"; };
+		LNCH1234567890ABCDEF0001 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "LaunchScreen/LaunchScreen.storyboard"; sourceTree = "<group>"; };
+		BRPV1234567890ABCDEF0001 /* BenefitRowView+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BenefitRowView+Previews.swift"; sourceTree = "<group>"; };
+		BRCF1234567890ABCDEF0001 /* BenefitRowConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitRowConfiguration.swift; sourceTree = "<group>"; };
+		BRBS1234567890ABCDEF0001 /* BenefitRowButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitRowButtonStyle.swift; sourceTree = "<group>"; };
+		SBRV1234567890ABCDEF0001 /* SwipeableBenefitRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableBenefitRowView.swift; sourceTree = "<group>"; };
+		LDVW1234567890ABCDEF0001 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		STCD1234567890ABCDEF0001 /* StatCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCard.swift; sourceTree = "<group>"; };
+		EDCS1234567890ABCDEF0001 /* EditCardSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardSheet.swift; sourceTree = "<group>"; };
+		HTBV1234567890ABCDEF0001 /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
+		WTBV1234567890ABCDEF0001 /* WalletTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTabView.swift; sourceTree = "<group>"; };
+		BRCFTEST567890ABCDEF0001 /* BenefitRowConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitRowConfigurationTests.swift; sourceTree = "<group>"; };
+		TABVTEST567890ABCDEF0001 /* TabViewActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewActionsTests.swift; sourceTree = "<group>"; };
+		APLG1234567890ABCDEF0001 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
+		CATB1234567890ABCDEF0001 /* CategoryBenefitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBenefitsView.swift; sourceTree = "<group>"; };
+		PERB1234567890ABCDEF0001 /* PeriodBenefitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodBenefitsView.swift; sourceTree = "<group>"; };
+		BBCS1234567890ABCDEF0001 /* BenefitsByCardSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitsByCardSection.swift; sourceTree = "<group>"; };
+		BBUS1234567890ABCDEF0001 /* BenefitsByUrgencySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitsByUrgencySection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -232,14 +272,18 @@
 				08BAFF15C5A312EC3B5AADE9 /* AddCardViewModel.swift */,
 				897779E2EA378051D5F88E6A /* CardDetailView.swift */,
 				8E088EEE7CA79D56546D0BD6 /* CardDetailViewModel.swift */,
+				CATB1234567890ABCDEF0001 /* CategoryBenefitsView.swift */,
+				56746CFA55C44669A3DB79C6 /* DashboardInsightResolver.swift */,
 				CBCE67853C0BAFAF38C72AFD /* ExpiringBenefitsListView.swift */,
+				HTBV1234567890ABCDEF0001 /* HomeTabView.swift */,
 				323F84B427FFD695595C99FC /* HomeViewModel.swift */,
+				PERB1234567890ABCDEF0001 /* PeriodBenefitsView.swift */,
 				E63E2CD59514C3BA886C1E18 /* RecommendationSearchView.swift */,
 				11C15127D4C99E82B62A03D5 /* ValueBreakdownView.swift */,
+				WTBV1234567890ABCDEF0001 /* WalletTabView.swift */,
 				1B08DA0205E97EF15432F2B9 /* WalletView.swift */,
 				450DC2A09050CCBEE577B8BE /* Components */,
-							56746CFA55C44669A3DB79C6 /* DashboardInsightResolver.swift */,
-);
+			);
 			path = Home;
 			sourceTree = "<group>";
 		};
@@ -266,16 +310,23 @@
 				F79D4B8197EDD2CA84B373EF /* AccomplishmentRingsView.swift */,
 				4501261DC61C2E532545564C /* AchievementRing.swift */,
 				25F5B883213EBE804A6883F3 /* BenefitCategoryChartView.swift */,
+				BRBS1234567890ABCDEF0001 /* BenefitRowButtonStyle.swift */,
+				BRCF1234567890ABCDEF0001 /* BenefitRowConfiguration.swift */,
 				BEACB256F90E748CD5091166 /* BenefitRowView.swift */,
+				BRPV1234567890ABCDEF0001 /* BenefitRowView+Previews.swift */,
 				BSEC1234567890ABCDEF0001 /* BenefitSection.swift */,
 				BSPILL234567890ABCDEF0001 /* BenefitSummaryPill.swift */,
+				BBCS1234567890ABCDEF0001 /* BenefitsByCardSection.swift */,
+				BBUS1234567890ABCDEF0001 /* BenefitsByUrgencySection.swift */,
 				512EB62DAFE6DC3D6B9B4A66 /* CardComponent.swift */,
 				CSTK1234567890ABCDEF0001 /* CardStackView.swift */,
+				EDCS1234567890ABCDEF0001 /* EditCardSheet.swift */,
 				EXPD1234567890ABCDEF0001 /* ExpandedBenefitDetail.swift */,
 				79FB60319F7D76FFA9BDE491 /* ExpiringBenefitsSectionView.swift */,
 				C78364C9F06766DFE9ABBBE7 /* InsightBannerView.swift */,
 				80F6D85957FAA3FBFCB27BC0 /* MonthlyProgressCardView.swift */,
 				19C6DD7AD95A6E571F847AD7 /* PeriodCarouselView.swift */,
+				SBRV1234567890ABCDEF0001 /* SwipeableBenefitRowView.swift */,
 				WLST1234567890ABCDEF0001 /* WalletListView.swift */,
 			);
 			path = Components;
@@ -285,22 +336,26 @@
 			isa = PBXGroup;
 			children = (
 				65E27E98ED6155FCFFFE5BC8 /* AddCardViewModelTests.swift */,
-				9E5F3C8A2B4D7E61F8A93C50 /* SearchableTests.swift */,
 				BBA34E9FFE4F2FCA182A9454 /* AppIntegrationTests.swift */,
 				63CB676B1164CCD02FF1FAE6 /* BenefitCategoryTests.swift */,
 				BEXT1234567890ABCDEF0001 /* BenefitExtensionsTests.swift */,
 				8B6383CA5E10AAD87DC0E954 /* BenefitRepositoryTests.swift */,
+				BRCFTEST567890ABCDEF0001 /* BenefitRowConfigurationTests.swift */,
 				BSST1234567890ABCDEF0001 /* BenefitStateServiceTests.swift */,
 				1C6B2483BF90BC941C23A8BA /* CardRepositoryTests.swift */,
+				DFC84C44D504468F82BF66EE /* DashboardInsightResolverTests.swift */,
 				3C98BD262E549B9F4734262E /* DateExtensionsTests.swift */,
 				D72CCEF3837F986E75B3F53A /* HomeViewModelTests.swift */,
 				D338CF4B53BD34A68F1105A2 /* MarkUndoCycleTests.swift */,
 				719753005DE26AE590ACFD00 /* MultipleBenefitsTests.swift */,
 				D3E008C59E2FCEC28A03D01C /* NotificationServiceTests.swift */,
-				SWDTEST1234567890ABCDE01 /* SwiftDataHelpersTests.swift */,
 				0ACADBD6E3A2135985B05675 /* PeriodMetricsTests.swift */,
-							DFC84C44D504468F82BF66EE /* DashboardInsightResolverTests.swift */,
-);
+				20517F53F17D4326B05BBD2C /* AppLoggerTests.swift */,
+				PROG1234567890ABCDEF0001 /* ProgressCardViewTests.swift */,
+				9E5F3C8A2B4D7E61F8A93C50 /* SearchableTests.swift */,
+				SWDTEST1234567890ABCDE01 /* SwiftDataHelpersTests.swift */,
+				TABVTEST567890ABCDEF0001 /* TabViewActionsTests.swift */,
+			);
 			path = UnitTests;
 			sourceTree = "<group>";
 		};
@@ -379,10 +434,20 @@
 			isa = PBXGroup;
 			children = (
 				7B4B20EFEA0B3F16668FBAA0 /* Adapters */,
+				CORECOMP123456789ABCGRP1 /* Components */,
 				EB204BABB8DAD3F716B0EFA9 /* Extensions */,
 				B964B7A48151451DBD9CBAF7 /* Protocols */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		CORECOMP123456789ABCGRP1 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				LDVW1234567890ABCDEF0001 /* LoadingView.swift */,
+				STCD1234567890ABCDEF0001 /* StatCard.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		B964B7A48151451DBD9CBAF7 /* Protocols */ = {
@@ -403,6 +468,7 @@
 		B9852CFB8BDFB0C35EA639B6 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
+				APPM1234567890ABCDEF0001 /* AppearanceMode.swift */,
 				A929208E7A5A5DB85A0FF0C9 /* BenefitEnums.swift */,
 			);
 			path = Enums;
@@ -412,6 +478,7 @@
 			isa = PBXGroup;
 			children = (
 				FE8C84A7E9481EC950763438 /* Assets.xcassets */,
+				LNCH1234567890ABCDEF0001 /* LaunchScreen.storyboard */,
 			);
 			name = Resources;
 			path = CouponTracker/Resources;
@@ -482,6 +549,7 @@
 		F26ED9489CB6C15561D0E569 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				APLG1234567890ABCDEF0001 /* AppLogger.swift */,
 				A8FFD8A7AF5039F906788DFF /* Formatters.swift */,
 				66C57E2A90D204E9A753C0D4 /* PreviewData.swift */,
 				MOCK1234567890ABCDEFGRP1 /* Mocks */,
@@ -575,6 +643,7 @@
 				026D8972D5DD39BCCCF0632C /* CardTemplates.json in Resources */,
 				DFCDE392BD086AA5144B15DA /* FINAL_FIX_SUMMARY.md in Resources */,
 				F96488E52C33477965DB3843 /* RUNTIME_FIX.md in Resources */,
+				LNCH1234567890ABCDEF0002 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -600,8 +669,12 @@
 				SWDTEST1234567890ABCDE02 /* SwiftDataHelpersTests.swift in Sources */,
 				B1F95B103967189AF7C61BF9 /* NotificationServiceTests.swift in Sources */,
 				EE5C5A57FC8CF5AF9EB09941 /* PeriodMetricsTests.swift in Sources */,
-							F18D4368B1254B7EA4DDFB19 /* DashboardInsightResolverTests.swift in Sources */,
-);
+				40101F66D24A460384DA082F /* AppLoggerTests.swift in Sources */,
+				PROG1234567890ABCDEF0002 /* ProgressCardViewTests.swift in Sources */,
+				F18D4368B1254B7EA4DDFB19 /* DashboardInsightResolverTests.swift in Sources */,
+				BRCFTEST567890ABCDEF0002 /* BenefitRowConfigurationTests.swift in Sources */,
+				TABVTEST567890ABCDEF0002 /* TabViewActionsTests.swift in Sources */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F61D3B6BFB55F889200E6128 /* Sources */ = {
@@ -613,6 +686,7 @@
 				38B444A49EFA559A921092C5 /* AddCardView.swift in Sources */,
 				33DDFDB70545A448BCC969DD /* AddCardViewModel.swift in Sources */,
 				D261AB1D754F86719801FEBB /* AppContainer.swift in Sources */,
+				APPM1234567890ABCDEF0002 /* AppearanceMode.swift in Sources */,
 				2E121BE1121884800ACE3A4B /* Benefit.swift in Sources */,
 				92762ABB72D25384C2804FB1 /* BenefitCategoryChartView.swift in Sources */,
 				BENF1234567890ABCDEF0002 /* BenefitExtensions.swift in Sources */,
@@ -647,6 +721,7 @@
 				97B48712F8B647CA1FC085BE /* ExpiringBenefitsListView.swift in Sources */,
 				F8AAAB08C32E291E3E8FF089 /* ExpiringBenefitsSectionView.swift in Sources */,
 				C8286FE28C0D020FF54D8BD5 /* Formatters.swift in Sources */,
+				APLG1234567890ABCDEF0002 /* AppLogger.swift in Sources */,
 				7D1461E0C4A4167BDAF2D48A /* HomeViewModel.swift in Sources */,
 				4C031D2EBACCF72F431319D0 /* InsightBannerView.swift in Sources */,
 				DF7D70F799397FF16C800306 /* MonthlyProgressCardView.swift in Sources */,
@@ -669,8 +744,21 @@
 				6610865792430F1FB49661A8 /* ValueSummaryCard.swift in Sources */,
 				WLST1234567890ABCDEF0002 /* WalletListView.swift in Sources */,
 				F76B24B529C471E8D4896947 /* WalletView.swift in Sources */,
-							2AC9B683A0A4402D8CC5956B /* DashboardInsightResolver.swift in Sources */,
-);
+				2AC9B683A0A4402D8CC5956B /* DashboardInsightResolver.swift in Sources */,
+				BRPV1234567890ABCDEF0002 /* BenefitRowView+Previews.swift in Sources */,
+				BRCF1234567890ABCDEF0002 /* BenefitRowConfiguration.swift in Sources */,
+				BRBS1234567890ABCDEF0002 /* BenefitRowButtonStyle.swift in Sources */,
+				SBRV1234567890ABCDEF0002 /* SwipeableBenefitRowView.swift in Sources */,
+				LDVW1234567890ABCDEF0002 /* LoadingView.swift in Sources */,
+				STCD1234567890ABCDEF0002 /* StatCard.swift in Sources */,
+				EDCS1234567890ABCDEF0002 /* EditCardSheet.swift in Sources */,
+				HTBV1234567890ABCDEF0002 /* HomeTabView.swift in Sources */,
+				WTBV1234567890ABCDEF0002 /* WalletTabView.swift in Sources */,
+				CATB1234567890ABCDEF0002 /* CategoryBenefitsView.swift in Sources */,
+				PERB1234567890ABCDEF0002 /* PeriodBenefitsView.swift in Sources */,
+				BBCS1234567890ABCDEF0002 /* BenefitsByCardSection.swift in Sources */,
+				BBUS1234567890ABCDEF0002 /* BenefitsByUrgencySection.swift in Sources */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
@@ -830,11 +918,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CouponTracker/CouponTracker.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_KEY_CFBundleDisplayName = CouponTracker;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.coupontracker.app;
@@ -849,11 +938,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CouponTracker/CouponTracker.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_KEY_CFBundleDisplayName = CouponTracker;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.coupontracker.app;

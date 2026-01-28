@@ -236,7 +236,7 @@ struct WalletView: View {
                     Text("Add Card")
                 }
                 .font(DesignSystem.Typography.headline)
-                .foregroundStyle(.white)
+                .foregroundStyle(DesignSystem.Colors.onColor)
                 .padding(.horizontal, DesignSystem.Spacing.xl)
                 .padding(.vertical, DesignSystem.Spacing.md)
                 .background(

@@ -66,6 +66,16 @@ protocol BenefitRepositoryProtocol {
     /// - Throws: Repository error if fetch fails
     func getRedeemedValue(for period: BenefitPeriod, referenceDate: Date) throws -> Decimal
 
+    /// Gets total redeemed value for a specific period, filtered by benefit frequency.
+    ///
+    /// - Parameters:
+    ///   - period: The view period (monthly/quarterly/semiAnnual/annual)
+    ///   - frequency: Only include benefits with this frequency
+    ///   - referenceDate: The reference date for period calculation
+    /// - Returns: Sum of valueRedeemed for matching usages in the period
+    /// - Throws: Repository error if fetch fails
+    func getRedeemedValue(for period: BenefitPeriod, frequency: BenefitFrequency, referenceDate: Date) throws -> Decimal
+
     // MARK: - Write Operations
 
     /// Marks a benefit as used and creates a usage history record.

@@ -38,7 +38,7 @@ struct InsightBannerView: View {
                 // Icon
                 Image(systemName: insight.icon)
                     .font(.system(size: 20, weight: .semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(DesignSystem.Colors.onColor)
                     .frame(width: 32, height: 32)
                     .background(
                         Circle()
@@ -48,7 +48,7 @@ struct InsightBannerView: View {
                 // Message
                 Text(insight.message)
                     .font(DesignSystem.Typography.subhead)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(DesignSystem.Colors.onColor)
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)
 
@@ -63,7 +63,7 @@ struct InsightBannerView: View {
                     }) {
                         Image(systemName: "xmark")
                             .font(.system(size: 12, weight: .bold))
-                            .foregroundStyle(.white.opacity(0.7))
+                            .foregroundStyle(DesignSystem.Colors.onColor.opacity(0.7))
                             .frame(width: DesignSystem.Sizing.minTouchTarget, height: DesignSystem.Sizing.minTouchTarget)
                     }
                     .accessibilityLabel("Dismiss banner")
@@ -71,7 +71,7 @@ struct InsightBannerView: View {
                     // Chevron for tap action
                     Image(systemName: "chevron.right")
                         .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(.white.opacity(0.7))
+                        .foregroundStyle(DesignSystem.Colors.onColor.opacity(0.7))
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.lg)

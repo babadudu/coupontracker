@@ -469,6 +469,71 @@ func handleAppRefresh(task: BGAppRefreshTask) {
 
 ---
 
+## Logging Architecture
+
+### Production Logging Strategy
+
+The application uses Apple's unified logging system (`os.Logger`) for production-safe, structured logging that supports debugging without exposing sensitive data.
+
+**Framework:** `os` (built-in)
+
+### AppLogger Utility
+
+Centralized logging utility with domain-specific categories:
+
+```swift
+import os
+
+enum AppLogger {
+    private static let subsystem = "com.coupontracker.app"
+
+    static let benefits = Logger(subsystem: subsystem, category: "benefits")
+    static let notifications = Logger(subsystem: subsystem, category: "notifications")
+    static let data = Logger(subsystem: subsystem, category: "data")
+    static let cards = Logger(subsystem: subsystem, category: "cards")
+    static let settings = Logger(subsystem: subsystem, category: "settings")
+    static let templates = Logger(subsystem: subsystem, category: "templates")
+    static let app = Logger(subsystem: subsystem, category: "app")
+}
+```
+
+### Log Categories
+
+| Category | Purpose | Example Usages |
+|----------|---------|----------------|
+| `benefits` | Benefit operations, status changes | Mark used, undo, expiration |
+| `notifications` | Notification scheduling, permissions | Schedule, cancel, auth requests |
+| `data` | Data layer operations | Fetch, save, migration errors |
+| `cards` | Card management | Add, delete, edit operations |
+| `settings` | User preferences | Load, save preferences |
+| `templates` | Template loading | JSON parsing, fallbacks |
+| `app` | General app lifecycle | Launch, background, errors |
+
+### Log Levels
+
+| Level | Usage | Production Visibility |
+|-------|-------|----------------------|
+| `.debug()` | Development diagnostics | Hidden by default |
+| `.info()` | Normal operations | Available in Console.app |
+| `.warning()` | Recoverable issues | Persisted, highlighted |
+| `.error()` | Operation failures | Persisted, requires attention |
+| `.fault()` | Critical system errors | Always persisted |
+
+### Viewing Logs
+
+1. Connect device or use Simulator
+2. Open Console.app (macOS)
+3. Filter by subsystem: `com.coupontracker.app`
+4. Filter by category as needed
+
+### Privacy Considerations
+
+- User data is NOT logged in production
+- Only operation outcomes and error descriptions
+- Sensitive values use string interpolation privacy: `.private`
+
+---
+
 ## Card Database Management
 
 ### Template Database Format
@@ -710,6 +775,7 @@ BGScheduler          RefreshTask          BenefitService          SwiftData     
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
 | 1.0 | 2026-01-16 | Product Team | Initial technical specification |
+| 1.1 | 2026-01-21 | Engineering | Added Logging Architecture section |
 
 ---
 

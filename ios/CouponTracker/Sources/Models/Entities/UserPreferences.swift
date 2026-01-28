@@ -76,6 +76,15 @@ final class UserPreferences {
     /// Whether to sort cards by urgency
     var sortCardsByUrgency: Bool
 
+    /// Appearance mode (system, light, dark) - raw storage
+    var appearanceModeRaw: String = AppearanceMode.system.rawValue
+
+    /// Appearance mode preference
+    var appearanceMode: AppearanceMode {
+        get { AppearanceMode(rawValue: appearanceModeRaw) ?? .system }
+        set { appearanceModeRaw = newValue.rawValue }
+    }
+
     // MARK: - Metadata
 
     /// Last modification timestamp

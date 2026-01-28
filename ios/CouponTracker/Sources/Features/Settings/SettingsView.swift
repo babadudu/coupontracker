@@ -53,9 +53,13 @@ private struct SettingsContentView: View {
 
     var body: some View {
         List {
+            appearanceSection
             notificationSection
             reminderTimingSection
             appInfoSection
+        }
+        .onChange(of: viewModel.appearanceMode) { _, _ in
+            viewModel.savePreferences()
         }
         .onChange(of: viewModel.notificationsEnabled) { _, newValue in
             if newValue {
@@ -79,6 +83,23 @@ private struct SettingsContentView: View {
         }
         .onChange(of: viewModel.preferredReminderTime) { _, _ in
             viewModel.savePreferences()
+        }
+    }
+
+    // MARK: - Appearance Section
+
+    private var appearanceSection: some View {
+        Section {
+            Picker(selection: $viewModel.appearanceMode) {
+                ForEach(AppearanceMode.allCases) { mode in
+                    Label(mode.displayName, systemImage: mode.iconName)
+                        .tag(mode)
+                }
+            } label: {
+                Label("Appearance", systemImage: "circle.lefthalf.filled")
+            }
+        } header: {
+            Text("Appearance")
         }
     }
 
