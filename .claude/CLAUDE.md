@@ -66,14 +66,11 @@ Always provide feedback mechanisms:
 - Check build output for type errors
 - Verify with actual data, not assumptions
 
-### Slash Commands
-Store reusable workflows in `.claude/commands/`:
-```
-.claude/commands/
-  commit-push-pr.md    # Daily inner-loop
-  run-tests.md         # Verification
-  review-pr.md         # Code review
-```
+### Skills (Auto-Invoked)
+Skills in `.claude/skills/<name>/SKILL.md` auto-invoke via `description` field:
+- `/add-swift-file` — triggers when creating `.swift` files
+- `/arch-check` — triggers when editing Views/ViewModels/Repositories
+- `/pattern-check` — triggers after delete/navigation/aggregation changes
 
 ### Learning Loop
 When Claude makes a mistake:
@@ -326,8 +323,11 @@ When adding protocols with common property names, use unique identifiers:
 ### Category Taxonomy (7 categories)
 travel, dining, transportation, shopping, entertainment, business, lifestyle
 
-### Auto-Invoke Commands
-- **Creating `.swift` files** → Auto-run `/add-swift-file` to update project.pbxproj
+### Skills (Auto-Invoke via Description)
+All skills in `.claude/skills/` auto-invoke based on their `description` frontmatter:
+- `/add-swift-file` — new `.swift` file in `ios/`
+- `/arch-check` — editing Views/ViewModels/Repositories
+- `/pattern-check` — delete ops, navigation, aggregation logic
 
 ---
 

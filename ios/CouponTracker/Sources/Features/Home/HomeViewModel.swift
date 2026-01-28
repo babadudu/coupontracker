@@ -9,6 +9,7 @@
 import Foundation
 import SwiftUI
 import Observation
+import os
 
 // MARK: - Dashboard Insight
 
@@ -179,7 +180,9 @@ final class HomeViewModel {
         cards.isEmpty
     }
 
-    /// Total value redeemed for a specific period (queries historical BenefitUsage records)
+    /// Total value redeemed for a specific period.
+    /// Queries historical BenefitUsage records for ALL benefits used within the period,
+    /// regardless of benefit frequency. An annual benefit used in March counts toward March's total.
     func redeemedValue(for period: BenefitPeriod) -> Decimal {
         do {
             return try benefitRepository.getRedeemedValue(for: period, referenceDate: Date())
@@ -202,6 +205,33 @@ final class HomeViewModel {
     /// Total value redeemed this year
     var redeemedThisYear: Decimal {
         redeemedValue(for: .annual)
+    }
+
+    /// Monthly metrics for dashboard (only monthly-frequency benefits)
+    var monthlyMetrics: PeriodMetrics {
+        let monthlyBenefits = allBenefits.filter { $0.frequency == .monthly }
+        return PeriodMetrics.calculate(for: monthlyBenefits, period: .monthly, applyMultiplier: false)
+    }
+
+    /// Returns metrics for a given period using cumulative roll-up.
+    /// - Monthly: only monthly-frequency benefits
+    /// - Quarterly: monthly + quarterly benefits
+    /// - Annual: all frequency benefits
+    /// - Parameter period: The benefit period to calculate metrics for
+    /// - Returns: PeriodMetrics with redeemed/available values and counts
+    func metrics(for period: BenefitPeriod) -> PeriodMetrics {
+        let includedFrequencies = period.includedFrequencies
+        let filteredBenefits = allBenefits.filter { includedFrequencies.contains($0.frequency) }
+        return PeriodMetrics.calculate(for: filteredBenefits, period: period, applyMultiplier: false)
+    }
+
+    /// Historical redeemed value for monthly-frequency benefits only
+    var monthlyRedeemedValue: Decimal {
+        do {
+            return try benefitRepository.getRedeemedValue(for: .monthly, frequency: .monthly, referenceDate: Date())
+        } catch {
+            return monthlyMetrics.redeemedValue
+        }
     }
 
     /// Count of used benefits
@@ -294,6 +324,144 @@ final class HomeViewModel {
         urgentExpiringBenefits.count
     }
 
+    // MARK: - Category Drill-Down Support
+
+    /// Returns all available benefits for a given category, grouped by card.
+    /// Used by CategoryBenefitsView for drill-down from ValueBreakdownView.
+    ///
+    /// - Parameter category: The benefit category to filter by
+    /// - Returns: Array of (card, benefits) tuples sorted by total value descending
+    func benefitsForCategory(_ category: BenefitCategory) -> [(card: CardDisplayAdapter, benefits: [BenefitDisplayAdapter])] {
+        var result: [(card: CardDisplayAdapter, benefits: [BenefitDisplayAdapter])] = []
+
+        for card in displayCards {
+            let categoryBenefits = card.benefits.filter { benefit in
+                benefit.category == category && benefit.status == .available
+            }
+            if !categoryBenefits.isEmpty {
+                result.append((card: card, benefits: categoryBenefits))
+            }
+        }
+
+        // Sort by total value descending
+        return result.sorted { lhs, rhs in
+            let lhsValue = lhs.benefits.reduce(Decimal.zero) { $0 + $1.value }
+            let rhsValue = rhs.benefits.reduce(Decimal.zero) { $0 + $1.value }
+            return lhsValue > rhsValue
+        }
+    }
+
+    /// Returns used benefits for a given category, grouped by card.
+    /// Used by CategoryBenefitsView for the "Used This Period" section.
+    ///
+    /// - Parameter category: The benefit category to filter by
+    /// - Returns: Array of (card, benefits) tuples
+    func usedBenefitsForCategory(_ category: BenefitCategory) -> [(card: CardDisplayAdapter, benefits: [BenefitDisplayAdapter])] {
+        var result: [(card: CardDisplayAdapter, benefits: [BenefitDisplayAdapter])] = []
+
+        for card in displayCards {
+            let usedBenefits = card.benefits.filter { benefit in
+                benefit.category == category && benefit.status == .used
+            }
+            if !usedBenefits.isEmpty {
+                result.append((card: card, benefits: usedBenefits))
+            }
+        }
+
+        return result
+    }
+
+    /// Returns total value for a category (available benefits only)
+    func totalValueForCategory(_ category: BenefitCategory) -> Decimal {
+        benefitsByCategory[category] ?? .zero
+    }
+
+    /// Returns count of available benefits for a category
+    func benefitCountForCategory(_ category: BenefitCategory) -> Int {
+        displayCards.flatMap { $0.benefits }
+            .filter { $0.category == category && $0.status == .available }
+            .count
+    }
+
+    // MARK: - Period Drill-Down Support
+
+    /// Returns all available benefits within a time period, grouped by urgency.
+    /// Used by PeriodBenefitsView for drill-down from ValueBreakdownView.
+    ///
+    /// - Parameter period: The time period filter (thisWeek, thisMonth, later)
+    /// - Returns: Array of (urgency, benefits with card info) tuples sorted by urgency
+    func benefitsForPeriod(_ period: TimePeriodFilter) -> [(urgency: ExpirationUrgency, items: [ExpiringBenefitDisplayAdapter])] {
+        // Filter benefits within the period
+        let periodBenefits = displayExpiringBenefitsAll.filter { item in
+            period.contains(daysRemaining: item.benefit.daysRemaining)
+        }
+
+        // Group by urgency
+        var grouped: [ExpirationUrgency: [ExpiringBenefitDisplayAdapter]] = [:]
+        for item in periodBenefits {
+            let urgency = ExpirationUrgency.from(daysRemaining: item.benefit.daysRemaining)
+            grouped[urgency, default: []].append(item)
+        }
+
+        // Sort each group by expiration date (soonest first)
+        for (urgency, items) in grouped {
+            grouped[urgency] = items.sorted { $0.benefit.daysRemaining < $1.benefit.daysRemaining }
+        }
+
+        // Return as array sorted by urgency order
+        let urgencyOrder: [ExpirationUrgency] = [.expiringToday, .within1Day, .within3Days, .within1Week, .later]
+        return urgencyOrder.compactMap { urgency in
+            guard let items = grouped[urgency], !items.isEmpty else { return nil }
+            return (urgency: urgency, items: items)
+        }
+    }
+
+    /// All expiring benefits as display adapters (not limited to 7 days)
+    var displayExpiringBenefitsAll: [ExpiringBenefitDisplayAdapter] {
+        cards.flatMap { card -> [ExpiringBenefitDisplayAdapter] in
+            let cardTemplate = card.cardTemplateId.flatMap { cardTemplates[$0] }
+            let cardAdapter = CardDisplayAdapter(
+                card: card,
+                cardTemplate: cardTemplate,
+                benefitTemplates: benefitTemplates
+            )
+
+            return card.benefits
+                .filter { $0.status == .available }
+                .map { benefit in
+                    let benefitTemplate = benefit.templateBenefitId.flatMap { benefitTemplates[$0] }
+                    let benefitAdapter = BenefitDisplayAdapter(
+                        benefit: benefit,
+                        template: benefitTemplate
+                    )
+                    return ExpiringBenefitDisplayAdapter(benefit: benefitAdapter, card: cardAdapter)
+                }
+        }
+    }
+
+    /// Returns total value for a time period
+    func totalValueForPeriod(_ period: TimePeriodFilter) -> Decimal {
+        displayExpiringBenefitsAll
+            .filter { period.contains(daysRemaining: $0.benefit.daysRemaining) }
+            .reduce(Decimal.zero) { $0 + $1.benefit.value }
+    }
+
+    /// Returns count of benefits for a time period
+    func benefitCountForPeriod(_ period: TimePeriodFilter) -> Int {
+        displayExpiringBenefitsAll
+            .filter { period.contains(daysRemaining: $0.benefit.daysRemaining) }
+            .count
+    }
+
+    /// Returns count of cards with benefits in a time period
+    func cardCountForPeriod(_ period: TimePeriodFilter) -> Int {
+        Set(
+            displayExpiringBenefitsAll
+                .filter { period.contains(daysRemaining: $0.benefit.daysRemaining) }
+                .map { $0.card.id }
+        ).count
+    }
+
     /// Total value of urgent expiring benefits
     var urgentExpiringValue: Decimal {
         urgentExpiringBenefits.reduce(Decimal.zero) { $0 + $1.value }
@@ -365,21 +533,17 @@ final class HomeViewModel {
     /// It loads all cards, benefits expiring within 7 days, and templates.
     func loadData() async {
         guard !isLoading else {
-            print("⏭️  HomeViewModel: Already loading, skipping...")
             return
         }
 
-        print("📊 HomeViewModel: Starting data load...")
         isLoading = true
         error = nil
 
         do {
             // Load templates first for display resolution
-            print("  → Loading templates...")
             loadTemplates()
 
             // Load cards and expiring benefits in parallel
-            print("  → Loading cards and benefits...")
             async let cardsTask: () = loadCards()
             async let benefitsTask: () = loadExpiringBenefits()
 
@@ -392,14 +556,9 @@ final class HomeViewModel {
             // Update last refreshed timestamp
             lastRefreshed = Date()
 
-            print("✅ HomeViewModel: Data loaded successfully")
-            print("  → Cards: \(cards.count)")
-            print("  → Expiring benefits: \(expiringBenefits.count)")
-            print("  → Recommendations: \(categoryRecommendations.count) categories")
-
         } catch {
             self.error = error
-            print("❌ HomeViewModel: Failed to load data: \(error)")
+            AppLogger.data.error("Failed to load home data: \(error.localizedDescription)")
         }
 
         isLoading = false
@@ -408,15 +567,14 @@ final class HomeViewModel {
     /// Loads templates into cache for display resolution
     private func loadTemplates() {
         do {
-            print("  → Loading card templates from TemplateLoader...")
             let database = try templateLoader.loadAllTemplates()
             cardTemplates = Dictionary(uniqueKeysWithValues: database.cards.map { ($0.id, $0) })
             benefitTemplates = database.cards.flatMap { card in
                 card.benefits.map { ($0.id, $0) }
             }.reduce(into: [:]) { $0[$1.0] = $1.1 }
-            print("  ✅ Loaded \(cardTemplates.count) card templates, \(benefitTemplates.count) benefit templates")
         } catch {
-            print("  ⚠️ Failed to load templates: \(error). App will continue with limited functionality.")
+            // Templates failed to load - app will continue with limited functionality
+            AppLogger.templates.error("Failed to load templates: \(error.localizedDescription)")
         }
     }
 
@@ -454,7 +612,7 @@ final class HomeViewModel {
 
         } catch {
             self.error = error
-            print("Failed to delete card: \(error)")
+            AppLogger.cards.error("Failed to delete card: \(error.localizedDescription)")
         }
     }
 
@@ -480,14 +638,14 @@ final class HomeViewModel {
     /// Loads best card recommendations by category
     private func loadRecommendations() {
         guard let service = recommendationService else {
-            print("  ⚠️ Recommendation service not available")
             return
         }
 
         do {
             categoryRecommendations = try service.findBestCardsForAllCategories()
         } catch {
-            print("  ⚠️ Failed to load recommendations: \(error)")
+            // Failed to load recommendations
+            AppLogger.data.error("Failed to load recommendations: \(error.localizedDescription)")
         }
     }
 }

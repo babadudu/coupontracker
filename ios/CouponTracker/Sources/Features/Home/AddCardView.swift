@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import os
 
 /// Sheet/modal view for adding new cards from card templates.
 ///
@@ -210,7 +211,7 @@ struct AddCardView: View {
                     RoundedRectangle(cornerRadius: DesignSystem.Sizing.buttonCornerRadius)
                         .fill(viewModel.canAddCard ? DesignSystem.Colors.primaryFallback : DesignSystem.Colors.neutral)
                 )
-                .foregroundStyle(.white)
+                .foregroundStyle(DesignSystem.Colors.onColor)
             }
             .disabled(!viewModel.canAddCard)
             .padding(.horizontal, DesignSystem.Spacing.lg)
@@ -279,10 +280,8 @@ struct AddCardView: View {
             // Successfully added card - dismiss the sheet
             dismiss()
         } else {
-            // Handle error - in production, might show an error alert
             if let error = viewModel.error {
-                print("Error adding card: \(error)")
-                // Could show an alert here
+                AppLogger.cards.error("Failed to add card: \(error.localizedDescription)")
             }
         }
     }
@@ -328,7 +327,7 @@ private struct TemplateCardView: View {
                 Text(template.issuer.uppercased())
                     .font(.system(size: 8, weight: .semibold))
                     .tracking(1.0)
-                    .foregroundStyle(.white.opacity(0.8))
+                    .foregroundStyle(DesignSystem.Colors.onColor.opacity(0.8))
 
                 Spacer()
             }
@@ -346,7 +345,7 @@ private struct TemplateCardView: View {
 
                             Image(systemName: "checkmark")
                                 .font(.system(size: 10, weight: .bold))
-                                .foregroundStyle(.white)
+                                .foregroundStyle(DesignSystem.Colors.onColor)
                         }
                     }
                     Spacer()

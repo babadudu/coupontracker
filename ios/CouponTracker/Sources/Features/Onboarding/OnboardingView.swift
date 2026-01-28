@@ -45,7 +45,7 @@ struct OnboardingFlowView: View {
                     Button(action: onComplete) {
                         Text("Get Started")
                             .font(DesignSystem.Typography.headline)
-                            .foregroundColor(.white)
+                            .foregroundColor(DesignSystem.Colors.onColor)
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(DesignSystem.Colors.primary)
@@ -55,7 +55,7 @@ struct OnboardingFlowView: View {
                     Button(action: { currentPage += 1 }) {
                         Text("Continue")
                             .font(DesignSystem.Typography.headline)
-                            .foregroundColor(.white)
+                            .foregroundColor(DesignSystem.Colors.onColor)
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(DesignSystem.Colors.primary)

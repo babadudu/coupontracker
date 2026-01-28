@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 import Observation
+import os
 
 /// Centralized dependency injection container for the application.
 ///
@@ -195,10 +196,9 @@ final class AppContainer {
 
             if migratedCount > 0 {
                 try modelContext.save()
-                print("✅ Migrated \(migratedCount) benefits with nil customFrequency")
             }
         } catch {
-            print("⚠️ Failed to migrate nil frequency benefits: \(error)")
+            AppLogger.data.error("Failed to migrate nil frequency benefits: \(error.localizedDescription)")
         }
     }
 }
@@ -336,7 +336,7 @@ final class BenefitResetService {
                 await processBenefitReset(benefit)
             }
         } catch {
-            print("Failed to process expired periods: \(error)")
+            AppLogger.data.error("Failed to process expired periods: \(error.localizedDescription)")
         }
     }
 
@@ -360,7 +360,7 @@ final class BenefitResetService {
         do {
             try benefitRepository.resetBenefitForNewPeriod(benefit)
         } catch {
-            print("Failed to reset benefit: \(error)")
+            AppLogger.benefits.error("Failed to reset benefit for new period: \(error.localizedDescription)")
         }
     }
 }

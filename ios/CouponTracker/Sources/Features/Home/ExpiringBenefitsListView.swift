@@ -20,6 +20,7 @@
 //  )
 
 import SwiftUI
+import os
 
 // MARK: - Expiring Benefits List View
 
@@ -266,7 +267,7 @@ struct ExpiringBenefitsListView: View {
                     await viewModel.loadData()
                 }
             } catch {
-                print("Failed to mark benefit as done: \(error)")
+                AppLogger.benefits.error("Failed to mark benefit as done: \(error.localizedDescription)")
             }
         }
     }

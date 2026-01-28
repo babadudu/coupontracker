@@ -85,16 +85,16 @@ struct ValueSummaryCard: View {
             VStack(spacing: DesignSystem.Spacing.xs) {
                 Text("Total Available")
                     .font(DesignSystem.Typography.subhead)
-                    .foregroundStyle(.white.opacity(0.8))
+                    .foregroundStyle(DesignSystem.Colors.onColor.opacity(0.8))
 
                 Text(formattedTotalValue)
                     .font(DesignSystem.Typography.valueLarge)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(DesignSystem.Colors.onColor)
                     .contentTransition(.numericText())
 
                 Text("Across \(cardCount) card\(cardCount == 1 ? "" : "s")")
                     .font(DesignSystem.Typography.footnote)
-                    .foregroundStyle(.white.opacity(0.6))
+                    .foregroundStyle(DesignSystem.Colors.onColor.opacity(0.6))
             }
 
             // Breakdown section
@@ -134,7 +134,7 @@ struct ValueSummaryCard: View {
                             .font(.system(size: 12, weight: .semibold))
                     }
                     .font(DesignSystem.Typography.subhead)
-                    .foregroundStyle(.white.opacity(0.8))
+                    .foregroundStyle(DesignSystem.Colors.onColor.opacity(0.8))
                 }
             }
         }
@@ -282,11 +282,11 @@ struct ValueBreakdownItem: View {
                 Text(label)
                     .font(DesignSystem.Typography.caption)
             }
-            .foregroundStyle(.white.opacity(0.7))
+            .foregroundStyle(DesignSystem.Colors.onColor.opacity(0.7))
 
             Text(value)
                 .font(DesignSystem.Typography.headline)
-                .foregroundStyle(isUrgent ? DesignSystem.Colors.warning : .white)
+                .foregroundStyle(isUrgent ? DesignSystem.Colors.warning : DesignSystem.Colors.onColor)
         }
     }
 }

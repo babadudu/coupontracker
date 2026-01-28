@@ -688,4 +688,208 @@ final class PeriodMetricsTests: XCTestCase {
         benefit.customFrequency = frequency
         return benefit
     }
+
+    // MARK: - Cumulative Roll-up Tests
+
+    /// Tests that BenefitPeriod.includedFrequencies returns correct cumulative sets.
+    func testIncludedFrequencies_CumulativeRollup() {
+        // Monthly: only monthly
+        XCTAssertEqual(
+            BenefitPeriod.monthly.includedFrequencies,
+            [.monthly],
+            "Monthly view should only include monthly frequency"
+        )
+
+        // Quarterly: monthly + quarterly
+        XCTAssertEqual(
+            BenefitPeriod.quarterly.includedFrequencies,
+            [.monthly, .quarterly],
+            "Quarterly view should include monthly and quarterly frequencies"
+        )
+
+        // SemiAnnual: monthly + quarterly + semiAnnual
+        XCTAssertEqual(
+            BenefitPeriod.semiAnnual.includedFrequencies,
+            [.monthly, .quarterly, .semiAnnual],
+            "Semi-annual view should include monthly, quarterly, and semi-annual frequencies"
+        )
+
+        // Annual: all frequencies
+        XCTAssertEqual(
+            BenefitPeriod.annual.includedFrequencies,
+            [.monthly, .quarterly, .semiAnnual, .annual],
+            "Annual view should include all frequencies"
+        )
+    }
+
+    /// Test Case 1: January Monthly View - only monthly benefits counted
+    /// Expected: Redeemed $115, Total $115, Used 3 of 3
+    func testCumulativeRollup_MonthlyView_OnlyMonthlyBenefits() throws {
+        let card = UserCard(nickname: "Test Card")
+        modelContext.insert(card)
+
+        let today = Date()
+        let (monthlyStart, monthlyEnd) = BenefitPeriod.monthly.periodDates(for: today)
+        let (quarterlyStart, quarterlyEnd) = BenefitPeriod.quarterly.periodDates(for: today)
+        let (annualStart, annualEnd) = BenefitPeriod.annual.periodDates(for: today)
+
+        // Monthly benefits (all used)
+        let monthly1 = createBenefit(card: card, value: 50, frequency: .monthly, status: .used, periodStart: monthlyStart, periodEnd: monthlyEnd)
+        let monthly2 = createBenefit(card: card, value: 15, frequency: .monthly, status: .used, periodStart: monthlyStart, periodEnd: monthlyEnd)
+        let monthly3 = createBenefit(card: card, value: 50, frequency: .monthly, status: .used, periodStart: monthlyStart, periodEnd: monthlyEnd)
+
+        // Quarterly benefit (used - should be excluded from monthly view)
+        let quarterly = createBenefit(card: card, value: 300, frequency: .quarterly, status: .used, periodStart: quarterlyStart, periodEnd: quarterlyEnd)
+
+        // Annual benefit (available - should be excluded from monthly view)
+        let annual = createBenefit(card: card, value: 300, frequency: .annual, status: .available, periodStart: annualStart, periodEnd: annualEnd)
+
+        modelContext.insert(monthly1)
+        modelContext.insert(monthly2)
+        modelContext.insert(monthly3)
+        modelContext.insert(quarterly)
+        modelContext.insert(annual)
+        try modelContext.save()
+
+        // Filter by monthly includedFrequencies (simulating ViewModel behavior)
+        let allBenefits = [monthly1, monthly2, monthly3, quarterly, annual]
+        let includedFrequencies = BenefitPeriod.monthly.includedFrequencies
+        let filteredBenefits = allBenefits.filter { includedFrequencies.contains($0.frequency) }
+
+        let metrics = PeriodMetrics.calculate(for: filteredBenefits, period: .monthly, applyMultiplier: false)
+
+        XCTAssertEqual(metrics.redeemedValue, 115, "Monthly redeemed should be $115 ($50 + $15 + $50)")
+        XCTAssertEqual(metrics.totalValue, 115, "Monthly total should be $115")
+        XCTAssertEqual(metrics.usedCount, 3, "Monthly used count should be 3")
+        XCTAssertEqual(metrics.totalCount, 3, "Monthly total count should be 3")
+    }
+
+    /// Test Case 2: Q1 Quarterly View - monthly + quarterly benefits
+    /// Expected: Redeemed $415, Total $530, Used 4 of 7
+    func testCumulativeRollup_QuarterlyView_MonthlyPlusQuarterly() throws {
+        let card = UserCard(nickname: "Test Card")
+        modelContext.insert(card)
+
+        let today = Date()
+        let (monthlyStart, monthlyEnd) = BenefitPeriod.monthly.periodDates(for: today)
+        let (quarterlyStart, quarterlyEnd) = BenefitPeriod.quarterly.periodDates(for: today)
+        let (annualStart, annualEnd) = BenefitPeriod.annual.periodDates(for: today)
+
+        // January monthly benefits (3 used)
+        let janMonthly1 = createBenefit(card: card, value: 50, frequency: .monthly, status: .used, periodStart: monthlyStart, periodEnd: monthlyEnd)
+        let janMonthly2 = createBenefit(card: card, value: 15, frequency: .monthly, status: .used, periodStart: monthlyStart, periodEnd: monthlyEnd)
+        let janMonthly3 = createBenefit(card: card, value: 50, frequency: .monthly, status: .used, periodStart: monthlyStart, periodEnd: monthlyEnd)
+
+        // February monthly benefits (3 available) - using same period for simplicity
+        let febMonthly1 = createBenefit(card: card, value: 50, frequency: .monthly, status: .available, periodStart: monthlyStart, periodEnd: monthlyEnd)
+        let febMonthly2 = createBenefit(card: card, value: 15, frequency: .monthly, status: .available, periodStart: monthlyStart, periodEnd: monthlyEnd)
+        let febMonthly3 = createBenefit(card: card, value: 50, frequency: .monthly, status: .available, periodStart: monthlyStart, periodEnd: monthlyEnd)
+
+        // Quarterly benefit (used)
+        let quarterly = createBenefit(card: card, value: 300, frequency: .quarterly, status: .used, periodStart: quarterlyStart, periodEnd: quarterlyEnd)
+
+        // Annual benefit (available - excluded from quarterly view)
+        let annual = createBenefit(card: card, value: 300, frequency: .annual, status: .available, periodStart: annualStart, periodEnd: annualEnd)
+
+        modelContext.insert(janMonthly1)
+        modelContext.insert(janMonthly2)
+        modelContext.insert(janMonthly3)
+        modelContext.insert(febMonthly1)
+        modelContext.insert(febMonthly2)
+        modelContext.insert(febMonthly3)
+        modelContext.insert(quarterly)
+        modelContext.insert(annual)
+        try modelContext.save()
+
+        // Filter by quarterly includedFrequencies
+        let allBenefits = [janMonthly1, janMonthly2, janMonthly3, febMonthly1, febMonthly2, febMonthly3, quarterly, annual]
+        let includedFrequencies = BenefitPeriod.quarterly.includedFrequencies
+        let filteredBenefits = allBenefits.filter { includedFrequencies.contains($0.frequency) }
+
+        let metrics = PeriodMetrics.calculate(for: filteredBenefits, period: .quarterly, applyMultiplier: false)
+
+        XCTAssertEqual(metrics.redeemedValue, 415, "Quarterly redeemed should be $415 ($50 + $15 + $50 + $300)")
+        XCTAssertEqual(metrics.totalValue, 530, "Quarterly total should be $530")
+        XCTAssertEqual(metrics.usedCount, 4, "Quarterly used count should be 4")
+        XCTAssertEqual(metrics.totalCount, 7, "Quarterly total count should be 7")
+    }
+
+    /// Test Case 3: Annual View - all frequencies combined
+    /// Expected: Redeemed $415, Total $830, Used 4 of 8
+    func testCumulativeRollup_AnnualView_AllFrequencies() throws {
+        let card = UserCard(nickname: "Test Card")
+        modelContext.insert(card)
+
+        let today = Date()
+        let (monthlyStart, monthlyEnd) = BenefitPeriod.monthly.periodDates(for: today)
+        let (quarterlyStart, quarterlyEnd) = BenefitPeriod.quarterly.periodDates(for: today)
+        let (annualStart, annualEnd) = BenefitPeriod.annual.periodDates(for: today)
+
+        // Monthly benefits (3 used, 3 available)
+        let janMonthly1 = createBenefit(card: card, value: 50, frequency: .monthly, status: .used, periodStart: monthlyStart, periodEnd: monthlyEnd)
+        let janMonthly2 = createBenefit(card: card, value: 15, frequency: .monthly, status: .used, periodStart: monthlyStart, periodEnd: monthlyEnd)
+        let janMonthly3 = createBenefit(card: card, value: 50, frequency: .monthly, status: .used, periodStart: monthlyStart, periodEnd: monthlyEnd)
+        let febMonthly1 = createBenefit(card: card, value: 50, frequency: .monthly, status: .available, periodStart: monthlyStart, periodEnd: monthlyEnd)
+        let febMonthly2 = createBenefit(card: card, value: 15, frequency: .monthly, status: .available, periodStart: monthlyStart, periodEnd: monthlyEnd)
+        let febMonthly3 = createBenefit(card: card, value: 50, frequency: .monthly, status: .available, periodStart: monthlyStart, periodEnd: monthlyEnd)
+
+        // Quarterly benefit (used)
+        let quarterly = createBenefit(card: card, value: 300, frequency: .quarterly, status: .used, periodStart: quarterlyStart, periodEnd: quarterlyEnd)
+
+        // Annual benefit (available)
+        let annual = createBenefit(card: card, value: 300, frequency: .annual, status: .available, periodStart: annualStart, periodEnd: annualEnd)
+
+        modelContext.insert(janMonthly1)
+        modelContext.insert(janMonthly2)
+        modelContext.insert(janMonthly3)
+        modelContext.insert(febMonthly1)
+        modelContext.insert(febMonthly2)
+        modelContext.insert(febMonthly3)
+        modelContext.insert(quarterly)
+        modelContext.insert(annual)
+        try modelContext.save()
+
+        // Filter by annual includedFrequencies (all frequencies)
+        let allBenefits = [janMonthly1, janMonthly2, janMonthly3, febMonthly1, febMonthly2, febMonthly3, quarterly, annual]
+        let includedFrequencies = BenefitPeriod.annual.includedFrequencies
+        let filteredBenefits = allBenefits.filter { includedFrequencies.contains($0.frequency) }
+
+        let metrics = PeriodMetrics.calculate(for: filteredBenefits, period: .annual, applyMultiplier: false)
+
+        XCTAssertEqual(metrics.redeemedValue, 415, "Annual redeemed should be $415")
+        XCTAssertEqual(metrics.totalValue, 830, "Annual total should be $830")
+        XCTAssertEqual(metrics.usedCount, 4, "Annual used count should be 4")
+        XCTAssertEqual(metrics.totalCount, 8, "Annual total count should be 8")
+    }
+
+    /// Test Case 4: February Monthly View - no benefits redeemed
+    /// Expected: Redeemed $0, Total $115, Used 0 of 3
+    func testCumulativeRollup_MonthlyView_NothingRedeemed() throws {
+        let card = UserCard(nickname: "Test Card")
+        modelContext.insert(card)
+
+        let today = Date()
+        let (monthlyStart, monthlyEnd) = BenefitPeriod.monthly.periodDates(for: today)
+
+        // February monthly benefits (all available)
+        let febMonthly1 = createBenefit(card: card, value: 50, frequency: .monthly, status: .available, periodStart: monthlyStart, periodEnd: monthlyEnd)
+        let febMonthly2 = createBenefit(card: card, value: 15, frequency: .monthly, status: .available, periodStart: monthlyStart, periodEnd: monthlyEnd)
+        let febMonthly3 = createBenefit(card: card, value: 50, frequency: .monthly, status: .available, periodStart: monthlyStart, periodEnd: monthlyEnd)
+
+        modelContext.insert(febMonthly1)
+        modelContext.insert(febMonthly2)
+        modelContext.insert(febMonthly3)
+        try modelContext.save()
+
+        let allBenefits = [febMonthly1, febMonthly2, febMonthly3]
+        let includedFrequencies = BenefitPeriod.monthly.includedFrequencies
+        let filteredBenefits = allBenefits.filter { includedFrequencies.contains($0.frequency) }
+
+        let metrics = PeriodMetrics.calculate(for: filteredBenefits, period: .monthly, applyMultiplier: false)
+
+        XCTAssertEqual(metrics.redeemedValue, 0, "February redeemed should be $0")
+        XCTAssertEqual(metrics.totalValue, 115, "February total should be $115")
+        XCTAssertEqual(metrics.usedCount, 0, "February used count should be 0")
+        XCTAssertEqual(metrics.totalCount, 3, "February total count should be 3")
+    }
 }

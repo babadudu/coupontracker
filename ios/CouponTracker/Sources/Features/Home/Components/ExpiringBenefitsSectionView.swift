@@ -139,7 +139,7 @@ struct ExpiringBenefitsSectionView: View {
             // Count badge
             Text("\(totalCount)")
                 .font(DesignSystem.Typography.badge)
-                .foregroundStyle(.white)
+                .foregroundStyle(DesignSystem.Colors.onColor)
                 .padding(.horizontal, DesignSystem.Spacing.sm)
                 .padding(.vertical, DesignSystem.Spacing.xs - 2)
                 .background(

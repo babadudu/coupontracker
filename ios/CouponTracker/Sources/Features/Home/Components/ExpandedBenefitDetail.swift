@@ -55,7 +55,7 @@ struct ExpandedBenefitDetail: View {
                                 Text("Mark as Done")
                             }
                             .font(DesignSystem.Typography.subhead)
-                            .foregroundStyle(.white)
+                            .foregroundStyle(DesignSystem.Colors.onColor)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, DesignSystem.Spacing.sm)
                             .background(

@@ -296,7 +296,7 @@ struct CardComponent: View {
 
                     Image(systemName: "checkmark")
                         .font(.system(size: 12, weight: .bold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(DesignSystem.Colors.onColor)
                 }
                 .padding(DesignSystem.Spacing.sm)
             }

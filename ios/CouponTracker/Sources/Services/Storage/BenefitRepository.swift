@@ -195,6 +195,24 @@ final class BenefitRepository: BenefitRepositoryProtocol {
         return usages.reduce(Decimal.zero) { $0 + $1.valueRedeemed }
     }
 
+    func getRedeemedValue(for period: BenefitPeriod, frequency: BenefitFrequency, referenceDate: Date = Date()) throws -> Decimal {
+        let (viewStart, viewEnd) = period.periodDates(for: referenceDate)
+
+        let descriptor = FetchDescriptor<BenefitUsage>(
+            predicate: #Predicate { usage in
+                !usage.wasAutoExpired &&
+                usage.periodStart >= viewStart &&
+                usage.periodStart <= viewEnd
+            }
+        )
+
+        let usages = try modelContext.fetch(descriptor)
+        // Filter by frequency in-memory (SwiftData predicates don't support optional relationship properties)
+        return usages
+            .filter { $0.benefit?.frequency == frequency }
+            .reduce(Decimal.zero) { $0 + $1.valueRedeemed }
+    }
+
 }
 
 // MARK: - Error Types

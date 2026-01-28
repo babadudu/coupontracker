@@ -17,3 +17,4 @@ The app follows a modular MVVM (Model-View-ViewModel) architecture with the foll
 2. **Dependency Injection** - Dependencies are injected for testability
 3. **Protocol-Oriented Design** - Abstractions via protocols for flexibility
 4. **Unidirectional Data Flow** - Predictable state management
+5. **Structured Logging** - Production-safe logging via os.Logger with domain categories

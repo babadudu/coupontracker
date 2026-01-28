@@ -34,6 +34,7 @@ struct CardDetailView: View {
     // MARK: - Properties
 
     let card: PreviewCard
+    var highlightBenefitId: UUID? = nil
     var onMarkAsDone: ((PreviewBenefit) -> Void)? = nil
     var onSnooze: ((PreviewBenefit, Int) -> Void)? = nil
     var onUndo: ((PreviewBenefit) -> Void)? = nil
@@ -45,34 +46,40 @@ struct CardDetailView: View {
     @State private var showRemoveConfirmation = false
     @State private var expandedBenefitId: UUID? = nil
     @State private var selectedPeriod: BenefitPeriod = .monthly
+    @State private var highlightedId: UUID? = nil
     @Environment(\.dismiss) private var dismiss
 
     // MARK: - Body
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 0) {
-                // Card Header
-                cardHeader
+        ScrollViewReader { scrollProxy in
+            ScrollView {
+                VStack(spacing: 0) {
+                    // Card Header
+                    cardHeader
 
-                // Accomplishment Rings
-                if !card.benefits.isEmpty {
-                    PreviewCardPeriodSection(
-                        benefits: card.benefits,
-                        selectedPeriod: $selectedPeriod
-                    )
-                    .padding(.horizontal, DesignSystem.Spacing.lg)
-                    .padding(.top, DesignSystem.Spacing.lg)
+                    // Accomplishment Rings
+                    if !card.benefits.isEmpty {
+                        PreviewCardPeriodSection(
+                            benefits: card.benefits,
+                            selectedPeriod: $selectedPeriod
+                        )
+                        .padding(.horizontal, DesignSystem.Spacing.lg)
+                        .padding(.top, DesignSystem.Spacing.lg)
+                    }
+
+                    // Benefits Sections
+                    benefitsSections
+                        .padding(.top, DesignSystem.Spacing.lg)
+
+                    // Remove Card Section
+                    removeCardSection
+                        .padding(.top, DesignSystem.Spacing.xxl)
+                        .padding(.bottom, DesignSystem.Spacing.xxxl)
                 }
-
-                // Benefits Sections
-                benefitsSections
-                    .padding(.top, DesignSystem.Spacing.lg)
-
-                // Remove Card Section
-                removeCardSection
-                    .padding(.top, DesignSystem.Spacing.xxl)
-                    .padding(.bottom, DesignSystem.Spacing.xxxl)
+            }
+            .onAppear {
+                scrollToBenefitIfNeeded(proxy: scrollProxy)
             }
         }
         .background(DesignSystem.Colors.backgroundPrimary)
@@ -167,6 +174,7 @@ struct CardDetailView: View {
                     cardGradient: card.gradient,
                     onMarkAsDone: onMarkAsDone,
                     onSnooze: onSnooze,
+                    highlightedBenefitId: highlightedId,
                     expandedBenefitId: $expandedBenefitId
                 )
             }
@@ -179,6 +187,7 @@ struct CardDetailView: View {
                     benefits: card.usedBenefits,
                     cardGradient: card.gradient,
                     onUndo: onUndo,
+                    highlightedBenefitId: highlightedId,
                     expandedBenefitId: $expandedBenefitId
                 )
             }
@@ -191,6 +200,7 @@ struct CardDetailView: View {
                     benefits: card.expiredBenefits,
                     cardGradient: card.gradient,
                     isCollapsible: true,
+                    highlightedBenefitId: highlightedId,
                     expandedBenefitId: $expandedBenefitId
                 )
             }
@@ -232,6 +242,29 @@ struct CardDetailView: View {
         let total = card.usedBenefits.reduce(Decimal.zero) { $0 + $1.value }
         return "\(Formatters.formatCurrencyWhole(total)) redeemed"
     }
+
+    // MARK: - Deep Link Handling
+
+    /// Scrolls to and highlights the specified benefit if needed
+    private func scrollToBenefitIfNeeded(proxy: ScrollViewProxy) {
+        guard let benefitId = highlightBenefitId else { return }
+
+        // Small delay to ensure layout is complete
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            withAnimation(DesignSystem.Animation.spring) {
+                proxy.scrollTo(benefitId, anchor: .center)
+                expandedBenefitId = benefitId
+                highlightedId = benefitId
+            }
+
+            // Clear highlight after animation
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                withAnimation(DesignSystem.Animation.spring) {
+                    highlightedId = nil
+                }
+            }
+        }
+    }
 }
 
 // MARK: - Previews
@@ -240,18 +273,10 @@ struct CardDetailView: View {
     NavigationStack {
         CardDetailView(
             card: PreviewData.amexPlatinum,
-            onMarkAsDone: { benefit in
-                print("Marked done: \(benefit.name)")
-            },
-            onSnooze: { benefit, days in
-                print("Snoozed \(benefit.name) for \(days) days")
-            },
-            onRemoveCard: {
-                print("Remove card")
-            },
-            onEditCard: {
-                print("Edit card")
-            }
+            onMarkAsDone: { _ in },
+            onSnooze: { _, _ in },
+            onRemoveCard: { },
+            onEditCard: { }
         )
     }
 }

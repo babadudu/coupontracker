@@ -5,6 +5,7 @@
 //
 
 import Foundation
+import os
 
 /// TemplateLoader
 ///
@@ -87,20 +88,20 @@ final class TemplateLoader: TemplateLoaderProtocol {
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .iso8601
                 let database = try decoder.decode(CardDatabase.self, from: data)
-                
+
                 // Validate schema version
                 guard database.schemaVersion == 1 else {
                     throw TemplateLoaderError.invalidSchemaVersion(database.schemaVersion)
                 }
-                
+
                 // Cache and return
                 cachedDatabase = database
                 return database
             } catch {
-                print("⚠️ Failed to load CardTemplates.json: \(error). Using fallback templates.")
+                AppLogger.templates.warning("Failed to load CardTemplates.json: \(error.localizedDescription). Using fallback templates.")
             }
         } else {
-            print("⚠️ CardTemplates.json not found in bundle. Using fallback templates.")
+            AppLogger.templates.warning("CardTemplates.json not found in bundle. Using fallback templates.")
         }
         
         // Return fallback templates if file not found or loading failed

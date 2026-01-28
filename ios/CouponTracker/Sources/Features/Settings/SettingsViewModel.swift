@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 import SwiftData
 import Observation
+import os
 
 /// ViewModel for the settings screen.
 ///
@@ -56,6 +57,9 @@ final class SettingsViewModel {
 
     /// Preferred reminder time (as Date for DatePicker)
     var preferredReminderTime: Date = Calendar.current.date(from: DateComponents(hour: 9, minute: 0)) ?? Date()
+
+    /// Appearance mode preference (system, light, dark)
+    var appearanceMode: AppearanceMode = .system
 
     // MARK: - App Info
 
@@ -127,7 +131,7 @@ final class SettingsViewModel {
 
         } catch {
             self.error = error
-            print("Failed to load preferences: \(error)")
+            AppLogger.settings.error("Failed to load preferences: \(error.localizedDescription)")
         }
 
         isLoading = false
@@ -139,7 +143,6 @@ final class SettingsViewModel {
     /// and persists to SwiftData.
     func savePreferences() {
         guard let prefs = userPreferences else {
-            print("Warning: No UserPreferences loaded, call loadPreferences() first")
             return
         }
 
@@ -150,6 +153,7 @@ final class SettingsViewModel {
         prefs.notify3DaysBefore = notify3DaysBefore
         prefs.notify1WeekBefore = notify1WeekBefore
         prefs.quietHoursEnabled = quietHoursEnabled
+        prefs.appearanceMode = appearanceMode
 
         // Convert Date objects to hour/minute integers
         let calendar = Calendar.current
@@ -169,9 +173,11 @@ final class SettingsViewModel {
 
         do {
             try modelContext.save()
+            // Notify ContentView to reload appearance mode
+            NotificationCenter.default.post(name: .userPreferencesChanged, object: nil)
         } catch {
             self.error = error
-            print("Failed to save preferences: \(error)")
+            AppLogger.settings.error("Failed to save preferences: \(error.localizedDescription)")
         }
     }
 
@@ -181,7 +187,6 @@ final class SettingsViewModel {
     /// to their default values.
     func resetToDefaults() {
         guard let prefs = userPreferences else {
-            print("Warning: No UserPreferences loaded, call loadPreferences() first")
             return
         }
 
@@ -198,6 +203,7 @@ final class SettingsViewModel {
         prefs.quietHoursEnd = 8
         prefs.showBenefitValues = true
         prefs.sortCardsByUrgency = true
+        prefs.appearanceMode = .system
         prefs.markAsUpdated()
 
         do {
@@ -206,7 +212,7 @@ final class SettingsViewModel {
             populateStateFromPreferences(prefs)
         } catch {
             self.error = error
-            print("Failed to reset preferences: \(error)")
+            AppLogger.settings.error("Failed to reset preferences to defaults: \(error.localizedDescription)")
         }
     }
 
@@ -224,7 +230,7 @@ final class SettingsViewModel {
             return granted
         } catch {
             self.error = error
-            print("Failed to request notification permission: \(error)")
+            AppLogger.notifications.error("Failed to request notification permission: \(error.localizedDescription)")
             return false
         }
     }
@@ -240,6 +246,7 @@ final class SettingsViewModel {
         notify3DaysBefore = prefs.notify3DaysBefore
         notify1WeekBefore = prefs.notify1WeekBefore
         quietHoursEnabled = prefs.quietHoursEnabled
+        appearanceMode = prefs.appearanceMode
 
         // Convert hour integers to Date objects for DatePicker
         let calendar = Calendar.current

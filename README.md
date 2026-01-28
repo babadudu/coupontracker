@@ -58,7 +58,7 @@ ios/CouponTracker/Sources/
 ├── Models/                # Data models
 │   ├── Entities/          # SwiftData models
 │   └── Enums/             # App enumerations
-└── Utils/                 # Utilities (Formatters, Design System)
+└── Utils/                 # Utilities (Formatters, Design System, AppLogger)
 ```
 
 ### Key Technologies
@@ -67,6 +67,7 @@ ios/CouponTracker/Sources/
 - **SwiftData** - Persistence layer
 - **UserNotifications** - Push notification support
 - **Swift Charts** - Data visualization
+- **os.Logger** - Structured production logging
 
 ## Benefit Categories
 
@@ -94,7 +95,7 @@ xcodebuild test \
 
 - **Unit Tests**: Models, ViewModels, Services
 - **Integration Tests**: Repository operations, SwiftData
-- **135+ tests** covering core functionality
+- **350+ tests** covering core functionality
 
 ## Development
 

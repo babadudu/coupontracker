@@ -401,7 +401,7 @@ struct PreviewCardPeriodSection: View {
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 200)
-                .background(Color.gray.opacity(0.1))
+                .background(DesignSystem.Colors.backgroundSecondary)
             }
             .frame(height: 280)
         }

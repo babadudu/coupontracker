@@ -24,7 +24,10 @@ enum DesignSystem {
         /// Primary brand color - used for CTAs, links, and primary actions
         /// Contrast ratio: 4.5:1 on white background
         static let primary = Color("Primary", bundle: nil)
-        static let primaryFallback = Color(hex: "#007AFF")
+        static let primaryFallback = Color.adaptive(
+            light: Color(hex: "#007AFF"),
+            dark: Color(hex: "#0A84FF")
+        )
 
         /// Darker primary for pressed states
         static let primaryDark = Color(hex: "#0055CC")
@@ -32,13 +35,22 @@ enum DesignSystem {
         // MARK: Semantic Status Colors
         /// Success state - used for completed actions, "used" indicators
         /// Green that works in both light and dark modes
-        static let success = Color(hex: "#34C759")
+        static let success = Color.adaptive(
+            light: Color(hex: "#34C759"),
+            dark: Color(hex: "#30D158")
+        )
 
         /// Warning state - expiring soon (4-7 days)
-        static let warning = Color(hex: "#FF9500")
+        static let warning = Color.adaptive(
+            light: Color(hex: "#FF9500"),
+            dark: Color(hex: "#FF9F0A")
+        )
 
         /// Danger/urgent state - expiring today or within 3 days
-        static let danger = Color(hex: "#FF3B30")
+        static let danger = Color.adaptive(
+            light: Color(hex: "#FF3B30"),
+            dark: Color(hex: "#FF453A")
+        )
 
         /// Neutral/disabled state - secondary text, expired items
         static let neutral = Color(hex: "#8E8E93")
@@ -81,6 +93,10 @@ enum DesignSystem {
         static var textTertiary: Color {
             Color(uiColor: .tertiaryLabel)
         }
+
+        /// Text/icon color for use on vibrant colored backgrounds (gradients, status banners)
+        /// Always white because backgrounds are vibrant colors needing contrast
+        static let onColor = Color.white
 
         // MARK: Card Issuer Brand Colors
         /// These colors represent credit card issuer brand identities
@@ -485,6 +501,15 @@ extension Color {
             blue: Double(b) / 255,
             opacity: Double(a) / 255
         )
+    }
+
+    /// Creates a color that adapts to light/dark mode
+    static func adaptive(light: Color, dark: Color) -> Color {
+        Color(UIColor { traitCollection in
+            traitCollection.userInterfaceStyle == .dark
+                ? UIColor(dark)
+                : UIColor(light)
+        })
     }
 }
 

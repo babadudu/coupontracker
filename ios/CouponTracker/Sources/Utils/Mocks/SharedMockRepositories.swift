@@ -146,6 +146,13 @@ final class MockBenefitRepository: BenefitRepositoryProtocol {
             .filter { $0.status == .used }
             .reduce(Decimal.zero) { $0 + $1.effectiveValue }
     }
+
+    func getRedeemedValue(for period: BenefitPeriod, frequency: BenefitFrequency, referenceDate: Date) throws -> Decimal {
+        if shouldThrowError { throw MockError.operationFailed }
+        return benefits
+            .filter { $0.status == .used && $0.frequency == frequency }
+            .reduce(Decimal.zero) { $0 + $1.effectiveValue }
+    }
 }
 
 // MARK: - Mock Template Loader
