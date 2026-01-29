@@ -1,16 +1,24 @@
 # Engineering Task Assignments
 
-> Generated from Architect and Senior Engineer review of tech debt RCA.
+> Tracks implementation tasks for CouponTracker development.
 
 ---
 
 ## 📊 Completion Status (January 2026)
 
+### Phase 1-3: Tech Debt Sprint (COMPLETED)
+
 | Status | Count | Tasks |
 |--------|-------|-------|
 | ✅ Completed | 10 | T-011, T-008, T-004, T-006, T-007, T-010, T-015, T-016, T-005, T-012 |
+
+### Phase 4: Subscription & Coupon Tracking (CURRENT)
+
+| Status | Count | Tasks |
+|--------|-------|-------|
+| ✅ Completed | 5 | T-401, T-402, T-403, T-404, T-405 |
 | ⚠️ In Progress | 0 | — |
-| ⏳ Pending | 0 | — |
+| ⏳ Pending | 13 | T-406 through T-418 |
 
 ### 🚀 App Store Readiness: COMPLETED
 - Push notification entitlements
@@ -593,6 +601,521 @@ Created `AppLoggerTests.swift` with 18 tests covering:
 - Logger accessibility (all 7 categories)
 - Smoke tests for all log levels (debug, info, warning, error, fault)
 - Advanced usage (string interpolation, privacy, multiple messages)
+
+---
+
+---
+
+## Phase 4: Subscription & Coupon Tracking
+
+> New feature implementation for subscription tracking, coupon management, and card annual fee ROI.
+
+### Task Dependency Graph (Phase 4)
+
+```
+PHASE 1: CORE MODELS (No Dependencies)
+├── T-401: Subscription Entity                    ⏳
+├── T-402: SubscriptionPayment Entity             ⏳
+├── T-403: Coupon Entity                          ⏳
+├── T-404: New Enums (SubscriptionFrequency, etc.)⏳
+└── T-405: UserCard Annual Fee Properties         ⏳
+
+PHASE 2: DATA LAYER (Depends on Phase 1)
+├── T-406: SubscriptionRepository                 ⏳
+├── T-407: CouponRepository                       ⏳
+├── T-408: SubscriptionTemplate + JSON            ⏳
+└── T-409: CardRepository Updates (subscriptions) ⏳
+
+PHASE 3: SERVICES (Depends on Phase 2)
+├── T-410: SubscriptionStateService               ⏳
+├── T-411: CardROIService                         ⏳
+└── T-412: NotificationService Extensions         ⏳
+
+PHASE 4: UI LAYER (Depends on Phase 3)
+├── T-413: TrackerTabView + Navigation            ⏳
+├── T-414: Subscription Views + ViewModels        ⏳
+└── T-415: Coupon Views + ViewModels              ⏳
+
+PHASE 5: INTEGRATION (Depends on Phase 4)
+├── T-416: Dashboard Widgets                      ⏳
+├── T-417: CardDetailView ROI Card                ⏳
+└── T-418: Insight Banner Extensions              ⏳
+```
+
+---
+
+### T-401: Create Subscription Entity ✅ COMPLETED
+**Priority:** P0 | **Effort:** Medium | **Risk:** Low
+**Phase:** 1 - Core Models | **Completed:** January 29, 2026
+
+**Description:** Create SwiftData entity for tracking recurring subscriptions.
+
+**Requirements:**
+- All properties must have default values (migration safety)
+- Optional relationship to UserCard (nullify on delete)
+- Follow existing Benefit entity patterns
+
+**Files:**
+- `ios/CouponTracker/Sources/Models/Entities/Subscription.swift` (new)
+
+**Acceptance Criteria:**
+- [ ] Entity compiles with SwiftData
+- [ ] All properties have default values
+- [ ] Relationship to UserCard is optional
+- [ ] Cascade delete to SubscriptionPayment
+
+---
+
+### T-402: Create SubscriptionPayment Entity ✅ COMPLETED
+**Priority:** P0 | **Effort:** Small | **Risk:** Low
+**Phase:** 1 - Core Models | **Completed:** January 29, 2026
+
+**Description:** Create entity for subscription payment history.
+
+**Files:**
+- `ios/CouponTracker/Sources/Models/Entities/SubscriptionPayment.swift` (new)
+
+**Acceptance Criteria:**
+- [ ] Entity compiles with SwiftData
+- [ ] Denormalized snapshots for card/subscription names
+- [ ] All properties have defaults
+
+---
+
+### T-403: Create Coupon Entity ✅ COMPLETED
+**Priority:** P0 | **Effort:** Medium | **Risk:** Low
+**Phase:** 1 - Core Models | **Completed:** January 29, 2026
+
+**Description:** Create standalone entity for one-time coupons/rewards.
+
+**Files:**
+- `ios/CouponTracker/Sources/Models/Entities/Coupon.swift` (new)
+
+**Acceptance Criteria:**
+- [ ] Entity compiles with SwiftData
+- [ ] No card relationship (standalone)
+- [ ] isUsed + usedDate tracking
+- [ ] All properties have defaults
+
+---
+
+### T-404: Create Subscription and Coupon Enums ✅ COMPLETED
+**Priority:** P0 | **Effort:** Small | **Risk:** Low
+**Phase:** 1 - Core Models | **Completed:** January 29, 2026
+
+**Description:** Create enum types for subscriptions and coupons.
+
+**Files:**
+- `ios/CouponTracker/Sources/Models/Enums/SubscriptionEnums.swift` (new)
+- `ios/CouponTracker/Sources/Models/Enums/CouponEnums.swift` (new)
+
+**Enums:**
+- `SubscriptionFrequency`: weekly, monthly, quarterly, annual
+- `SubscriptionCategory`: streaming, software, gaming, news, fitness, utilities, foodDelivery, other
+- `CouponCategory`: dining, shopping, travel, entertainment, services, grocery, other
+
+**Acceptance Criteria:**
+- [ ] All enums Codable + CaseIterable
+- [ ] Each has displayName, iconName computed properties
+- [ ] SubscriptionFrequency has annualMultiplier and nextRenewalDate(from:)
+
+---
+
+### T-405: Add Annual Fee Properties to UserCard ✅ COMPLETED
+**Priority:** P0 | **Effort:** Small | **Risk:** Medium (migration)
+**Phase:** 1 - Core Models | **Completed:** January 29, 2026
+
+**Description:** Extend UserCard with annual fee tracking and subscription relationship.
+
+**Properties to Add:**
+- `annualFee: Decimal = 0`
+- `annualFeeDate: Date?`
+- `feeReminderDaysBefore: Int = 30`
+- `feeReminderNotificationId: String?`
+- `subscriptions: [Subscription]` (nullify relationship)
+
+**Files:**
+- `ios/CouponTracker/Sources/Models/Entities/UserCard.swift` (modify)
+
+**Acceptance Criteria:**
+- [ ] All new properties have defaults (migration safe)
+- [ ] Relationship uses .nullify delete rule
+- [ ] Existing tests pass
+
+---
+
+### T-406: Create SubscriptionRepository
+**Priority:** P1 | **Effort:** Medium | **Risk:** Low
+**Phase:** 2 - Data Layer
+**Depends on:** T-401, T-402
+
+**Description:** CRUD repository for Subscription entity.
+
+**Operations:**
+- getAllSubscriptions()
+- getSubscription(by: UUID)
+- getSubscriptions(for: UserCard)
+- getActiveSubscriptions()
+- addSubscription(from: SubscriptionTemplate, card: UserCard?)
+- addCustomSubscription(...)
+- updateSubscription(...)
+- markRenewalPaid(...)
+- deleteSubscription(...)
+- getUpcomingRenewals(within: Int)
+
+**Files:**
+- `ios/CouponTracker/Sources/Services/Storage/SubscriptionRepository.swift` (new)
+- `ios/CouponTracker/Sources/Core/Protocols/SubscriptionRepositoryProtocol.swift` (new)
+
+**Acceptance Criteria:**
+- [ ] CRUD operations only (no business logic)
+- [ ] Follows existing repository patterns
+- [ ] Protocol defined for testability
+
+---
+
+### T-407: Create CouponRepository
+**Priority:** P1 | **Effort:** Medium | **Risk:** Low
+**Phase:** 2 - Data Layer
+**Depends on:** T-403
+
+**Description:** CRUD repository for Coupon entity.
+
+**Operations:**
+- getAllCoupons()
+- getCoupon(by: UUID)
+- getActiveCoupons()
+- getUsedCoupons()
+- addCoupon(...)
+- updateCoupon(...)
+- markCouponUsed(...)
+- deleteCoupon(...)
+- getExpiringCoupons(within: Int)
+
+**Files:**
+- `ios/CouponTracker/Sources/Services/Storage/CouponRepository.swift` (new)
+- `ios/CouponTracker/Sources/Core/Protocols/CouponRepositoryProtocol.swift` (new)
+
+**Acceptance Criteria:**
+- [ ] CRUD operations only
+- [ ] Protocol defined
+- [ ] Follows existing patterns
+
+---
+
+### T-408: Create SubscriptionTemplate and JSON Data
+**Priority:** P1 | **Effort:** Medium | **Risk:** Low
+**Phase:** 2 - Data Layer
+**Depends on:** T-404
+
+**Description:** Create template structure and 20-30 popular subscription services.
+
+**Files:**
+- `ios/CouponTracker/Sources/Models/Templates/SubscriptionTemplate.swift` (new)
+- `ios/CouponTracker/Sources/Resources/subscriptions.json` (new)
+- `ios/CouponTracker/Sources/Services/SubscriptionTemplateLoader.swift` (new)
+
+**Templates to Include:**
+| Category | Services |
+|----------|----------|
+| Streaming | Netflix, Spotify, Disney+, HBO Max, YouTube Premium, Apple Music, Hulu, Amazon Prime Video |
+| Software | Adobe CC, Microsoft 365, 1Password, Notion, Dropbox |
+| Gaming | Xbox Game Pass, PlayStation Plus, Nintendo Online |
+| News | NYT, WSJ, Apple News+ |
+| Fitness | Peloton, Planet Fitness |
+| Utilities | iCloud, Google One |
+| Food | DoorDash Pass, Uber One |
+
+**Acceptance Criteria:**
+- [ ] 20-30 templates in JSON
+- [ ] TemplateLoader follows existing pattern
+- [ ] Each template has: id, name, description, suggestedPrice, frequency, category, iconName
+
+---
+
+### T-409: Update CardRepository for Subscriptions
+**Priority:** P1 | **Effort:** Small | **Risk:** Low
+**Phase:** 2 - Data Layer
+**Depends on:** T-405
+
+**Description:** Update CardRepository to handle subscription relationships and annual fee queries.
+
+**New Operations:**
+- getCardsWithAnnualFees()
+- getCardROIData(for: UserCard)
+- updateAnnualFee(card: UserCard, fee: Decimal, date: Date?)
+
+**Files:**
+- `ios/CouponTracker/Sources/Services/Storage/CardRepository.swift` (modify)
+
+**Acceptance Criteria:**
+- [ ] Subscription relationship properly loaded
+- [ ] Annual fee queries work
+- [ ] Existing tests pass
+
+---
+
+### T-410: Create SubscriptionStateService
+**Priority:** P1 | **Effort:** Medium | **Risk:** Low
+**Phase:** 3 - Services
+**Depends on:** T-406
+
+**Description:** Business logic for subscription state management.
+
+**Operations:**
+- calculateNextRenewal(for: Subscription)
+- canMarkRenewalPaid(Subscription)
+- calculateAnnualizedCost(Subscription)
+- processRenewalPaid(Subscription)
+
+**Files:**
+- `ios/CouponTracker/Sources/Services/SubscriptionStateService.swift` (new)
+- `ios/CouponTracker/Sources/Core/Protocols/SubscriptionStateServiceProtocol.swift` (new)
+
+**Acceptance Criteria:**
+- [ ] Follows BenefitStateService patterns
+- [ ] Protocol defined for testability
+- [ ] All date calculations use Date extensions
+
+---
+
+### T-411: Create CardROIService
+**Priority:** P1 | **Effort:** Medium | **Risk:** Low
+**Phase:** 3 - Services
+**Depends on:** T-405, T-409
+
+**Description:** Calculate ROI metrics for cards with annual fees.
+
+**Operations:**
+- calculateROI(for: UserCard, benefits: [Benefit]) -> CardROI
+- isCardProfitable(card: UserCard) -> Bool
+- calculateBreakEvenProgress(card: UserCard) -> Decimal
+
+**Output Structure:**
+```swift
+struct CardROI {
+    let annualFee: Decimal
+    let benefitsRedeemed: Decimal
+    let benefitsAvailable: Decimal
+    let netValue: Decimal
+    let roiPercentage: Int
+    let daysUntilFeeRenewal: Int?
+}
+```
+
+**Files:**
+- `ios/CouponTracker/Sources/Services/CardROIService.swift` (new)
+
+**Acceptance Criteria:**
+- [ ] Accurate ROI calculation
+- [ ] Handles cards without annual fee (returns nil)
+- [ ] Unit tests for edge cases
+
+---
+
+### T-412: Extend NotificationService for Subscriptions/Coupons
+**Priority:** P1 | **Effort:** Medium | **Risk:** Medium
+**Phase:** 3 - Services
+**Depends on:** T-406, T-407
+
+**Description:** Add notification scheduling for subscription renewals and coupon expirations.
+
+**New Categories:**
+- `SUBSCRIPTION_RENEWAL`
+- `COUPON_EXPIRING`
+- `ANNUAL_FEE_REMINDER`
+
+**Requirements:**
+- Implement notification quota management (iOS limit: 64)
+- Priority: urgent coupons > subscriptions > annual fees
+- Configurable reminder timing per item
+
+**Files:**
+- `ios/CouponTracker/Sources/Services/NotificationService.swift` (modify)
+
+**Acceptance Criteria:**
+- [ ] New notification categories registered
+- [ ] Quota management prevents exceeding 64 limit
+- [ ] Quick actions work (Mark Paid, Snooze)
+
+---
+
+### T-413: Create TrackerTabView and Navigation
+**Priority:** P1 | **Effort:** Medium | **Risk:** Low
+**Phase:** 4 - UI Layer
+**Depends on:** T-406, T-407
+
+**Description:** Add 4th tab for subscription and coupon tracking.
+
+**Components:**
+- TrackerTabView with segmented control
+- Tab bar update (add Tracker tab)
+- Navigation structure for subscriptions/coupons
+
+**Files:**
+- `ios/CouponTracker/Sources/Features/Tracker/TrackerTabView.swift` (new)
+- `ios/CouponTracker/Sources/Views/ContentView.swift` (modify)
+
+**Acceptance Criteria:**
+- [ ] 4th tab appears in tab bar
+- [ ] Segmented control switches between Subscriptions/Coupons
+- [ ] Badge shows urgent item count
+
+---
+
+### T-414: Create Subscription Views and ViewModels
+**Priority:** P1 | **Effort:** Large | **Risk:** Medium
+**Phase:** 4 - UI Layer
+**Depends on:** T-406, T-408, T-410
+
+**Components:**
+- SubscriptionsListView
+- SubscriptionRowView
+- SubscriptionDetailView
+- AddSubscriptionView (with template picker)
+- SubscriptionListViewModel
+- AddSubscriptionViewModel
+
+**Files:**
+- `ios/CouponTracker/Sources/Features/Tracker/Subscriptions/*.swift` (new, multiple)
+- `ios/CouponTracker/Sources/Features/Tracker/ViewModels/*.swift` (new, multiple)
+
+**Acceptance Criteria:**
+- [ ] List shows all subscriptions with urgency states
+- [ ] Template picker with search
+- [ ] Add custom subscription flow
+- [ ] Edit/delete functionality
+- [ ] Mark renewal paid
+- [ ] Views < 400 lines each
+
+---
+
+### T-415: Create Coupon Views and ViewModels
+**Priority:** P1 | **Effort:** Large | **Risk:** Medium
+**Phase:** 4 - UI Layer
+**Depends on:** T-407
+
+**Components:**
+- CouponsListView
+- CouponRowView
+- CouponDetailView
+- AddCouponView
+- CouponListViewModel
+
+**Files:**
+- `ios/CouponTracker/Sources/Features/Tracker/Coupons/*.swift` (new, multiple)
+
+**Acceptance Criteria:**
+- [ ] List grouped by urgency (Today, This Week, Later)
+- [ ] Countdown timer for <24h expiration
+- [ ] Mark as used with undo
+- [ ] Add/edit/delete flows
+- [ ] Views < 400 lines each
+
+---
+
+### T-416: Create Dashboard Widgets
+**Priority:** P2 | **Effort:** Medium | **Risk:** Low
+**Phase:** 5 - Integration
+**Depends on:** T-414, T-415
+
+**Components:**
+- DashboardSubscriptionsWidget
+- DashboardCouponsWidget
+
+**Files:**
+- `ios/CouponTracker/Sources/Features/Home/Components/DashboardSubscriptionsWidget.swift` (new)
+- `ios/CouponTracker/Sources/Features/Home/Components/DashboardCouponsWidget.swift` (new)
+- `ios/CouponTracker/Sources/Features/Home/HomeTabView.swift` (modify)
+
+**Acceptance Criteria:**
+- [ ] Subscription widget shows total monthly cost + upcoming count
+- [ ] Coupon widget shows expiring today/this week counts
+- [ ] Tapping navigates to Tracker tab
+
+---
+
+### T-417: Create AnnualFeeROICard for CardDetailView
+**Priority:** P2 | **Effort:** Medium | **Risk:** Low
+**Phase:** 5 - Integration
+**Depends on:** T-411
+
+**Description:** Visual ROI display on CardDetailView.
+
+**Files:**
+- `ios/CouponTracker/Sources/Features/Wallet/Components/AnnualFeeROICard.swift` (new)
+- `ios/CouponTracker/Sources/Features/Wallet/CardDetailView.swift` (modify)
+
+**Acceptance Criteria:**
+- [ ] Shows redeemed vs. annual fee
+- [ ] Progress bar toward break-even
+- [ ] Green/red color coding
+- [ ] Only shows if annualFee > 0
+
+---
+
+### T-418: Extend Insight Banners
+**Priority:** P2 | **Effort:** Small | **Risk:** Low
+**Phase:** 5 - Integration
+**Depends on:** T-414, T-415
+
+**New Insight Types:**
+- `subscriptionsDueSoon(count: Int, totalCost: Decimal)`
+- `couponsExpiringToday(count: Int)`
+- `annualFeeDue(cardName: String, fee: Decimal, daysUntil: Int)`
+
+**Files:**
+- `ios/CouponTracker/Sources/Features/Home/DashboardInsightResolver.swift` (modify)
+- `ios/CouponTracker/Sources/Features/Home/Components/InsightBannerView.swift` (modify)
+
+**Acceptance Criteria:**
+- [ ] New insight types render correctly
+- [ ] Priority order: coupons > annual fee > subscriptions > benefits
+- [ ] Tapping navigates to relevant screen
+
+---
+
+## Phase 4 Implementation Schedule
+
+### Week 1: Foundation (Phase 1 + 2)
+| Day | Tasks |
+|-----|-------|
+| 1-2 | T-401, T-402, T-403, T-404 (Entities + Enums) |
+| 3 | T-405 (UserCard updates) |
+| 4-5 | T-406, T-407 (Repositories) |
+
+### Week 2: Data + Services (Phase 2 + 3)
+| Day | Tasks |
+|-----|-------|
+| 1-2 | T-408 (Templates + JSON) |
+| 3 | T-409 (CardRepository updates) |
+| 4-5 | T-410, T-411 (Services) |
+
+### Week 3: Services + UI (Phase 3 + 4)
+| Day | Tasks |
+|-----|-------|
+| 1-2 | T-412 (NotificationService) |
+| 3-5 | T-413, T-414 (Tracker tab + Subscriptions UI) |
+
+### Week 4: UI + Integration (Phase 4 + 5)
+| Day | Tasks |
+|-----|-------|
+| 1-2 | T-415 (Coupons UI) |
+| 3-4 | T-416, T-417 (Dashboard + ROI) |
+| 5 | T-418 (Insight banners) + Testing |
+
+---
+
+## Definition of Done (Phase 4)
+
+Each task must:
+- [x] Pass all existing tests
+- [x] Add new tests for the new code
+- [x] Follow CLAUDE.md patterns (defaults, denormalization, ID-based navigation)
+- [x] Views under 400 lines, ViewModels under 300 lines
+- [x] Use `/add-swift-file` skill for new Swift files
+- [x] Use `/arch-check` skill for Views/ViewModels/Repositories
+- [x] Use `/pattern-check` skill for delete operations and navigation
 
 ---
 

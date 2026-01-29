@@ -63,11 +63,29 @@ final class UserCard {
     /// Last modification timestamp
     var updatedAt: Date
 
+    // MARK: - Annual Fee Properties
+
+    /// Annual fee amount for this card
+    var annualFee: Decimal = 0
+
+    /// Date when the annual fee is charged
+    var annualFeeDate: Date?
+
+    /// Days before annual fee date to send reminder
+    var feeReminderDaysBefore: Int = 30
+
+    /// Scheduled notification identifier for fee reminder
+    var feeReminderNotificationId: String?
+
     // MARK: - Relationships
 
     /// Benefits associated with this card
     @Relationship(deleteRule: .cascade, inverse: \Benefit.userCard)
     var benefits: [Benefit] = []
+
+    /// Subscriptions paid with this card
+    @Relationship(deleteRule: .nullify, inverse: \Subscription.userCard)
+    var subscriptions: [Subscription] = []
 
     // MARK: - Initialization
 
@@ -145,6 +163,49 @@ final class UserCard {
     /// Whether this card has any benefits expiring soon (within 7 days)
     var hasExpiringSoonBenefits: Bool {
         benefits.contains { $0.isExpiringSoon }
+    }
+
+    /// Total monthly subscription cost for this card
+    var totalMonthlySubscriptionCost: Decimal {
+        subscriptions
+            .filter { $0.isActive }
+            .reduce(Decimal.zero) { $0 + $1.monthlyCost }
+    }
+
+    /// Total annual subscription cost for this card
+    var totalAnnualSubscriptionCost: Decimal {
+        subscriptions
+            .filter { $0.isActive }
+            .reduce(Decimal.zero) { $0 + $1.annualizedCost }
+    }
+
+    /// Count of active subscriptions
+    var activeSubscriptionCount: Int {
+        subscriptions.filter { $0.isActive }.count
+    }
+
+    /// Whether annual fee is coming soon (within reminder days)
+    var isAnnualFeeSoon: Bool {
+        guard let feeDate = annualFeeDate, annualFee > 0 else { return false }
+        let daysUntil = daysUntilAnnualFee
+        return daysUntil >= 0 && daysUntil <= feeReminderDaysBefore
+    }
+
+    /// Days until annual fee is charged
+    var daysUntilAnnualFee: Int {
+        guard let feeDate = annualFeeDate else { return Int.max }
+        let calendar = Calendar.current
+        let components = calendar.dateComponents(
+            [.day],
+            from: calendar.startOfDay(for: Date()),
+            to: calendar.startOfDay(for: feeDate)
+        )
+        return components.day ?? Int.max
+    }
+
+    /// Formatted annual fee
+    var formattedAnnualFee: String {
+        Formatters.formatCurrency(annualFee)
     }
 
     // MARK: - Methods

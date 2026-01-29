@@ -1,8 +1,8 @@
 # CouponTracker UI/UX Specifications
 
-**Version:** 1.0
-**Last Updated:** January 16, 2026
-**Status:** Draft - For UI Design Expert Review
+**Version:** 2.0
+**Last Updated:** January 29, 2026
+**Status:** Active
 **Author:** Product Team
 
 ---
@@ -719,7 +719,303 @@ Animation: Standard iOS pull-to-refresh spinner
 |-----|------|-------|-------|
 | Home | house.fill | Home | Count of expiring items |
 | Wallet | creditcard.fill | Wallet | - |
+| Tracker | checklist | Tracker | Count of urgent items |
 | Settings | gearshape.fill | Settings | - |
+
+---
+
+## Tracker Tab Specifications (Phase 4)
+
+### Screen 8: Tracker Tab
+
+**Purpose:** Manage subscriptions and coupons in a dedicated tab.
+
+**Layout:**
+```
++------------------------------------------+
+| Tracker                            [+ Add]|  <- Nav bar
++------------------------------------------+
+|                                          |
+| [Subscriptions] [Coupons]                |  <- Segmented Control
+|                                          |
++------------------------------------------+
+|                                          |
+| +--------------------------------------+ |
+| | Monthly Total                        | |
+| | $127.45                              | |  <- Summary Card
+| | 8 active subscriptions               | |
+| +--------------------------------------+ |
+|                                          |
+| Renewing Soon                            |  <- Section
+|                                          |
+| +--------------------------------------+ |
+| | [Netflix] Netflix          $15.99/mo | |
+| | Renews Tomorrow      [Sapphire Res.] | |  <- Subscription Row
+| +--------------------------------------+ |
+|                                          |
+| +--------------------------------------+ |
+| | [Spotify] Spotify          $10.99/mo | |
+| | Renews in 5 days                     | |
+| +--------------------------------------+ |
+|                                          |
+| All Subscriptions                        |  <- Section
+|                                          |
+| [More subscription rows...]              |
+|                                          |
++------------------------------------------+
+|  [Home]  [Wallet]  [Tracker]  [Settings] |
++------------------------------------------+
+```
+
+---
+
+### Screen 9: Coupons View (Tracker Tab - Coupons Segment)
+
+**Layout:**
+```
++------------------------------------------+
+| Tracker                            [+ Add]|
++------------------------------------------+
+|                                          |
+| [Subscriptions] [Coupons]                |  <- Selected: Coupons
+|                                          |
++------------------------------------------+
+|                                          |
+| [!] Expiring Today (2)                   |  <- Urgency Section
+|                                          |
+| +--------------------------------------+ |
+| | [McDonald's] BOGO Burger             | |
+| | Expires 11:59 PM         [Mark Used] | |  <- Urgent Coupon
+| +--------------------------------------+ |
+|                                          |
+| +--------------------------------------+ |
+| | [Walgreens] $5 Off $25               | |
+| | Expires 11:59 PM         [Mark Used] | |
+| +--------------------------------------+ |
+|                                          |
+| [!] Expiring This Week (5)               |  <- Section
+|                                          |
+| +--------------------------------------+ |
+| | [Uber Eats] 20% Off                  | |
+| | 3 days left              [Mark Used] | |
+| +--------------------------------------+ |
+|                                          |
+| Later (8)                                |
+| [More coupon rows...]                    |
+|                                          |
++------------------------------------------+
+```
+
+---
+
+### Screen 10: Add Subscription
+
+**Layout:**
+```
++------------------------------------------+
+| [Cancel]   Add Subscription       [Save] |
++------------------------------------------+
+|                                          |
+| +--------------------------------------+ |
+| | [Search] Search services...          | |
+| +--------------------------------------+ |
+|                                          |
+| Popular                                  |  <- Section
+|                                          |
+| +--------+ +--------+ +--------+         |
+| |Netflix | |Spotify | |Disney+ |         |
+| +--------+ +--------+ +--------+         |  <- Template Grid
+| +--------+ +--------+ +--------+         |
+| |Adobe   | |iCloud  | |Gym     |         |
+| +--------+ +--------+ +--------+         |
+|                                          |
+| [+ Add Custom Subscription]              |  <- Manual Entry
+|                                          |
++------------------------------------------+
+```
+
+**Configuration Sheet (after selecting template):**
+```
++------------------------------------------+
+|              [Drag Handle]               |
++------------------------------------------+
+|                                          |
+| [Netflix Logo]                           |
+| Netflix                                  |
+| Streaming service                        |
+|                                          |
+| +--------------------------------------+ |
+| | Amount         |   $15.99           | |
+| +--------------------------------------+ |
+| | Frequency      |   Monthly       >  | |
+| +--------------------------------------+ |
+| | Next Renewal   |   Feb 1, 2026   >  | |
+| +--------------------------------------+ |
+| | Payment Card   |   (Optional)    >  | |
+| +--------------------------------------+ |
+|                                          |
+| +--------------------------------------+ |
+| |           [Add Subscription]         | |  <- Primary CTA
+| +--------------------------------------+ |
+|                                          |
++------------------------------------------+
+```
+
+---
+
+### Screen 11: Add Coupon
+
+**Layout:**
+```
++------------------------------------------+
+| [Cancel]      Add Coupon          [Save] |
++------------------------------------------+
+|                                          |
+| +--------------------------------------+ |
+| | Name *                               | |
+| | McDonald's BOGO                      | |
+| +--------------------------------------+ |
+|                                          |
+| +--------------------------------------+ |
+| | Description                          | |
+| | Buy one Big Mac get one free         | |
+| +--------------------------------------+ |
+|                                          |
+| +--------------------------------------+ |
+| | Expiration Date *      Feb 15, 2026 >| |
+| +--------------------------------------+ |
+|                                          |
+| +--------------------------------------+ |
+| | Category              Dining       > | |
+| +--------------------------------------+ |
+|                                          |
+| +--------------------------------------+ |
+| | Value (optional)           $6.99     | |
+| +--------------------------------------+ |
+|                                          |
+| +--------------------------------------+ |
+| | Coupon Code (optional)               | |
+| | BOGO2026                             | |
+| +--------------------------------------+ |
+|                                          |
++------------------------------------------+
+```
+
+---
+
+### Screen 12: Annual Fee ROI Card (CardDetailView)
+
+**Location:** CardDetailView, below card header, above benefits
+
+**Layout:**
+```
++------------------------------------------+
+|                                          |
+| +--------------------------------------+ |
+| | Annual Fee ROI        Fee due: 45d   | |
+| +--------------------------------------+ |
+| |                                      | |
+| |  $875          -    $550    =  $325  | |
+| | Redeemed       Annual Fee    Net Gain| |
+| |                                      | |
+| | [====================----] 159%      | |
+| |                                      | |
+| | ✓ You've earned back your fee!       | |
+| +--------------------------------------+ |
+|                                          |
++------------------------------------------+
+```
+
+**States:**
+- **Positive ROI:** Green background, checkmark, "Net Gain"
+- **Negative ROI:** Red/orange background, arrow up, "Redeem $X more to break even"
+- **Fee Due Soon (<30 days):** Warning badge with countdown
+
+---
+
+### Subscription Row Component
+
+**Layout:**
+```
++--------------------------------------------------+
+|  [Icon]  Service Name              $XX.XX/freq   |
+|          Renews [date]     [Optional: Card chip] |
++--------------------------------------------------+
+```
+
+**Visual Specifications:**
+| Element | Spec |
+|---------|------|
+| Row height | 72pt |
+| Icon size | 40pt (rounded rect) |
+| Service name | SF Pro, 17pt, semibold |
+| Renewal date | SF Pro, 15pt, regular, secondary |
+| Price | SF Pro Rounded, 17pt, bold |
+| Frequency label | SF Pro, 13pt, regular, tertiary |
+| Card chip | 8pt height, card gradient background |
+
+**Urgency States:**
+| Days until renewal | Treatment |
+|-------------------|-----------|
+| 8+ | Standard (no highlight) |
+| 4-7 | Orange icon, yellow tint background |
+| 1-3 | Red icon, light red background |
+| Today/Tomorrow | Red icon, prominent red background, "Renews Tomorrow" |
+
+---
+
+### Coupon Row Component
+
+**Layout:**
+```
++--------------------------------------------------+
+|  [Icon]  Coupon Name                 [Mark Used] |
+|          Expires [countdown]                     |
++--------------------------------------------------+
+```
+
+**Urgency States:**
+| Time remaining | Treatment |
+|----------------|-----------|
+| 8+ days | Standard |
+| 4-7 days | Orange, "X days left" |
+| 1-3 days | Red, "X days left" |
+| <24 hours | Red pulse, "Expires in Xh Xm" |
+| Today | Red badge, "Expires Today" |
+
+---
+
+### Dashboard Integration (Phase 4)
+
+**Add to Dashboard (HomeTabView):**
+
+**Subscription Mini-Widget:**
+```
++------------------------------------------+
+| Subscriptions          $127.45/mo total  |
+|                                          |
+| [Netflix]  Netflix renews tomorrow       |
+| [Spotify]  +2 more this week             |
+|                                    [>]   |
++------------------------------------------+
+```
+
+**Coupons Mini-Widget:**
+```
++------------------------------------------+
+| Coupons Expiring                   [!]   |
+|                                          |
+| 2 expire today  |  5 expire this week    |
+|                                    [>]   |
++------------------------------------------+
+```
+
+**New Insight Banner Types:**
+| Insight | Trigger | Message |
+|---------|---------|---------|
+| subscriptionsDueSoon | 3+ renewals in 7 days | "3 subscriptions renew this week: $45" |
+| couponsExpiringToday | 1+ coupons expire today | "2 coupons expire today!" |
+| annualFeeDue | Fee in <30 days | "[Card] $550 annual fee due in 7 days" |
 
 ---
 

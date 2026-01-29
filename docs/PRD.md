@@ -1,8 +1,8 @@
 # CouponTracker Product Requirements Document (PRD)
 
-**Version:** 1.0
-**Last Updated:** January 16, 2026
-**Status:** Draft
+**Version:** 2.0
+**Last Updated:** January 29, 2026
+**Status:** Active
 **Product Owner:** [TBD]
 
 ---
@@ -198,6 +198,29 @@ Users frequently lose hundreds of dollars annually in expired credit card reward
 
 ---
 
+### Phase 4: Subscription & Coupon Tracking (Current)
+
+**Objective:** Expand beyond credit card benefits to track recurring subscriptions and one-time coupons/rewards.
+
+**In Scope:**
+- Credit card annual fee tracking with ROI visualization
+- Recurring subscription tracking (Netflix, Spotify, etc.)
+- 20-30 pre-populated subscription templates
+- Manual subscription entry with optional card linkage
+- One-time coupon/reward tracking with expiration dates
+- New "Tracker" tab for subscriptions and coupons
+- Dashboard integration with subscription/coupon widgets
+- Notification reminders for renewals and expirations
+
+**User Stories:**
+- US-4.1: Track annual fee and see if card benefits exceed the cost
+- US-4.2: Add subscriptions from templates or manually
+- US-4.3: Link subscriptions to payment cards (optional)
+- US-4.4: Track one-time coupons with expiration reminders
+- US-4.5: See total monthly/annual subscription spend
+
+---
+
 ### Future Phases (Post-MVP)
 
 - API integration with credit card providers
@@ -207,6 +230,8 @@ Users frequently lose hundreds of dollars annually in expired credit card reward
 - Apple Watch complications
 - Siri shortcuts integration
 - Shared household accounts
+- Subscription price change detection
+- Cancellation tracking and history
 
 ---
 
@@ -504,23 +529,185 @@ Users frequently lose hundreds of dollars annually in expired credit card reward
 
 ---
 
-### F6: Physical Coupon Tracking (Phase 2)
+### F6: Physical Coupon Tracking (Phase 2 - Deferred to Phase 4)
 
-#### F6.1: Manual Coupon Entry
+*Moved to F8 with expanded scope*
 
-**Description:** Add and track physical coupons and vouchers.
+---
+
+### F7: Credit Card Annual Fee Tracking (Phase 4)
+
+#### F7.1: Annual Fee on Card
+
+**Description:** Track annual fee amount and renewal date for credit cards.
 
 **Requirements:**
-- Form entry: store/brand, description, value, expiration date
-- Photo capture for coupon image
-- Barcode scanning (if applicable)
-- Category assignment
+- Annual fee amount (Decimal, default 0)
+- Annual fee renewal date (optional)
+- Configurable reminder (days before fee)
+- Display on card detail view
 
 **Acceptance Criteria:**
-- [ ] User can create coupon entries with key fields
-- [ ] Photo can be attached to coupon
-- [ ] Expiration reminders work like card benefits
-- [ ] Coupons can be marked as used
+- [ ] User can set/edit annual fee amount on any card
+- [ ] User can set annual fee renewal date
+- [ ] Annual fee displays on CardDetailView
+- [ ] Reminder notification sent before fee date
+
+---
+
+#### F7.2: ROI Visualization
+
+**Description:** Show whether card benefits exceed the annual fee.
+
+**Requirements:**
+- Calculate total benefits redeemed (current year)
+- Compare to annual fee
+- Visual indicator: positive ROI (green) vs negative (red)
+- Progress bar showing redeemed vs fee
+
+**Acceptance Criteria:**
+- [ ] ROI card displays on CardDetailView
+- [ ] Shows "Redeemed: $X / Annual Fee: $Y"
+- [ ] Net value displayed with color coding
+- [ ] Progress bar shows break-even progress
+
+---
+
+### F8: Subscription Tracking (Phase 4)
+
+#### F8.1: Subscription Management
+
+**Description:** Track recurring subscriptions with optional card linkage.
+
+**Requirements:**
+- Add subscription from template (20-30 popular services)
+- Manual subscription entry
+- Fields: name, price, frequency (weekly/monthly/quarterly/annual), next renewal date
+- Optional link to payment card
+- Category assignment (streaming, software, gaming, news, fitness, utilities, foodDelivery, other)
+
+**Acceptance Criteria:**
+- [ ] User can add subscription from template list
+- [ ] User can create custom subscription manually
+- [ ] Subscription can optionally link to a UserCard
+- [ ] Subscription displays in Tracker tab
+
+---
+
+#### F8.2: Subscription Templates
+
+**Description:** Pre-populated list of common subscription services.
+
+**Requirements:**
+- 20-30 popular services (Netflix, Spotify, Disney+, Adobe, etc.)
+- Each template: name, suggested price, default frequency, category, icon
+- Searchable/filterable template list
+- User can override price when adding
+
+**Template Categories:**
+| Category | Examples |
+|----------|----------|
+| Streaming | Netflix, Spotify, Disney+, HBO Max, YouTube Premium |
+| Software | Adobe CC, Microsoft 365, 1Password, Notion |
+| Gaming | Xbox Game Pass, PlayStation Plus, Nintendo Online |
+| News | NYT, WSJ, Medium, Substack |
+| Fitness | Peloton, gym memberships, Apple Fitness+ |
+| Utilities | iCloud, Google One, Dropbox |
+| Food Delivery | DoorDash Pass, Uber One |
+
+**Acceptance Criteria:**
+- [ ] Template picker shows 20-30 services with icons
+- [ ] Templates grouped by category
+- [ ] Search filters templates in real-time
+- [ ] Selected template pre-fills form fields
+
+---
+
+#### F8.3: Subscription Reminders
+
+**Description:** Notification before subscription renewal.
+
+**Requirements:**
+- User-configurable reminder days (default: 7)
+- Notification includes: service name, amount, renewal date
+- Quick actions: Mark Paid, Snooze
+
+**Acceptance Criteria:**
+- [ ] Reminder sent N days before nextRenewalDate
+- [ ] Notification actionable without opening app
+- [ ] User can configure reminder timing per subscription
+
+---
+
+#### F8.4: Subscription Analytics
+
+**Description:** Spending summary across subscriptions.
+
+**Requirements:**
+- Total monthly cost (normalized from all frequencies)
+- Total annual cost
+- Cost by category breakdown
+- Upcoming renewals list
+
+**Acceptance Criteria:**
+- [ ] Dashboard widget shows total monthly subscription cost
+- [ ] Tracker tab shows spending breakdown
+- [ ] Upcoming renewals highlighted
+
+---
+
+### F9: Coupon/Reward Tracking (Phase 4)
+
+#### F9.1: Manual Coupon Entry
+
+**Description:** Track one-time coupons and rewards with expiration dates.
+
+**Requirements:**
+- Fields: name, description (optional), expiration date, category, value (optional), merchant (optional), code (optional)
+- Categories: dining, shopping, travel, entertainment, services, grocery, other
+- Status: available, used, expired
+- Reminder before expiration
+
+**Acceptance Criteria:**
+- [ ] User can create coupon with required fields
+- [ ] Coupon displays in Tracker tab (Coupons section)
+- [ ] Expiration countdown shown
+- [ ] Reminder notification sent before expiration
+
+---
+
+#### F9.2: Mark Coupon Used
+
+**Description:** Track when coupons are redeemed.
+
+**Requirements:**
+- One-tap "Mark as Used" action
+- Records used date
+- Coupon moves to "Used" status
+- Undo available briefly
+
+**Acceptance Criteria:**
+- [ ] User can mark coupon as used
+- [ ] Used date recorded
+- [ ] Undo available for 10 seconds
+- [ ] Used coupons shown in separate section
+
+---
+
+#### F9.3: Coupon Urgency Display
+
+**Description:** Visual urgency for expiring coupons.
+
+**Requirements:**
+- Countdown timer for <24 hours
+- Red highlight for "Expires Today"
+- Orange for "Expires This Week"
+- Badge on Tracker tab for urgent coupons
+
+**Acceptance Criteria:**
+- [ ] Coupons grouped by urgency (Today, This Week, Later)
+- [ ] Countdown timer for imminent expiration
+- [ ] Tab badge shows urgent count
 
 ---
 

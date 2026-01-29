@@ -62,6 +62,11 @@
 		B7C9A460508A0AD351873D7B /* UserCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A163AE2E6DB027C2AE0F01C /* UserCard.swift */; };
 		C34CA3CFB1A9714A3CF22A32 /* CardDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E088EEE7CA79D56546D0BD6 /* CardDetailViewModel.swift */; };
 		C3E3E377779D70B787DB455C /* BenefitEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = A929208E7A5A5DB85A0FF0C9 /* BenefitEnums.swift */; };
+		COUP1234567890ABCDEF0002 /* Coupon.swift in Sources */ = {isa = PBXBuildFile; fileRef = COUP1234567890ABCDEF0001 /* Coupon.swift */; };
+		CPCE1234567890ABCDEF0002 /* CouponEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = CPCE1234567890ABCDEF0001 /* CouponEnums.swift */; };
+		SUBS1234567890ABCDEF0002 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = SUBS1234567890ABCDEF0001 /* Subscription.swift */; };
+		SBSE1234567890ABCDEF0002 /* SubscriptionEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = SBSE1234567890ABCDEF0001 /* SubscriptionEnums.swift */; };
+		SBPY1234567890ABCDEF0002 /* SubscriptionPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = SBPY1234567890ABCDEF0001 /* SubscriptionPayment.swift */; };
 		C45169A498A513529EEA0B7F /* MarkUndoCycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338CF4B53BD34A68F1105A2 /* MarkUndoCycleTests.swift */; };
 		C8286FE28C0D020FF54D8BD5 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FFD8A7AF5039F906788DFF /* Formatters.swift */; };
 		D261AB1D754F86719801FEBB /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C25932E958C53791B73F07 /* AppContainer.swift */; };
@@ -204,6 +209,11 @@
 		F79D4B8197EDD2CA84B373EF /* AccomplishmentRingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccomplishmentRingsView.swift; sourceTree = "<group>"; };
 		FAF161B5EA56A3CF548D511B /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
 		FCC84562864B46CAA4C71D9A /* BenefitUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitUsage.swift; sourceTree = "<group>"; };
+		COUP1234567890ABCDEF0001 /* Coupon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coupon.swift; sourceTree = "<group>"; };
+		CPCE1234567890ABCDEF0001 /* CouponEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponEnums.swift; sourceTree = "<group>"; };
+		SUBS1234567890ABCDEF0001 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
+		SBSE1234567890ABCDEF0001 /* SubscriptionEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionEnums.swift; sourceTree = "<group>"; };
+		SBPY1234567890ABCDEF0001 /* SubscriptionPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPayment.swift; sourceTree = "<group>"; };
 		FE8C84A7E9481EC950763438 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		MOCK1234567890ABCDEF0001 /* SharedMockRepositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedMockRepositories.swift; sourceTree = "<group>"; };
 		BENF1234567890ABCDEF0001 /* BenefitExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitExtensions.swift; sourceTree = "<group>"; };
@@ -240,6 +250,9 @@
 			children = (
 				254736E578BB0838D073A454 /* Benefit.swift */,
 				FCC84562864B46CAA4C71D9A /* BenefitUsage.swift */,
+				COUP1234567890ABCDEF0001 /* Coupon.swift */,
+				SUBS1234567890ABCDEF0001 /* Subscription.swift */,
+				SBPY1234567890ABCDEF0001 /* SubscriptionPayment.swift */,
 				9A163AE2E6DB027C2AE0F01C /* UserCard.swift */,
 				72ED49A42D2834D3DBD86566 /* UserPreferences.swift */,
 			);
@@ -470,6 +483,8 @@
 			children = (
 				APPM1234567890ABCDEF0001 /* AppearanceMode.swift */,
 				A929208E7A5A5DB85A0FF0C9 /* BenefitEnums.swift */,
+				CPCE1234567890ABCDEF0001 /* CouponEnums.swift */,
+				SBSE1234567890ABCDEF0001 /* SubscriptionEnums.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -712,6 +727,8 @@
 				395F8BB83661232BB5BE237C /* CardRepositoryProtocol.swift in Sources */,
 				F396EE8CFD737702D990E73F /* CardTemplate.swift in Sources */,
 				55F44CFA7F698F068904D049 /* ContentView.swift in Sources */,
+				COUP1234567890ABCDEF0002 /* Coupon.swift in Sources */,
+				CPCE1234567890ABCDEF0002 /* CouponEnums.swift in Sources */,
 				3C064B50953CBD821BA28265 /* CouponTrackerApp.swift in Sources */,
 				D4788364B5F8A9DFABF3194B /* DateExtensions.swift in Sources */,
 				432280BEC019FE51C29F6C34 /* DesignSystem.swift in Sources */,
@@ -735,6 +752,9 @@
 				9C827B5B1D3B5D2BAFFC12A6 /* Repository.swift in Sources */,
 				EE79D5396E16D4F16AC9F43E /* SettingsView.swift in Sources */,
 				74B00860557357C480E2A750 /* SettingsViewModel.swift in Sources */,
+				SUBS1234567890ABCDEF0002 /* Subscription.swift in Sources */,
+				SBSE1234567890ABCDEF0002 /* SubscriptionEnums.swift in Sources */,
+				SBPY1234567890ABCDEF0002 /* SubscriptionPayment.swift in Sources */,
 				MOCK1234567890ABCDEF0002 /* SharedMockRepositories.swift in Sources */,
 				304F02ACE4B476BF70466D3B /* TemplateLoader.swift in Sources */,
 				069D31CD320AE60F05732728 /* TemplateLoaderProtocol.swift in Sources */,

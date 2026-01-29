@@ -1,8 +1,8 @@
 # CouponTracker Data Model Specification
 
-**Version:** 1.0
-**Last Updated:** January 16, 2026
-**Status:** Approved
+**Version:** 2.0
+**Last Updated:** January 29, 2026
+**Status:** Active
 **Author:** Software Architect
 
 ---
@@ -48,23 +48,61 @@ CouponTracker uses a **hybrid data architecture**:
 │                        (User Data - Persistent)                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 
-┌─────────────────────┐         ┌─────────────────────┐         ┌─────────────────────┐
-│      UserCard       │         │      Benefit        │         │    BenefitUsage     │
-├─────────────────────┤         ├─────────────────────┤         ├─────────────────────┤
-│ id: UUID (PK)       │         │ id: UUID (PK)       │         │ id: UUID (PK)       │
-│ cardTemplateId: UUID│◄────────│ userCardId: UUID(FK)│◄────────│ benefitId: UUID(FK) │
-│ nickname: String?   │   1:N   │ templateBenefitId   │   1:N   │ usedDate: Date      │
-│ addedDate: Date     │         │ customName: String? │         │ periodStart: Date   │
-│ isCustom: Bool      │         │ customValue: Decimal│         │ periodEnd: Date     │
-│ customName: String? │         │ status: BenefitStat │         │ valueRedeemed: Dec  │
-│ customIssuer: String│         │ currentPeriodStart  │         │ notes: String?      │
-│ customColorHex: Str?│         │ currentPeriodEnd    │         │ createdAt: Date     │
-│ sortOrder: Int      │         │ reminderEnabled:Bool│         └─────────────────────┘
-│ createdAt: Date     │         │ reminderDaysBefore  │
-│ updatedAt: Date     │         │ lastReminderDate    │
-└─────────────────────┘         │ createdAt: Date     │
-                                │ updatedAt: Date     │
-                                └─────────────────────┘
+┌─────────────────────────┐       ┌─────────────────────┐       ┌─────────────────────┐
+│       UserCard          │       │      Benefit        │       │    BenefitUsage     │
+├─────────────────────────┤       ├─────────────────────┤       ├─────────────────────┤
+│ id: UUID (PK)           │       │ id: UUID (PK)       │       │ id: UUID (PK)       │
+│ cardTemplateId: UUID    │◄──────│ userCardId: UUID(FK)│◄──────│ benefitId: UUID(FK) │
+│ nickname: String?       │  1:N  │ templateBenefitId   │  1:N  │ usedDate: Date      │
+│ addedDate: Date         │       │ customName: String? │       │ periodStart: Date   │
+│ isCustom: Bool          │       │ customValue: Decimal│       │ periodEnd: Date     │
+│ customName: String?     │       │ status: BenefitStat │       │ valueRedeemed: Dec  │
+│ customIssuer: String    │       │ currentPeriodStart  │       │ notes: String?      │
+│ customColorHex: Str?    │       │ currentPeriodEnd    │       │ createdAt: Date     │
+│ sortOrder: Int          │       │ reminderEnabled:Bool│       └─────────────────────┘
+│ createdAt: Date         │       │ reminderDaysBefore  │
+│ updatedAt: Date         │       │ lastReminderDate    │
+│ ────────────────────────│       │ createdAt: Date     │
+│ annualFee: Decimal = 0  │ NEW   │ updatedAt: Date     │
+│ annualFeeDate: Date?    │ NEW   └─────────────────────┘
+│ feeReminderDays: Int=30 │ NEW
+│ subscriptions: [Sub...] │ NEW   ┌─────────────────────┐       ┌─────────────────────┐
+└────────────┬────────────┘       │    Subscription     │  NEW  │ SubscriptionPayment │ NEW
+             │                    ├─────────────────────┤       ├─────────────────────┤
+             │ 1:N (nullify)      │ id: UUID (PK)       │       │ id: UUID (PK)       │
+             └───────────────────►│ userCard: UserCard? │◄──────│ subscriptionId: UUID│
+                                  │ templateId: UUID?   │  1:N  │ paymentDate: Date   │
+                                  │ name: String        │       │ amount: Decimal     │
+                                  │ price: Decimal      │       │ periodStart: Date   │
+                                  │ frequency: SubFreq  │       │ periodEnd: Date     │
+                                  │ category: SubCat    │       │ nameSnapshot: String│
+                                  │ startDate: Date     │       │ createdAt: Date     │
+                                  │ nextRenewalDate:Date│       └─────────────────────┘
+                                  │ isActive: Bool=true │
+                                  │ reminderEnabled:Bool│
+                                  │ reminderDaysBefore  │
+                                  │ createdAt: Date     │
+                                  │ updatedAt: Date     │
+                                  └─────────────────────┘
+
+┌─────────────────────────┐
+│        Coupon           │  NEW (Standalone - no card relationship)
+├─────────────────────────┤
+│ id: UUID (PK)           │
+│ name: String            │
+│ couponDescription: Str? │
+│ expirationDate: Date    │
+│ category: CouponCategory│
+│ value: Decimal?         │
+│ merchant: String?       │
+│ code: String?           │
+│ isUsed: Bool = false    │
+│ usedDate: Date?         │
+│ reminderEnabled: Bool   │
+│ reminderDaysBefore: Int │
+│ createdAt: Date         │
+│ updatedAt: Date         │
+└─────────────────────────┘
                                           │
                                           │ References (Lookup)
                                           ▼
@@ -526,7 +564,231 @@ final class UserPreferences {
 
 ---
 
+### Subscription (NEW - Phase 4)
+
+Represents a recurring subscription paid by the user.
+
+```swift
+// Sources/Models/Entities/Subscription.swift
+
+import SwiftData
+import Foundation
+
+@Model
+final class Subscription {
+    // MARK: - Primary Key
+    @Attribute(.unique)
+    var id: UUID
+
+    // MARK: - Relationships
+    /// Optional link to payment card (nullify on card delete)
+    var userCard: UserCard?
+
+    // MARK: - Template Reference
+    var templateId: UUID?
+
+    // MARK: - Core Properties (Denormalized)
+    var name: String = ""
+    var subscriptionDescription: String?
+    var price: Decimal = 0
+    var frequency: SubscriptionFrequency = .monthly
+    var category: SubscriptionCategory = .other
+
+    // MARK: - Tracking State
+    var startDate: Date = Date()
+    var nextRenewalDate: Date = Date()
+    var isActive: Bool = true
+
+    // MARK: - Notifications
+    var reminderEnabled: Bool = true
+    var reminderDaysBefore: Int = 7
+    var lastReminderDate: Date?
+    var scheduledNotificationId: String?
+
+    // MARK: - Display
+    var iconName: String?
+    var websiteUrl: String?
+    var notes: String?
+
+    // MARK: - Snapshots (Denormalized)
+    var cardNameSnapshot: String?
+
+    // MARK: - Metadata
+    var createdAt: Date = Date()
+    var updatedAt: Date = Date()
+
+    // MARK: - Relationships
+    @Relationship(deleteRule: .cascade, inverse: \SubscriptionPayment.subscription)
+    var paymentHistory: [SubscriptionPayment] = []
+
+    // MARK: - Computed Properties
+
+    /// Annualized cost of this subscription
+    var annualizedCost: Decimal {
+        price * Decimal(frequency.annualMultiplier)
+    }
+
+    /// Days until next renewal
+    var daysUntilRenewal: Int {
+        Calendar.current.dateComponents([.day], from: Date(), to: nextRenewalDate).day ?? 0
+    }
+}
+```
+
+---
+
+### SubscriptionPayment (NEW - Phase 4)
+
+Historical record of subscription payments.
+
+```swift
+// Sources/Models/Entities/SubscriptionPayment.swift
+
+import SwiftData
+import Foundation
+
+@Model
+final class SubscriptionPayment {
+    @Attribute(.unique)
+    var id: UUID
+
+    var subscription: Subscription?
+    var paymentDate: Date = Date()
+    var amount: Decimal = 0
+    var periodStart: Date = Date()
+    var periodEnd: Date = Date()
+    var wasAutoRecorded: Bool = false
+
+    // MARK: - Denormalized Snapshots
+    var subscriptionNameSnapshot: String = ""
+    var cardNameSnapshot: String?
+    var cardIdSnapshot: UUID?
+
+    var createdAt: Date = Date()
+}
+```
+
+---
+
+### Coupon (NEW - Phase 4)
+
+Represents a one-time coupon, reward, or promotional offer.
+
+```swift
+// Sources/Models/Entities/Coupon.swift
+
+import SwiftData
+import Foundation
+
+@Model
+final class Coupon {
+    @Attribute(.unique)
+    var id: UUID
+
+    // MARK: - Core Properties
+    var name: String = ""
+    var couponDescription: String?
+    var expirationDate: Date = Date()
+    var category: CouponCategory = .other
+    var value: Decimal?
+    var merchant: String?
+    var code: String?
+
+    // MARK: - Status
+    var isUsed: Bool = false
+    var usedDate: Date?
+
+    // MARK: - Notifications
+    var reminderEnabled: Bool = true
+    var reminderDaysBefore: Int = 3
+    var lastReminderDate: Date?
+    var scheduledNotificationId: String?
+
+    // MARK: - Metadata
+    var notes: String?
+    var createdAt: Date = Date()
+    var updatedAt: Date = Date()
+
+    // MARK: - Computed Properties
+
+    var daysUntilExpiration: Int {
+        Calendar.current.dateComponents([.day], from: Date(), to: expirationDate).day ?? 0
+    }
+
+    var isExpired: Bool {
+        Date() > expirationDate && !isUsed
+    }
+
+    var isExpiringSoon: Bool {
+        daysUntilExpiration <= 7 && !isUsed && !isExpired
+    }
+}
+```
+
+---
+
+### UserCard Modifications (Phase 4)
+
+Add the following properties to existing UserCard entity:
+
+```swift
+// Add to UserCard.swift
+
+// MARK: - Annual Fee Tracking (NEW)
+
+/// Annual fee amount (0 = no fee)
+var annualFee: Decimal = 0
+
+/// Date when annual fee is charged (nil = not tracking)
+var annualFeeDate: Date?
+
+/// Days before fee to send reminder (default: 30)
+var feeReminderDaysBefore: Int = 30
+
+/// Scheduled notification ID for fee reminder
+var feeReminderNotificationId: String?
+
+// MARK: - Subscription Relationship (NEW)
+/// Subscriptions paid with this card (nullify on card delete)
+@Relationship(deleteRule: .nullify, inverse: \Subscription.userCard)
+var subscriptions: [Subscription] = []
+```
+
+---
+
 ## Template Structures
+
+### SubscriptionTemplate (NEW - Phase 4)
+
+Pre-populated subscription definition (read-only, bundled).
+
+```swift
+// Sources/Models/Templates/SubscriptionTemplate.swift
+
+import Foundation
+
+struct SubscriptionTemplate: Codable, Identifiable, Hashable {
+    let id: UUID
+    let name: String
+    let description: String
+    let suggestedPrice: Decimal
+    let frequency: SubscriptionFrequency
+    let category: SubscriptionCategory
+    let iconName: String?
+    let websiteUrl: String?
+    let isPopular: Bool
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+
+    static func == (lhs: SubscriptionTemplate, rhs: SubscriptionTemplate) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+```
+
+---
 
 ### CardTemplate
 
@@ -806,6 +1068,155 @@ enum BenefitCategory: String, Codable, CaseIterable {
         case .hotel: return "building.2"
         case .airline: return "airplane.departure"
         case .other: return "star"
+        }
+    }
+}
+```
+
+```swift
+// Sources/Models/Enums/SubscriptionEnums.swift (NEW - Phase 4)
+
+import Foundation
+
+/// Frequency options for subscription billing cycles.
+enum SubscriptionFrequency: String, Codable, CaseIterable, Identifiable {
+    var id: String { rawValue }
+
+    case weekly
+    case monthly
+    case quarterly
+    case annual
+
+    var displayName: String {
+        switch self {
+        case .weekly: return "Weekly"
+        case .monthly: return "Monthly"
+        case .quarterly: return "Quarterly"
+        case .annual: return "Annual"
+        }
+    }
+
+    var shortLabel: String {
+        switch self {
+        case .weekly: return "/wk"
+        case .monthly: return "/mo"
+        case .quarterly: return "/qtr"
+        case .annual: return "/yr"
+        }
+    }
+
+    /// Annualized cost multiplier
+    var annualMultiplier: Int {
+        switch self {
+        case .weekly: return 52
+        case .monthly: return 12
+        case .quarterly: return 4
+        case .annual: return 1
+        }
+    }
+
+    /// Calculate next renewal date from a given date
+    func nextRenewalDate(from date: Date) -> Date {
+        let calendar = Calendar.current
+        switch self {
+        case .weekly:
+            return calendar.date(byAdding: .weekOfYear, value: 1, to: date) ?? date
+        case .monthly:
+            return calendar.date(byAdding: .month, value: 1, to: date) ?? date
+        case .quarterly:
+            return calendar.date(byAdding: .month, value: 3, to: date) ?? date
+        case .annual:
+            return calendar.date(byAdding: .year, value: 1, to: date) ?? date
+        }
+    }
+}
+
+/// Categories for subscription types.
+enum SubscriptionCategory: String, Codable, CaseIterable, Identifiable {
+    var id: String { rawValue }
+
+    case streaming      // Netflix, Spotify, Disney+
+    case software       // Adobe, Microsoft 365, 1Password
+    case gaming         // Xbox Game Pass, PlayStation Plus
+    case news           // NYT, WSJ, Substack
+    case fitness        // Gym memberships, Peloton
+    case utilities      // Phone, internet, cloud storage
+    case foodDelivery   // DoorDash Pass, Uber One
+    case other
+
+    var displayName: String {
+        switch self {
+        case .streaming: return "Streaming"
+        case .software: return "Software"
+        case .gaming: return "Gaming"
+        case .news: return "News & Media"
+        case .fitness: return "Fitness"
+        case .utilities: return "Utilities"
+        case .foodDelivery: return "Food Delivery"
+        case .other: return "Other"
+        }
+    }
+
+    var iconName: String {
+        switch self {
+        case .streaming: return "play.tv.fill"
+        case .software: return "app.badge.fill"
+        case .gaming: return "gamecontroller.fill"
+        case .news: return "newspaper.fill"
+        case .fitness: return "figure.run"
+        case .utilities: return "bolt.fill"
+        case .foodDelivery: return "takeoutbag.and.cup.and.straw.fill"
+        case .other: return "square.grid.2x2.fill"
+        }
+    }
+
+    // Migration support
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = SubscriptionCategory(rawValue: rawValue) ?? .other
+    }
+}
+```
+
+```swift
+// Sources/Models/Enums/CouponEnums.swift (NEW - Phase 4)
+
+import Foundation
+
+/// Categories for one-time coupons/rewards.
+enum CouponCategory: String, Codable, CaseIterable, Identifiable {
+    var id: String { rawValue }
+
+    case dining         // Restaurant deals, BOGO offers
+    case shopping       // Retail coupons, discount codes
+    case travel         // Flight/hotel vouchers
+    case entertainment  // Movie tickets, event passes
+    case services       // Haircut, car wash, etc.
+    case grocery        // Supermarket coupons
+    case other
+
+    var displayName: String {
+        switch self {
+        case .dining: return "Dining"
+        case .shopping: return "Shopping"
+        case .travel: return "Travel"
+        case .entertainment: return "Entertainment"
+        case .services: return "Services"
+        case .grocery: return "Grocery"
+        case .other: return "Other"
+        }
+    }
+
+    var iconName: String {
+        switch self {
+        case .dining: return "fork.knife"
+        case .shopping: return "bag.fill"
+        case .travel: return "airplane"
+        case .entertainment: return "ticket.fill"
+        case .services: return "wrench.and.screwdriver.fill"
+        case .grocery: return "cart.fill"
+        case .other: return "tag.fill"
         }
     }
 }
