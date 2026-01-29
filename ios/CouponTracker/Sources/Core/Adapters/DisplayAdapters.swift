@@ -111,6 +111,26 @@ struct CardDisplayAdapter: CardDisplayable {
         return name
     }
 
+    // MARK: - Annual Fee Properties (for ROI Card)
+
+    var annualFee: Decimal { card.annualFee }
+    var annualFeeDate: Date? { card.annualFeeDate }
+    var daysUntilAnnualFee: Int { card.daysUntilAnnualFee }
+
+    // MARK: - Subscription Properties
+
+    var subscriptions: [Subscription] {
+        Array(card.subscriptions)
+    }
+
+    var totalAnnualSubscriptionCost: Decimal {
+        card.totalAnnualSubscriptionCost
+    }
+
+    // MARK: - Underlying Card Access
+
+    var userCard: UserCard { card }
+
     init(
         card: UserCard,
         cardTemplate: CardTemplate?,
@@ -213,10 +233,12 @@ extension CardDisplayAdapter {
             name: name,
             issuer: issuer,
             nickname: nickname,
-            annualFee: 0, // Not tracked in UserCard
+            annualFee: annualFee,
             gradient: gradient,
             benefits: benefits.map { $0.toPreviewBenefit() },
-            isCustom: false
+            isCustom: false,
+            annualFeeDate: annualFeeDate,
+            totalSubscriptionCost: totalAnnualSubscriptionCost
         )
     }
 }

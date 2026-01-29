@@ -16,9 +16,9 @@
 
 | Status | Count | Tasks |
 |--------|-------|-------|
-| ✅ Completed | 15 | T-401 through T-415 |
+| ✅ Completed | 18 | T-401 through T-418 |
 | ⚠️ In Progress | 0 | — |
-| ⏳ Pending | 3 | T-416 through T-418 |
+| ⏳ Pending | 0 | — |
 
 ### 🚀 App Store Readiness: COMPLETED
 - Push notification entitlements
@@ -636,10 +636,10 @@ PHASE 4: UI LAYER (Depends on Phase 3)             ✅ COMPLETED
 ├── T-414: Subscription Views + ViewModels        ✅
 └── T-415: Coupon Views + ViewModels              ✅
 
-PHASE 5: INTEGRATION (Depends on Phase 4)
-├── T-416: Dashboard Widgets                      ⏳
-├── T-417: CardDetailView ROI Card                ⏳
-└── T-418: Insight Banner Extensions              ⏳
+PHASE 5: INTEGRATION (Depends on Phase 4)          ✅ COMPLETED
+├── T-416: Dashboard Widgets                      ✅
+├── T-417: CardDetailView ROI Card                ✅
+└── T-418: Insight Banner Extensions              ✅
 ```
 
 ---

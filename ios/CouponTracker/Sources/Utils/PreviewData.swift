@@ -72,9 +72,25 @@ struct PreviewCard: CardDisplayable {
     var benefits: [PreviewBenefit]
     let isCustom: Bool
 
+    // ROI-related properties
+    let annualFeeDate: Date?
+    let totalSubscriptionCost: Decimal
+
     /// Number of urgent benefits (3 days or less)
     var urgentBenefitsCount: Int {
         benefits.filter { $0.isUrgent && $0.status == .available }.count
+    }
+
+    /// Days until annual fee is due
+    var daysUntilAnnualFee: Int {
+        guard let feeDate = annualFeeDate else { return Int.max }
+        let calendar = Calendar.current
+        let components = calendar.dateComponents(
+            [.day],
+            from: calendar.startOfDay(for: Date()),
+            to: calendar.startOfDay(for: feeDate)
+        )
+        return components.day ?? Int.max
     }
 
     init(
@@ -85,7 +101,9 @@ struct PreviewCard: CardDisplayable {
         annualFee: Decimal = 0,
         gradient: DesignSystem.CardGradient = .obsidian,
         benefits: [PreviewBenefit] = [],
-        isCustom: Bool = false
+        isCustom: Bool = false,
+        annualFeeDate: Date? = nil,
+        totalSubscriptionCost: Decimal = 0
     ) {
         self.id = id
         self.name = name
@@ -95,6 +113,8 @@ struct PreviewCard: CardDisplayable {
         self.gradient = gradient
         self.benefits = benefits
         self.isCustom = isCustom
+        self.annualFeeDate = annualFeeDate
+        self.totalSubscriptionCost = totalSubscriptionCost
     }
 }
 

@@ -27,6 +27,15 @@ enum DashboardInsight: Equatable {
     /// New user onboarding prompt
     case onboarding
 
+    /// Subscriptions renewing soon
+    case subscriptionsRenewing(count: Int, totalCost: Decimal)
+
+    /// Coupons expiring soon
+    case couponsExpiring(count: Int, totalValue: Decimal)
+
+    /// Annual fee due soon for a card
+    case annualFeeDue(cardName: String, fee: Decimal, daysUntil: Int)
+
     /// Icon for this insight type
     var icon: String {
         switch self {
@@ -38,6 +47,12 @@ enum DashboardInsight: Equatable {
             return "gift.fill"
         case .onboarding:
             return "sparkles"
+        case .subscriptionsRenewing:
+            return "repeat.circle.fill"
+        case .couponsExpiring:
+            return "tag.fill"
+        case .annualFeeDue:
+            return "creditcard.fill"
         }
     }
 
@@ -52,6 +67,12 @@ enum DashboardInsight: Equatable {
             return DesignSystem.Colors.primaryFallback
         case .onboarding:
             return DesignSystem.Colors.primaryFallback
+        case .subscriptionsRenewing:
+            return DesignSystem.Colors.warning
+        case .couponsExpiring:
+            return DesignSystem.Colors.warning
+        case .annualFeeDue:
+            return DesignSystem.Colors.danger
         }
     }
 
@@ -69,6 +90,25 @@ enum DashboardInsight: Equatable {
             return "\(Formatters.formatCurrencyWhole(value)) in benefits waiting for you"
         case .onboarding:
             return "Add your first card to start tracking benefits"
+        case .subscriptionsRenewing(let count, let totalCost):
+            let costStr = Formatters.formatCurrencyWhole(totalCost)
+            return count == 1
+                ? "1 subscription (\(costStr)) renewing this week"
+                : "\(count) subscriptions (\(costStr)) renewing this week"
+        case .couponsExpiring(let count, let totalValue):
+            let valueStr = Formatters.formatCurrencyWhole(totalValue)
+            return count == 1
+                ? "1 coupon (\(valueStr)) expiring soon"
+                : "\(count) coupons (\(valueStr)) expiring soon"
+        case .annualFeeDue(let cardName, let fee, let daysUntil):
+            let feeStr = Formatters.formatCurrencyWhole(fee)
+            if daysUntil == 0 {
+                return "\(cardName) annual fee (\(feeStr)) due today"
+            } else if daysUntil == 1 {
+                return "\(cardName) annual fee (\(feeStr)) due tomorrow"
+            } else {
+                return "\(cardName) annual fee (\(feeStr)) due in \(daysUntil) days"
+            }
         }
     }
 }

@@ -39,6 +39,9 @@
 		4989C98E43B9751A39A23D8E /* SubscriptionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDAE7469B24643AFB4BA288 /* SubscriptionListView.swift */; };
 		4BADBB08DCC4657AC8F4EE04 /* CardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E44E4BA948F880DE0C5B3F8 /* CardRepository.swift */; };
 		4C031D2EBACCF72F431319D0 /* InsightBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78364C9F06766DFE9ABBBE7 /* InsightBannerView.swift */; };
+		SUBW1234567890ABCDEF0002 /* SubscriptionWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SUBW1234567890ABCDEF0001 /* SubscriptionWidgetView.swift */; };
+		CPWV1234567890ABCDEF0002 /* CouponWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CPWV1234567890ABCDEF0001 /* CouponWidgetView.swift */; };
+		CROC1234567890ABCDEF0002 /* CardROICard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CROC1234567890ABCDEF0001 /* CardROICard.swift */; };
 		536E1DAE098D9E9531338E25 /* RecommendationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63E2CD59514C3BA886C1E18 /* RecommendationSearchView.swift */; };
 		55F44CFA7F698F068904D049 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C179A9A8213044AEA3F19D /* ContentView.swift */; };
 		577BC5ADC6B660C2151E21B8 /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897779E2EA378051D5F88E6A /* CardDetailView.swift */; };
@@ -233,6 +236,9 @@
 		C1EC2BD7A2EA7B8E9F114B0D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C283F73B0DC58B1294B3E812 /* CouponTrackerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CouponTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C78364C9F06766DFE9ABBBE7 /* InsightBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightBannerView.swift; sourceTree = "<group>"; };
+		SUBW1234567890ABCDEF0001 /* SubscriptionWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionWidgetView.swift; sourceTree = "<group>"; };
+		CPWV1234567890ABCDEF0001 /* CouponWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponWidgetView.swift; sourceTree = "<group>"; };
+		CROC1234567890ABCDEF0001 /* CardROICard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardROICard.swift; sourceTree = "<group>"; };
 		C7BBBEE6568878E3759D4396 /* BUILD_INSTRUCTIONS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = BUILD_INSTRUCTIONS.md; sourceTree = "<group>"; };
 		CATB1234567890ABCDEF0001 /* CategoryBenefitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBenefitsView.swift; sourceTree = "<group>"; };
 		CBCE67853C0BAFAF38C72AFD /* ExpiringBenefitsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiringBenefitsListView.swift; sourceTree = "<group>"; };
@@ -404,6 +410,9 @@
 				EXPD1234567890ABCDEF0001 /* ExpandedBenefitDetail.swift */,
 				79FB60319F7D76FFA9BDE491 /* ExpiringBenefitsSectionView.swift */,
 				C78364C9F06766DFE9ABBBE7 /* InsightBannerView.swift */,
+				SUBW1234567890ABCDEF0001 /* SubscriptionWidgetView.swift */,
+				CPWV1234567890ABCDEF0001 /* CouponWidgetView.swift */,
+				CROC1234567890ABCDEF0001 /* CardROICard.swift */,
 				80F6D85957FAA3FBFCB27BC0 /* MonthlyProgressCardView.swift */,
 				19C6DD7AD95A6E571F847AD7 /* PeriodCarouselView.swift */,
 				SBRV1234567890ABCDEF0001 /* SwipeableBenefitRowView.swift */,
@@ -855,6 +864,9 @@
 				APLG1234567890ABCDEF0002 /* AppLogger.swift in Sources */,
 				7D1461E0C4A4167BDAF2D48A /* HomeViewModel.swift in Sources */,
 				4C031D2EBACCF72F431319D0 /* InsightBannerView.swift in Sources */,
+				SUBW1234567890ABCDEF0002 /* SubscriptionWidgetView.swift in Sources */,
+				CPWV1234567890ABCDEF0002 /* CouponWidgetView.swift in Sources */,
+				CROC1234567890ABCDEF0002 /* CardROICard.swift in Sources */,
 				DF7D70F799397FF16C800306 /* MonthlyProgressCardView.swift in Sources */,
 				F0F648B40DF4B3C9AFD27408 /* NotificationExtensions.swift in Sources */,
 				SWDT1234567890ABCDEF0002 /* SwiftDataHelpers.swift in Sources */,

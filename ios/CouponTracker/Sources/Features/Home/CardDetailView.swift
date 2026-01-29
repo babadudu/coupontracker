@@ -68,6 +68,13 @@ struct CardDetailView: View {
                         .padding(.top, DesignSystem.Spacing.lg)
                     }
 
+                    // ROI Section (if annual fee > 0)
+                    if card.annualFee > 0 {
+                        roiSection
+                            .padding(.top, DesignSystem.Spacing.lg)
+                            .padding(.horizontal, DesignSystem.Spacing.lg)
+                    }
+
                     // Benefits Sections
                     benefitsSections
                         .padding(.top, DesignSystem.Spacing.lg)
@@ -228,6 +235,56 @@ struct CardDetailView: View {
             }
             .accessibilityLabel("Remove \(card.name) from wallet")
             .accessibilityHint("This will delete all tracked benefits for this card")
+        }
+    }
+
+    // MARK: - ROI Section
+
+    @ViewBuilder
+    private var roiSection: some View {
+        let benefitsRedeemed = card.usedBenefits.reduce(Decimal.zero) { $0 + $1.value }
+        let recommendation = generateRetentionRecommendation(
+            annualFee: card.annualFee,
+            redeemedValue: benefitsRedeemed
+        )
+
+        CardROICard(
+            annualFee: card.annualFee,
+            annualFeeDate: card.annualFeeDate,
+            benefitsRedeemed: benefitsRedeemed,
+            subscriptionCosts: card.totalSubscriptionCost,
+            recommendation: recommendation
+        )
+    }
+
+    /// Generates a retention recommendation based on redeemed benefits vs annual fee.
+    private func generateRetentionRecommendation(
+        annualFee: Decimal,
+        redeemedValue: Decimal
+    ) -> CardRetentionRecommendation {
+        guard annualFee > 0 else {
+            return .strongKeep(reason: "No annual fee - keep for available benefits")
+        }
+
+        let netValue = redeemedValue - annualFee
+        let roiPercentage = (netValue / annualFee) * 100
+
+        if roiPercentage >= 50 {
+            return .strongKeep(
+                reason: "Getting \(Formatters.formatCurrency(redeemedValue)) in value vs \(Formatters.formatCurrency(annualFee)) fee"
+            )
+        } else if roiPercentage >= 0 {
+            return .marginalKeep(
+                reason: "Earning \(Formatters.formatCurrency(netValue)) above the annual fee"
+            )
+        } else if roiPercentage >= -20 {
+            return .evaluate(
+                reason: "Currently \(Formatters.formatCurrency(abs(netValue))) short of breaking even on the fee"
+            )
+        } else {
+            return .considerCancelling(
+                reason: "Losing \(Formatters.formatCurrency(abs(netValue))) after accounting for the annual fee"
+            )
         }
     }
 

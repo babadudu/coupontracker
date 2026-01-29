@@ -29,6 +29,7 @@ struct HomeTabView: View {
 
     var onSwitchToWallet: (() -> Void)?
     var onSwitchToSettings: (() -> Void)?
+    var onSwitchToTracker: (() -> Void)?
 
     var body: some View {
         NavigationStack {
@@ -47,6 +48,11 @@ struct HomeTabView: View {
                                         showAddCard = true
                                     case .availableValue:
                                         showValueBreakdown = true
+                                    case .subscriptionsRenewing, .couponsExpiring:
+                                        onSwitchToTracker?()
+                                    case .annualFeeDue:
+                                        // Navigate to wallet tab (cards have the annual fee)
+                                        onSwitchToWallet?()
                                     default:
                                         break
                                     }
@@ -235,7 +241,54 @@ struct HomeTabView: View {
                     onTap: { showExpiringList = true }
                 )
             }
+
+            // Subscription and Coupon Widgets
+            trackerWidgets
         }
+    }
+
+    // MARK: - Tracker Widgets
+
+    @ViewBuilder
+    private var trackerWidgets: some View {
+        HStack(spacing: DesignSystem.Spacing.md) {
+            SubscriptionWidgetView(
+                monthlyCost: subscriptionMonthlyCost,
+                renewingSoonCount: subscriptionRenewingSoonCount,
+                onTap: { onSwitchToTracker?() }
+            )
+
+            CouponWidgetView(
+                validCount: couponValidCount,
+                expiringSoonCount: couponExpiringSoonCount,
+                totalSavings: couponTotalSavings,
+                onTap: { onSwitchToTracker?() }
+            )
+        }
+    }
+
+    // MARK: - Tracker Widget Data (Computed from Repository)
+
+    private var subscriptionMonthlyCost: Decimal {
+        (try? container.subscriptionRepository.getActiveSubscriptions()
+            .reduce(Decimal.zero) { $0 + $1.monthlyCost }) ?? 0
+    }
+
+    private var subscriptionRenewingSoonCount: Int {
+        (try? container.subscriptionRepository.getSubscriptionsRenewingSoon(within: 7).count) ?? 0
+    }
+
+    private var couponValidCount: Int {
+        (try? container.couponRepository.getValidCoupons().count) ?? 0
+    }
+
+    private var couponExpiringSoonCount: Int {
+        (try? container.couponRepository.getCouponsExpiringSoon(within: 7).count) ?? 0
+    }
+
+    private var couponTotalSavings: Decimal {
+        (try? container.couponRepository.getValidCoupons()
+            .reduce(Decimal.zero) { $0 + ($1.value ?? 0) }) ?? 0
     }
 
     // MARK: - Quick Stats (Empty State)
