@@ -33,8 +33,8 @@ final class CardRepository: CardRepositoryProtocol {
         )
         let cards = try modelContext.fetch(descriptor)
 
-        // Force benefits relationship to fully load (trigger lazy loading)
-        // This ensures card.benefits and their properties are populated before UI access
+        // Force relationships to fully load (trigger lazy loading)
+        // This ensures card.benefits and subscriptions are populated before UI access
         // Critical: Must access properties to ensure SwiftData loads them from storage
         for card in cards {
             for benefit in card.benefits {
@@ -43,6 +43,12 @@ final class CardRepository: CardRepositoryProtocol {
                 _ = benefit.customName
                 _ = benefit.status
                 _ = benefit.currentPeriodEnd
+            }
+            // Force subscription relationship to load
+            for subscription in card.subscriptions {
+                _ = subscription.name
+                _ = subscription.price
+                _ = subscription.isActive
             }
         }
 

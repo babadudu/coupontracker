@@ -16,9 +16,9 @@
 
 | Status | Count | Tasks |
 |--------|-------|-------|
-| ✅ Completed | 5 | T-401, T-402, T-403, T-404, T-405 |
+| ✅ Completed | 9 | T-401, T-402, T-403, T-404, T-405, T-406, T-407, T-408, T-409 |
 | ⚠️ In Progress | 0 | — |
-| ⏳ Pending | 13 | T-406 through T-418 |
+| ⏳ Pending | 9 | T-410 through T-418 |
 
 ### 🚀 App Store Readiness: COMPLETED
 - Push notification entitlements
@@ -617,14 +617,14 @@ PHASE 1: CORE MODELS (No Dependencies)
 ├── T-401: Subscription Entity                    ⏳
 ├── T-402: SubscriptionPayment Entity             ⏳
 ├── T-403: Coupon Entity                          ⏳
-├── T-404: New Enums (SubscriptionFrequency, etc.)⏳
-└── T-405: UserCard Annual Fee Properties         ⏳
+├── T-404: New Enums (SubscriptionFrequency, etc.)✅
+└── T-405: UserCard Annual Fee Properties         ✅
 
-PHASE 2: DATA LAYER (Depends on Phase 1)
-├── T-406: SubscriptionRepository                 ⏳
-├── T-407: CouponRepository                       ⏳
-├── T-408: SubscriptionTemplate + JSON            ⏳
-└── T-409: CardRepository Updates (subscriptions) ⏳
+PHASE 2: DATA LAYER (Depends on Phase 1)          ✅ COMPLETED
+├── T-406: SubscriptionRepository                 ✅
+├── T-407: CouponRepository                       ✅
+├── T-408: SubscriptionTemplate + JSON            ✅
+└── T-409: CardRepository Updates (subscriptions) ✅
 
 PHASE 3: SERVICES (Depends on Phase 2)
 ├── T-410: SubscriptionStateService               ⏳

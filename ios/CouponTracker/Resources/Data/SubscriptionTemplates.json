@@ -1,0 +1,407 @@
+{
+  "schemaVersion": 1,
+  "dataVersion": "1.0.0",
+  "lastUpdated": "2026-01-29T00:00:00Z",
+  "subscriptions": [
+    {
+      "id": "A0000001-0001-0001-0001-000000000001",
+      "name": "Netflix",
+      "defaultPrice": 15.49,
+      "frequency": "monthly",
+      "category": "streaming",
+      "iconName": "play.rectangle.fill",
+      "websiteUrl": "https://netflix.com",
+      "description": "Video streaming service"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000002",
+      "name": "Spotify",
+      "defaultPrice": 11.99,
+      "frequency": "monthly",
+      "category": "streaming",
+      "iconName": "music.note",
+      "websiteUrl": "https://spotify.com",
+      "description": "Music streaming service"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000003",
+      "name": "Disney+",
+      "defaultPrice": 13.99,
+      "frequency": "monthly",
+      "category": "streaming",
+      "iconName": "sparkles.tv.fill",
+      "websiteUrl": "https://disneyplus.com",
+      "description": "Disney, Pixar, Marvel, Star Wars streaming"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000004",
+      "name": "Amazon Prime",
+      "defaultPrice": 14.99,
+      "frequency": "monthly",
+      "category": "streaming",
+      "iconName": "shippingbox.fill",
+      "websiteUrl": "https://amazon.com/prime",
+      "description": "Shopping, streaming, and delivery benefits"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000005",
+      "name": "YouTube Premium",
+      "defaultPrice": 13.99,
+      "frequency": "monthly",
+      "category": "streaming",
+      "iconName": "play.rectangle.fill",
+      "websiteUrl": "https://youtube.com/premium",
+      "description": "Ad-free YouTube and YouTube Music"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000006",
+      "name": "Apple Music",
+      "defaultPrice": 10.99,
+      "frequency": "monthly",
+      "category": "streaming",
+      "iconName": "music.note",
+      "websiteUrl": "https://apple.com/apple-music",
+      "description": "Apple music streaming service"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000007",
+      "name": "HBO Max",
+      "defaultPrice": 15.99,
+      "frequency": "monthly",
+      "category": "streaming",
+      "iconName": "play.tv.fill",
+      "websiteUrl": "https://max.com",
+      "description": "HBO, Warner Bros, DC streaming"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000008",
+      "name": "Hulu",
+      "defaultPrice": 17.99,
+      "frequency": "monthly",
+      "category": "streaming",
+      "iconName": "play.tv.fill",
+      "websiteUrl": "https://hulu.com",
+      "description": "TV shows and movies streaming"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000009",
+      "name": "Adobe Creative Cloud",
+      "defaultPrice": 59.99,
+      "frequency": "monthly",
+      "category": "software",
+      "iconName": "paintbrush.fill",
+      "websiteUrl": "https://adobe.com/creativecloud",
+      "description": "Photoshop, Illustrator, Premiere Pro and more"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000010",
+      "name": "Microsoft 365",
+      "defaultPrice": 9.99,
+      "frequency": "monthly",
+      "category": "software",
+      "iconName": "doc.text.fill",
+      "websiteUrl": "https://microsoft.com/microsoft-365",
+      "description": "Office apps and cloud storage"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000011",
+      "name": "Dropbox Plus",
+      "defaultPrice": 11.99,
+      "frequency": "monthly",
+      "category": "software",
+      "iconName": "externaldrive.fill.badge.icloud",
+      "websiteUrl": "https://dropbox.com",
+      "description": "Cloud storage and file sync"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000012",
+      "name": "iCloud+",
+      "defaultPrice": 2.99,
+      "frequency": "monthly",
+      "category": "utilities",
+      "iconName": "icloud.fill",
+      "websiteUrl": "https://apple.com/icloud",
+      "description": "Apple cloud storage (200GB)"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000013",
+      "name": "Google One",
+      "defaultPrice": 2.99,
+      "frequency": "monthly",
+      "category": "utilities",
+      "iconName": "cloud.fill",
+      "websiteUrl": "https://one.google.com",
+      "description": "Google cloud storage (200GB)"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000014",
+      "name": "Notion",
+      "defaultPrice": 10.00,
+      "frequency": "monthly",
+      "category": "software",
+      "iconName": "doc.richtext.fill",
+      "websiteUrl": "https://notion.so",
+      "description": "All-in-one workspace for notes and docs"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000015",
+      "name": "Slack Pro",
+      "defaultPrice": 8.75,
+      "frequency": "monthly",
+      "category": "software",
+      "iconName": "bubble.left.and.bubble.right.fill",
+      "websiteUrl": "https://slack.com",
+      "description": "Team communication platform"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000016",
+      "name": "Zoom Pro",
+      "defaultPrice": 15.99,
+      "frequency": "monthly",
+      "category": "software",
+      "iconName": "video.fill",
+      "websiteUrl": "https://zoom.us",
+      "description": "Video conferencing service"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000017",
+      "name": "ChatGPT Plus",
+      "defaultPrice": 20.00,
+      "frequency": "monthly",
+      "category": "software",
+      "iconName": "bubble.left.fill",
+      "websiteUrl": "https://chat.openai.com",
+      "description": "OpenAI ChatGPT premium access"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000018",
+      "name": "Audible",
+      "defaultPrice": 14.95,
+      "frequency": "monthly",
+      "category": "streaming",
+      "iconName": "headphones",
+      "websiteUrl": "https://audible.com",
+      "description": "Audiobook service"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000019",
+      "name": "Kindle Unlimited",
+      "defaultPrice": 11.99,
+      "frequency": "monthly",
+      "category": "streaming",
+      "iconName": "book.fill",
+      "websiteUrl": "https://amazon.com/kindle-unlimited",
+      "description": "Unlimited ebooks and audiobooks"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000020",
+      "name": "PlayStation Plus Essential",
+      "defaultPrice": 9.99,
+      "frequency": "monthly",
+      "category": "gaming",
+      "iconName": "gamecontroller.fill",
+      "websiteUrl": "https://playstation.com/ps-plus",
+      "description": "PlayStation online gaming and monthly games"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000021",
+      "name": "Xbox Game Pass Ultimate",
+      "defaultPrice": 16.99,
+      "frequency": "monthly",
+      "category": "gaming",
+      "iconName": "gamecontroller.fill",
+      "websiteUrl": "https://xbox.com/game-pass",
+      "description": "Xbox games library and online play"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000022",
+      "name": "Nintendo Switch Online",
+      "defaultPrice": 3.99,
+      "frequency": "monthly",
+      "category": "gaming",
+      "iconName": "gamecontroller.fill",
+      "websiteUrl": "https://nintendo.com/switch/online",
+      "description": "Nintendo online gaming and classic games"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000023",
+      "name": "Crunchyroll",
+      "defaultPrice": 7.99,
+      "frequency": "monthly",
+      "category": "streaming",
+      "iconName": "play.tv.fill",
+      "websiteUrl": "https://crunchyroll.com",
+      "description": "Anime streaming service"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000024",
+      "name": "Paramount+",
+      "defaultPrice": 11.99,
+      "frequency": "monthly",
+      "category": "streaming",
+      "iconName": "play.tv.fill",
+      "websiteUrl": "https://paramountplus.com",
+      "description": "CBS, Paramount movies and shows"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000025",
+      "name": "Peacock Premium",
+      "defaultPrice": 7.99,
+      "frequency": "monthly",
+      "category": "streaming",
+      "iconName": "play.tv.fill",
+      "websiteUrl": "https://peacocktv.com",
+      "description": "NBC Universal streaming"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000026",
+      "name": "ESPN+",
+      "defaultPrice": 10.99,
+      "frequency": "monthly",
+      "category": "streaming",
+      "iconName": "sportscourt.fill",
+      "websiteUrl": "https://espn.com/plus",
+      "description": "Sports streaming service"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000027",
+      "name": "The New York Times",
+      "defaultPrice": 25.00,
+      "frequency": "monthly",
+      "category": "news",
+      "iconName": "newspaper.fill",
+      "websiteUrl": "https://nytimes.com",
+      "description": "News, cooking, games, and Wirecutter"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000028",
+      "name": "The Wall Street Journal",
+      "defaultPrice": 38.99,
+      "frequency": "monthly",
+      "category": "news",
+      "iconName": "newspaper.fill",
+      "websiteUrl": "https://wsj.com",
+      "description": "Business and financial news"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000029",
+      "name": "Apple TV+",
+      "defaultPrice": 9.99,
+      "frequency": "monthly",
+      "category": "streaming",
+      "iconName": "appletv.fill",
+      "websiteUrl": "https://tv.apple.com",
+      "description": "Apple original content streaming"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000030",
+      "name": "Apple One",
+      "defaultPrice": 19.95,
+      "frequency": "monthly",
+      "category": "utilities",
+      "iconName": "apple.logo",
+      "websiteUrl": "https://apple.com/apple-one",
+      "description": "Apple Music, TV+, Arcade, iCloud+"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000031",
+      "name": "DoorDash DashPass",
+      "defaultPrice": 9.99,
+      "frequency": "monthly",
+      "category": "foodDelivery",
+      "iconName": "takeoutbag.and.cup.and.straw.fill",
+      "websiteUrl": "https://doordash.com/dashpass",
+      "description": "Free delivery and reduced fees"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000032",
+      "name": "Uber One",
+      "defaultPrice": 9.99,
+      "frequency": "monthly",
+      "category": "foodDelivery",
+      "iconName": "car.fill",
+      "websiteUrl": "https://uber.com/one",
+      "description": "Uber Eats and Uber ride savings"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000033",
+      "name": "Peloton App",
+      "defaultPrice": 12.99,
+      "frequency": "monthly",
+      "category": "fitness",
+      "iconName": "figure.run",
+      "websiteUrl": "https://onepeloton.com",
+      "description": "Fitness classes and workouts"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000034",
+      "name": "Apple Fitness+",
+      "defaultPrice": 9.99,
+      "frequency": "monthly",
+      "category": "fitness",
+      "iconName": "figure.mixed.cardio",
+      "websiteUrl": "https://apple.com/apple-fitness-plus",
+      "description": "Apple workout and fitness service"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000035",
+      "name": "Calm",
+      "defaultPrice": 69.99,
+      "frequency": "annual",
+      "category": "fitness",
+      "iconName": "leaf.fill",
+      "websiteUrl": "https://calm.com",
+      "description": "Meditation and sleep app"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000036",
+      "name": "Headspace",
+      "defaultPrice": 69.99,
+      "frequency": "annual",
+      "category": "fitness",
+      "iconName": "brain.head.profile",
+      "websiteUrl": "https://headspace.com",
+      "description": "Meditation and mindfulness app"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000037",
+      "name": "1Password",
+      "defaultPrice": 2.99,
+      "frequency": "monthly",
+      "category": "software",
+      "iconName": "key.fill",
+      "websiteUrl": "https://1password.com",
+      "description": "Password manager"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000038",
+      "name": "NordVPN",
+      "defaultPrice": 12.99,
+      "frequency": "monthly",
+      "category": "utilities",
+      "iconName": "network.badge.shield.half.filled",
+      "websiteUrl": "https://nordvpn.com",
+      "description": "VPN and privacy service"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000039",
+      "name": "Claude Pro",
+      "defaultPrice": 20.00,
+      "frequency": "monthly",
+      "category": "software",
+      "iconName": "brain",
+      "websiteUrl": "https://claude.ai",
+      "description": "Anthropic Claude AI premium access"
+    },
+    {
+      "id": "A0000001-0001-0001-0001-000000000040",
+      "name": "GitHub Copilot",
+      "defaultPrice": 10.00,
+      "frequency": "monthly",
+      "category": "software",
+      "iconName": "chevron.left.forwardslash.chevron.right",
+      "websiteUrl": "https://github.com/features/copilot",
+      "description": "AI-powered code completion"
+    }
+  ]
+}

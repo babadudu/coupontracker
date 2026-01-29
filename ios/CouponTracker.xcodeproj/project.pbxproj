@@ -117,6 +117,12 @@
 		PERB1234567890ABCDEF0002 /* PeriodBenefitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = PERB1234567890ABCDEF0001 /* PeriodBenefitsView.swift */; };
 		BBCS1234567890ABCDEF0002 /* BenefitsByCardSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCS1234567890ABCDEF0001 /* BenefitsByCardSection.swift */; };
 		BBUS1234567890ABCDEF0002 /* BenefitsByUrgencySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBUS1234567890ABCDEF0001 /* BenefitsByUrgencySection.swift */; };
+		SRPP1234567890ABCDEF0002 /* SubscriptionRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = SRPP1234567890ABCDEF0001 /* SubscriptionRepositoryProtocol.swift */; };
+		CRPP1234567890ABCDEF0002 /* CouponRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CRPP1234567890ABCDEF0001 /* CouponRepositoryProtocol.swift */; };
+		SREP1234567890ABCDEF0002 /* SubscriptionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = SREP1234567890ABCDEF0001 /* SubscriptionRepository.swift */; };
+		CREP1234567890ABCDEF0002 /* CouponRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CREP1234567890ABCDEF0001 /* CouponRepository.swift */; };
+		STPL1234567890ABCDEF0002 /* SubscriptionTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = STPL1234567890ABCDEF0001 /* SubscriptionTemplate.swift */; };
+		STJN1234567890ABCDEF0002 /* SubscriptionTemplates.json in Resources */ = {isa = PBXBuildFile; fileRef = STJN1234567890ABCDEF0001 /* SubscriptionTemplates.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -242,6 +248,12 @@
 		PERB1234567890ABCDEF0001 /* PeriodBenefitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodBenefitsView.swift; sourceTree = "<group>"; };
 		BBCS1234567890ABCDEF0001 /* BenefitsByCardSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitsByCardSection.swift; sourceTree = "<group>"; };
 		BBUS1234567890ABCDEF0001 /* BenefitsByUrgencySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitsByUrgencySection.swift; sourceTree = "<group>"; };
+		SRPP1234567890ABCDEF0001 /* SubscriptionRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRepositoryProtocol.swift; sourceTree = "<group>"; };
+		CRPP1234567890ABCDEF0001 /* CouponRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponRepositoryProtocol.swift; sourceTree = "<group>"; };
+		SREP1234567890ABCDEF0001 /* SubscriptionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRepository.swift; sourceTree = "<group>"; };
+		CREP1234567890ABCDEF0001 /* CouponRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponRepository.swift; sourceTree = "<group>"; };
+		STPL1234567890ABCDEF0001 /* SubscriptionTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTemplate.swift; sourceTree = "<group>"; };
+		STJN1234567890ABCDEF0001 /* SubscriptionTemplates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SubscriptionTemplates.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -304,6 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				D6F2A2BB6B4ACAB75E27EDC4 /* CardTemplates.json */,
+				STJN1234567890ABCDEF0001 /* SubscriptionTemplates.json */,
 			);
 			name = Data;
 			path = CouponTracker/Resources/Data;
@@ -430,6 +443,8 @@
 			children = (
 				B24BDA735B8D5D2DD925B2BE /* BenefitRepository.swift */,
 				0E44E4BA948F880DE0C5B3F8 /* CardRepository.swift */,
+				CREP1234567890ABCDEF0001 /* CouponRepository.swift */,
+				SREP1234567890ABCDEF0001 /* SubscriptionRepository.swift */,
 				0245D0C77F9013564A0ABDDE /* TemplateLoader.swift */,
 			);
 			path = Storage;
@@ -470,9 +485,11 @@
 				BSSP1234567890ABCDEF0001 /* BenefitStateServiceProtocol.swift */,
 				67CE154AC2CDCDE9A679FC4D /* CardRecommendationServiceProtocol.swift */,
 				493928B6E9787E43E89C29E6 /* CardRepositoryProtocol.swift */,
+				CRPP1234567890ABCDEF0001 /* CouponRepositoryProtocol.swift */,
 				E75C9AC8BE3EA27BA966BEA2 /* DisplayProtocols.swift */,
-				8D4E2F6A9C1B5E73D8A92F40 /* Searchable.swift */,
 				8771D99E6BB132CFE1820DFC /* Repository.swift */,
+				8D4E2F6A9C1B5E73D8A92F40 /* Searchable.swift */,
+				SRPP1234567890ABCDEF0001 /* SubscriptionRepositoryProtocol.swift */,
 				6C0303E5DBAE98375C21EF5A /* TemplateLoaderProtocol.swift */,
 			);
 			path = Protocols;
@@ -519,6 +536,7 @@
 				BBB29D4EF00881B19387445C /* BenefitTemplate.swift */,
 				6C01E57DBC2A3D58AAF19036 /* CardDatabase.swift */,
 				5B6DB495CDEB980D66DEA2DA /* CardTemplate.swift */,
+				STPL1234567890ABCDEF0001 /* SubscriptionTemplate.swift */,
 			);
 			path = Templates;
 			sourceTree = "<group>";
@@ -656,6 +674,7 @@
 				3A4A58736B8B68CD2B9803AA /* Assets.xcassets in Resources */,
 				0A156F5AAEA68F76BAEF60F3 /* BUILD_INSTRUCTIONS.md in Resources */,
 				026D8972D5DD39BCCCF0632C /* CardTemplates.json in Resources */,
+				STJN1234567890ABCDEF0002 /* SubscriptionTemplates.json in Resources */,
 				DFCDE392BD086AA5144B15DA /* FINAL_FIX_SUMMARY.md in Resources */,
 				F96488E52C33477965DB3843 /* RUNTIME_FIX.md in Resources */,
 				LNCH1234567890ABCDEF0002 /* LaunchScreen.storyboard in Resources */,
@@ -778,6 +797,11 @@
 				PERB1234567890ABCDEF0002 /* PeriodBenefitsView.swift in Sources */,
 				BBCS1234567890ABCDEF0002 /* BenefitsByCardSection.swift in Sources */,
 				BBUS1234567890ABCDEF0002 /* BenefitsByUrgencySection.swift in Sources */,
+				SRPP1234567890ABCDEF0002 /* SubscriptionRepositoryProtocol.swift in Sources */,
+				CRPP1234567890ABCDEF0002 /* CouponRepositoryProtocol.swift in Sources */,
+				SREP1234567890ABCDEF0002 /* SubscriptionRepository.swift in Sources */,
+				CREP1234567890ABCDEF0002 /* CouponRepository.swift in Sources */,
+				STPL1234567890ABCDEF0002 /* SubscriptionTemplate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
