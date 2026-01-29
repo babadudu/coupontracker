@@ -7,24 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F18D4368B1254B7EA4DDFB19 /* DashboardInsightResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC84C44D504468F82BF66EE /* DashboardInsightResolverTests.swift */; };
-
-		2AC9B683A0A4402D8CC5956B /* DashboardInsightResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56746CFA55C44669A3DB79C6 /* DashboardInsightResolver.swift */; };
-
 		026D8972D5DD39BCCCF0632C /* CardTemplates.json in Resources */ = {isa = PBXBuildFile; fileRef = D6F2A2BB6B4ACAB75E27EDC4 /* CardTemplates.json */; };
 		069D31CD320AE60F05732728 /* TemplateLoaderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0303E5DBAE98375C21EF5A /* TemplateLoaderProtocol.swift */; };
 		07C6625487ECDF61EEABE442 /* AchievementRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4501261DC61C2E532545564C /* AchievementRing.swift */; };
 		0A156F5AAEA68F76BAEF60F3 /* BUILD_INSTRUCTIONS.md in Resources */ = {isa = PBXBuildFile; fileRef = C7BBBEE6568878E3759D4396 /* BUILD_INSTRUCTIONS.md */; };
 		0BCBE93F6878DBF661C85347 /* AccomplishmentRingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79D4B8197EDD2CA84B373EF /* AccomplishmentRingsView.swift */; };
-		APPM1234567890ABCDEF0002 /* AppearanceMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPM1234567890ABCDEF0001 /* AppearanceMode.swift */; };
 		114E3B35DD132242BA7357E8 /* AppIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA34E9FFE4F2FCA182A9454 /* AppIntegrationTests.swift */; };
 		15A6868843F10E688C4005A6 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72ED49A42D2834D3DBD86566 /* UserPreferences.swift */; };
 		17C888963B08F592AB1BF269 /* BenefitRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEACB256F90E748CD5091166 /* BenefitRowView.swift */; };
 		20809301A144FF147B9BA3BB /* DisplayAdapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C01581804BC57F6FBCB986C /* DisplayAdapters.swift */; };
 		25983D87369751FE293828C6 /* BenefitRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6383CA5E10AAD87DC0E954 /* BenefitRepositoryTests.swift */; };
 		279BAB34B0676E707A9467F5 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785DA21781A8E085EFC3AF67 /* NotificationService.swift */; };
+		2AC9B683A0A4402D8CC5956B /* DashboardInsightResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56746CFA55C44669A3DB79C6 /* DashboardInsightResolver.swift */; };
+		2AEE61DC2072E451E0600C84 /* SubscriptionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111E29DCDEBF1ADDC0AFB28A /* SubscriptionDetailView.swift */; };
 		2DDBB1215AF0ED387C0ED146 /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72CCEF3837F986E75B3F53A /* HomeViewModelTests.swift */; };
 		2E121BE1121884800ACE3A4B /* Benefit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254736E578BB0838D073A454 /* Benefit.swift */; };
+		2F84EB465A03589B18C6A3F7 /* DateExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C98BD262E549B9F4734262E /* DateExtensionsTests.swift */; };
+		3024FA0CF3B739043DE6A223 /* AddSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D9776B5CED46992F818254 /* AddSubscriptionView.swift */; };
 		304F02ACE4B476BF70466D3B /* TemplateLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0245D0C77F9013564A0ABDDE /* TemplateLoader.swift */; };
 		30C9E95FD1DA539FFDA89FB6 /* CardRecommendationServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67CE154AC2CDCDE9A679FC4D /* CardRecommendationServiceProtocol.swift */; };
 		31F9A8B7E2C6D4F93BA71E52 /* Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4E2F6A9C1B5E73D8A92F40 /* Searchable.swift */; };
@@ -33,14 +32,20 @@
 		395F8BB83661232BB5BE237C /* CardRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493928B6E9787E43E89C29E6 /* CardRepositoryProtocol.swift */; };
 		3A4A58736B8B68CD2B9803AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE8C84A7E9481EC950763438 /* Assets.xcassets */; };
 		3C064B50953CBD821BA28265 /* CouponTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158BA166DDD21F994ABD1264 /* CouponTrackerApp.swift */; };
+		3F168B37ED1CE49A728864CC /* TrackerTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC61998E37C292B6085AD59 /* TrackerTabView.swift */; };
+		40101F66D24A460384DA082F /* AppLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20517F53F17D4326B05BBD2C /* AppLoggerTests.swift */; };
 		432280BEC019FE51C29F6C34 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF161B5EA56A3CF548D511B /* DesignSystem.swift */; };
+		46A68A92AF0B8299A1B697A2 /* SubscriptionDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7C930759E1B33DA42401F5 /* SubscriptionDetailViewModel.swift */; };
+		4989C98E43B9751A39A23D8E /* SubscriptionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDAE7469B24643AFB4BA288 /* SubscriptionListView.swift */; };
 		4BADBB08DCC4657AC8F4EE04 /* CardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E44E4BA948F880DE0C5B3F8 /* CardRepository.swift */; };
 		4C031D2EBACCF72F431319D0 /* InsightBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78364C9F06766DFE9ABBBE7 /* InsightBannerView.swift */; };
 		536E1DAE098D9E9531338E25 /* RecommendationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63E2CD59514C3BA886C1E18 /* RecommendationSearchView.swift */; };
 		55F44CFA7F698F068904D049 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C179A9A8213044AEA3F19D /* ContentView.swift */; };
 		577BC5ADC6B660C2151E21B8 /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897779E2EA378051D5F88E6A /* CardDetailView.swift */; };
+		6287044CC2C76E1B5C4C80E4 /* CouponListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB7997A8A797BEDB0E3BA21 /* CouponListViewModel.swift */; };
 		6610865792430F1FB49661A8 /* ValueSummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EB86AF3ADF159DA31C433B /* ValueSummaryCard.swift */; };
 		6D4F020FAFE9D98FD67A9910 /* CardRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6B2483BF90BC941C23A8BA /* CardRepositoryTests.swift */; };
+		6D9B1946CB459C8C3CC6E924 /* CouponDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BC799C54818DC38A68347C /* CouponDetailViewModel.swift */; };
 		6DEE97BEA6353E69E045739E /* BenefitRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24BDA735B8D5D2DD925B2BE /* BenefitRepository.swift */; };
 		73E503A0CA18F6452A8A4ECA /* PreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C57E2A90D204E9A753C0D4 /* PreviewData.swift */; };
 		74B00860557357C480E2A750 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF03C19FBA3D646774548F9 /* SettingsViewModel.swift */; };
@@ -48,85 +53,91 @@
 		7E51E9860E80CDFBED08C3F9 /* MultipleBenefitsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719753005DE26AE590ACFD00 /* MultipleBenefitsTests.swift */; };
 		8624A01DC558018D6594DBC4 /* CardComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512EB62DAFE6DC3D6B9B4A66 /* CardComponent.swift */; };
 		8851669850C24D321C72E8C7 /* BenefitRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB10862F4F8818953D61F492 /* BenefitRepositoryProtocol.swift */; };
+		8C3BA8ECC5C45B6D4B2FC589 /* SubscriptionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8006797F462714AF24ED7BC4 /* SubscriptionListViewModel.swift */; };
+		901E61605421DAF1E3C00262 /* CouponListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244A00B547D68D30426942C2 /* CouponListView.swift */; };
 		92762ABB72D25384C2804FB1 /* BenefitCategoryChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F5B883213EBE804A6883F3 /* BenefitCategoryChartView.swift */; };
 		96741148C1CA338A24008060 /* BenefitCategoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CB676B1164CCD02FF1FAE6 /* BenefitCategoryTests.swift */; };
-		BEXT1234567890ABCDEF0002 /* BenefitExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEXT1234567890ABCDEF0001 /* BenefitExtensionsTests.swift */; };
 		97B48712F8B647CA1FC085BE /* ExpiringBenefitsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCE67853C0BAFAF38C72AFD /* ExpiringBenefitsListView.swift */; };
 		9B79C64BA0D6919960198FB2 /* BenefitUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC84562864B46CAA4C71D9A /* BenefitUsage.swift */; };
 		9C827B5B1D3B5D2BAFFC12A6 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8771D99E6BB132CFE1820DFC /* Repository.swift */; };
 		9D2CF415A02EEE2B5118EDCC /* PeriodCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C6DD7AD95A6E571F847AD7 /* PeriodCarouselView.swift */; };
 		A3B22F5DE47C2C58C58C3F5C /* ValueBreakdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C15127D4C99E82B62A03D5 /* ValueBreakdownView.swift */; };
 		A7838D5B4C6BF01F806E6E56 /* CardDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C01E57DBC2A3D58AAF19036 /* CardDatabase.swift */; };
+		AA3CDC2C321D9236EAEDFC7C /* AddCouponViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AB21E0D3ED2185EF73C7AE /* AddCouponViewModel.swift */; };
+		APLG1234567890ABCDEF0002 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = APLG1234567890ABCDEF0001 /* AppLogger.swift */; };
+		APPM1234567890ABCDEF0002 /* AppearanceMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPM1234567890ABCDEF0001 /* AppearanceMode.swift */; };
 		B1F95B103967189AF7C61BF9 /* NotificationServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E008C59E2FCEC28A03D01C /* NotificationServiceTests.swift */; };
-		SWDTEST1234567890ABCDE02 /* SwiftDataHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = SWDTEST1234567890ABCDE01 /* SwiftDataHelpersTests.swift */; };
+		B62EF8A04094C1BE673C1FED /* CouponDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89789120215BEBDFD23507D8 /* CouponDetailView.swift */; };
 		B7C9A460508A0AD351873D7B /* UserCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A163AE2E6DB027C2AE0F01C /* UserCard.swift */; };
+		BBCS1234567890ABCDEF0002 /* BenefitsByCardSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCS1234567890ABCDEF0001 /* BenefitsByCardSection.swift */; };
+		BBUS1234567890ABCDEF0002 /* BenefitsByUrgencySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBUS1234567890ABCDEF0001 /* BenefitsByUrgencySection.swift */; };
+		BENF1234567890ABCDEF0002 /* BenefitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BENF1234567890ABCDEF0001 /* BenefitExtensions.swift */; };
+		BEXT1234567890ABCDEF0002 /* BenefitExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEXT1234567890ABCDEF0001 /* BenefitExtensionsTests.swift */; };
+		BRBS1234567890ABCDEF0002 /* BenefitRowButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BRBS1234567890ABCDEF0001 /* BenefitRowButtonStyle.swift */; };
+		BRCF1234567890ABCDEF0002 /* BenefitRowConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BRCF1234567890ABCDEF0001 /* BenefitRowConfiguration.swift */; };
+		BRCFTEST567890ABCDEF0002 /* BenefitRowConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BRCFTEST567890ABCDEF0001 /* BenefitRowConfigurationTests.swift */; };
+		BRPV1234567890ABCDEF0002 /* BenefitRowView+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = BRPV1234567890ABCDEF0001 /* BenefitRowView+Previews.swift */; };
+		BSEC1234567890ABCDEF0002 /* BenefitSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BSEC1234567890ABCDEF0001 /* BenefitSection.swift */; };
+		BSPILL234567890ABCDEF0002 /* BenefitSummaryPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = BSPILL234567890ABCDEF0001 /* BenefitSummaryPill.swift */; };
+		BSS01234567890ABCDEF0002 /* BenefitStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BSS01234567890ABCDEF0001 /* BenefitStateService.swift */; };
+		BSSP1234567890ABCDEF0002 /* BenefitStateServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BSSP1234567890ABCDEF0001 /* BenefitStateServiceProtocol.swift */; };
+		BSST1234567890ABCDEF0002 /* BenefitStateServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BSST1234567890ABCDEF0001 /* BenefitStateServiceTests.swift */; };
 		C34CA3CFB1A9714A3CF22A32 /* CardDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E088EEE7CA79D56546D0BD6 /* CardDetailViewModel.swift */; };
 		C3E3E377779D70B787DB455C /* BenefitEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = A929208E7A5A5DB85A0FF0C9 /* BenefitEnums.swift */; };
+		C45169A498A513529EEA0B7F /* MarkUndoCycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338CF4B53BD34A68F1105A2 /* MarkUndoCycleTests.swift */; };
+		C49AA7178D6289FA1B96E4DE /* AddSubscriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3FCF3722D13259B4B5A7D6 /* AddSubscriptionViewModel.swift */; };
+		C5ECEEADCF75D452F8BD58F4 /* AddCouponView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0435834B39BD131448DCD1D4 /* AddCouponView.swift */; };
+		C8286FE28C0D020FF54D8BD5 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FFD8A7AF5039F906788DFF /* Formatters.swift */; };
+		CATB1234567890ABCDEF0002 /* CategoryBenefitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CATB1234567890ABCDEF0001 /* CategoryBenefitsView.swift */; };
 		COUP1234567890ABCDEF0002 /* Coupon.swift in Sources */ = {isa = PBXBuildFile; fileRef = COUP1234567890ABCDEF0001 /* Coupon.swift */; };
 		CPCE1234567890ABCDEF0002 /* CouponEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = CPCE1234567890ABCDEF0001 /* CouponEnums.swift */; };
-		SUBS1234567890ABCDEF0002 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = SUBS1234567890ABCDEF0001 /* Subscription.swift */; };
-		SBSE1234567890ABCDEF0002 /* SubscriptionEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = SBSE1234567890ABCDEF0001 /* SubscriptionEnums.swift */; };
-		SBPY1234567890ABCDEF0002 /* SubscriptionPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = SBPY1234567890ABCDEF0001 /* SubscriptionPayment.swift */; };
-		C45169A498A513529EEA0B7F /* MarkUndoCycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338CF4B53BD34A68F1105A2 /* MarkUndoCycleTests.swift */; };
-		C8286FE28C0D020FF54D8BD5 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FFD8A7AF5039F906788DFF /* Formatters.swift */; };
+		CREP1234567890ABCDEF0002 /* CouponRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CREP1234567890ABCDEF0001 /* CouponRepository.swift */; };
+		CRPP1234567890ABCDEF0002 /* CouponRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CRPP1234567890ABCDEF0001 /* CouponRepositoryProtocol.swift */; };
+		CRSP1234567890ABCDEF0002 /* CardROIServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CRSP1234567890ABCDEF0001 /* CardROIServiceProtocol.swift */; };
+		CRSS1234567890ABCDEF0002 /* CardROIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CRSS1234567890ABCDEF0001 /* CardROIService.swift */; };
+		CSTK1234567890ABCDEF0002 /* CardStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CSTK1234567890ABCDEF0001 /* CardStackView.swift */; };
 		D261AB1D754F86719801FEBB /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C25932E958C53791B73F07 /* AppContainer.swift */; };
+		D4788364B5F8A9DFABF3194B /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC3A8AB2D257641EA51D9DB /* DateExtensions.swift */; };
 		D9E8D22A8F993A0E8A08FBF4 /* DisplayProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75C9AC8BE3EA27BA966BEA2 /* DisplayProtocols.swift */; };
 		DF7D70F799397FF16C800306 /* MonthlyProgressCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F6D85957FAA3FBFCB27BC0 /* MonthlyProgressCardView.swift */; };
 		DFCDE392BD086AA5144B15DA /* FINAL_FIX_SUMMARY.md in Resources */ = {isa = PBXBuildFile; fileRef = 2066C06E79C96578C98F6363 /* FINAL_FIX_SUMMARY.md */; };
 		E080150C5354F7DAE3A3B079 /* BenefitTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB29D4EF00881B19387445C /* BenefitTemplate.swift */; };
-		D4788364B5F8A9DFABF3194B /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC3A8AB2D257641EA51D9DB /* DateExtensions.swift */; };
-		2F84EB465A03589B18C6A3F7 /* DateExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C98BD262E549B9F4734262E /* DateExtensionsTests.swift */; };
 		E0CF9E0171F4FECAE713FA4D /* AddCardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E27E98ED6155FCFFFE5BC8 /* AddCardViewModelTests.swift */; };
 		E1A8B9C7D3F6E5A84C2D1F60 /* SearchableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5F3C8A2B4D7E61F8A93C50 /* SearchableTests.swift */; };
 		EBEC715D01FFDE1859951636 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84408477EA6713CBEC771E1E /* OnboardingView.swift */; };
+		EDCS1234567890ABCDEF0002 /* EditCardSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCS1234567890ABCDEF0001 /* EditCardSheet.swift */; };
 		EE5C5A57FC8CF5AF9EB09941 /* PeriodMetricsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACADBD6E3A2135985B05675 /* PeriodMetricsTests.swift */; };
-		40101F66D24A460384DA082F /* AppLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20517F53F17D4326B05BBD2C /* AppLoggerTests.swift */; };
-		PROG1234567890ABCDEF0002 /* ProgressCardViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = PROG1234567890ABCDEF0001 /* ProgressCardViewTests.swift */; };
 		EE79D5396E16D4F16AC9F43E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EC2BD7A2EA7B8E9F114B0D /* SettingsView.swift */; };
+		EXPD1234567890ABCDEF0002 /* ExpandedBenefitDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EXPD1234567890ABCDEF0001 /* ExpandedBenefitDetail.swift */; };
 		F0F648B40DF4B3C9AFD27408 /* NotificationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 677CF1D787A44E95E6FE4CCE /* NotificationExtensions.swift */; };
-		SWDT1234567890ABCDEF0002 /* SwiftDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = SWDT1234567890ABCDEF0001 /* SwiftDataHelpers.swift */; };
+		F18D4368B1254B7EA4DDFB19 /* DashboardInsightResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC84C44D504468F82BF66EE /* DashboardInsightResolverTests.swift */; };
 		F396EE8CFD737702D990E73F /* CardTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DB495CDEB980D66DEA2DA /* CardTemplate.swift */; };
 		F3E16259FFCD240E7850A65C /* CardRecommendationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC767331D1E6D963FD0680D8 /* CardRecommendationService.swift */; };
 		F76B24B529C471E8D4896947 /* WalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B08DA0205E97EF15432F2B9 /* WalletView.swift */; };
 		F8AAAB08C32E291E3E8FF089 /* ExpiringBenefitsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FB60319F7D76FFA9BDE491 /* ExpiringBenefitsSectionView.swift */; };
 		F96488E52C33477965DB3843 /* RUNTIME_FIX.md in Resources */ = {isa = PBXBuildFile; fileRef = 3DC0FF0204993475F229EDB8 /* RUNTIME_FIX.md */; };
-		MOCK1234567890ABCDEF0002 /* SharedMockRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = MOCK1234567890ABCDEF0001 /* SharedMockRepositories.swift */; };
-		BENF1234567890ABCDEF0002 /* BenefitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BENF1234567890ABCDEF0001 /* BenefitExtensions.swift */; };
-		BSSP1234567890ABCDEF0002 /* BenefitStateServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BSSP1234567890ABCDEF0001 /* BenefitStateServiceProtocol.swift */; };
-		BSS01234567890ABCDEF0002 /* BenefitStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BSS01234567890ABCDEF0001 /* BenefitStateService.swift */; };
-		BSST1234567890ABCDEF0002 /* BenefitStateServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BSST1234567890ABCDEF0001 /* BenefitStateServiceTests.swift */; };
-		BSEC1234567890ABCDEF0002 /* BenefitSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BSEC1234567890ABCDEF0001 /* BenefitSection.swift */; };
-		BSPILL234567890ABCDEF0002 /* BenefitSummaryPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = BSPILL234567890ABCDEF0001 /* BenefitSummaryPill.swift */; };
-		CSTK1234567890ABCDEF0002 /* CardStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CSTK1234567890ABCDEF0001 /* CardStackView.swift */; };
-		EXPD1234567890ABCDEF0002 /* ExpandedBenefitDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EXPD1234567890ABCDEF0001 /* ExpandedBenefitDetail.swift */; };
-		WLST1234567890ABCDEF0002 /* WalletListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = WLST1234567890ABCDEF0001 /* WalletListView.swift */; };
-		LNCH1234567890ABCDEF0002 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = LNCH1234567890ABCDEF0001 /* LaunchScreen.storyboard */; };
-		BRCFTEST567890ABCDEF0002 /* BenefitRowConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BRCFTEST567890ABCDEF0001 /* BenefitRowConfigurationTests.swift */; };
-		TABVTEST567890ABCDEF0002 /* TabViewActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TABVTEST567890ABCDEF0001 /* TabViewActionsTests.swift */; };
-		BRPV1234567890ABCDEF0002 /* BenefitRowView+Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = BRPV1234567890ABCDEF0001 /* BenefitRowView+Previews.swift */; };
-		BRCF1234567890ABCDEF0002 /* BenefitRowConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BRCF1234567890ABCDEF0001 /* BenefitRowConfiguration.swift */; };
-		BRBS1234567890ABCDEF0002 /* BenefitRowButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BRBS1234567890ABCDEF0001 /* BenefitRowButtonStyle.swift */; };
-		SBRV1234567890ABCDEF0002 /* SwipeableBenefitRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SBRV1234567890ABCDEF0001 /* SwipeableBenefitRowView.swift */; };
-		LDVW1234567890ABCDEF0002 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = LDVW1234567890ABCDEF0001 /* LoadingView.swift */; };
-		STCD1234567890ABCDEF0002 /* StatCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = STCD1234567890ABCDEF0001 /* StatCard.swift */; };
-		EDCS1234567890ABCDEF0002 /* EditCardSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCS1234567890ABCDEF0001 /* EditCardSheet.swift */; };
 		HTBV1234567890ABCDEF0002 /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = HTBV1234567890ABCDEF0001 /* HomeTabView.swift */; };
-		WTBV1234567890ABCDEF0002 /* WalletTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = WTBV1234567890ABCDEF0001 /* WalletTabView.swift */; };
-		APLG1234567890ABCDEF0002 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = APLG1234567890ABCDEF0001 /* AppLogger.swift */; };
-		CATB1234567890ABCDEF0002 /* CategoryBenefitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CATB1234567890ABCDEF0001 /* CategoryBenefitsView.swift */; };
+		LDVW1234567890ABCDEF0002 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = LDVW1234567890ABCDEF0001 /* LoadingView.swift */; };
+		LNCH1234567890ABCDEF0002 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = LNCH1234567890ABCDEF0001 /* LaunchScreen.storyboard */; };
+		MOCK1234567890ABCDEF0002 /* SharedMockRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = MOCK1234567890ABCDEF0001 /* SharedMockRepositories.swift */; };
 		PERB1234567890ABCDEF0002 /* PeriodBenefitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = PERB1234567890ABCDEF0001 /* PeriodBenefitsView.swift */; };
-		BBCS1234567890ABCDEF0002 /* BenefitsByCardSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCS1234567890ABCDEF0001 /* BenefitsByCardSection.swift */; };
-		BBUS1234567890ABCDEF0002 /* BenefitsByUrgencySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBUS1234567890ABCDEF0001 /* BenefitsByUrgencySection.swift */; };
-		SRPP1234567890ABCDEF0002 /* SubscriptionRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = SRPP1234567890ABCDEF0001 /* SubscriptionRepositoryProtocol.swift */; };
-		CRPP1234567890ABCDEF0002 /* CouponRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CRPP1234567890ABCDEF0001 /* CouponRepositoryProtocol.swift */; };
+		PROG1234567890ABCDEF0002 /* ProgressCardViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = PROG1234567890ABCDEF0001 /* ProgressCardViewTests.swift */; };
+		SBPY1234567890ABCDEF0002 /* SubscriptionPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = SBPY1234567890ABCDEF0001 /* SubscriptionPayment.swift */; };
+		SBRV1234567890ABCDEF0002 /* SwipeableBenefitRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SBRV1234567890ABCDEF0001 /* SwipeableBenefitRowView.swift */; };
+		SBSE1234567890ABCDEF0002 /* SubscriptionEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = SBSE1234567890ABCDEF0001 /* SubscriptionEnums.swift */; };
 		SREP1234567890ABCDEF0002 /* SubscriptionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = SREP1234567890ABCDEF0001 /* SubscriptionRepository.swift */; };
-		CREP1234567890ABCDEF0002 /* CouponRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CREP1234567890ABCDEF0001 /* CouponRepository.swift */; };
-		STPL1234567890ABCDEF0002 /* SubscriptionTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = STPL1234567890ABCDEF0001 /* SubscriptionTemplate.swift */; };
-		STJN1234567890ABCDEF0002 /* SubscriptionTemplates.json in Resources */ = {isa = PBXBuildFile; fileRef = STJN1234567890ABCDEF0001 /* SubscriptionTemplates.json */; };
+		SRPP1234567890ABCDEF0002 /* SubscriptionRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = SRPP1234567890ABCDEF0001 /* SubscriptionRepositoryProtocol.swift */; };
 		SSSP1234567890ABCDEF0002 /* SubscriptionStateServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = SSSP1234567890ABCDEF0001 /* SubscriptionStateServiceProtocol.swift */; };
 		SSSS1234567890ABCDEF0002 /* SubscriptionStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = SSSS1234567890ABCDEF0001 /* SubscriptionStateService.swift */; };
-		CRSP1234567890ABCDEF0002 /* CardROIServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CRSP1234567890ABCDEF0001 /* CardROIServiceProtocol.swift */; };
-		CRSS1234567890ABCDEF0002 /* CardROIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CRSS1234567890ABCDEF0001 /* CardROIService.swift */; };
+		STCD1234567890ABCDEF0002 /* StatCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = STCD1234567890ABCDEF0001 /* StatCard.swift */; };
+		STJN1234567890ABCDEF0002 /* SubscriptionTemplates.json in Resources */ = {isa = PBXBuildFile; fileRef = STJN1234567890ABCDEF0001 /* SubscriptionTemplates.json */; };
+		STPL1234567890ABCDEF0002 /* SubscriptionTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = STPL1234567890ABCDEF0001 /* SubscriptionTemplate.swift */; };
+		SUBS1234567890ABCDEF0002 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = SUBS1234567890ABCDEF0001 /* Subscription.swift */; };
+		SWDT1234567890ABCDEF0002 /* SwiftDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = SWDT1234567890ABCDEF0001 /* SwiftDataHelpers.swift */; };
+		SWDTEST1234567890ABCDE02 /* SwiftDataHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = SWDTEST1234567890ABCDE01 /* SwiftDataHelpersTests.swift */; };
+		TABVTEST567890ABCDEF0002 /* TabViewActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TABVTEST567890ABCDEF0001 /* TabViewActionsTests.swift */; };
+		WLST1234567890ABCDEF0002 /* WalletListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = WLST1234567890ABCDEF0001 /* WalletListView.swift */; };
+		WTBV1234567890ABCDEF0002 /* WalletTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = WTBV1234567890ABCDEF0001 /* WalletTabView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -140,45 +151,42 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		DFC84C44D504468F82BF66EE /* DashboardInsightResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardInsightResolverTests.swift; sourceTree = "<group>"; };
-
-		56746CFA55C44669A3DB79C6 /* DashboardInsightResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardInsightResolver.swift; sourceTree = "<group>"; };
-
 		0245D0C77F9013564A0ABDDE /* TemplateLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateLoader.swift; sourceTree = "<group>"; };
+		0435834B39BD131448DCD1D4 /* AddCouponView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AddCouponView.swift; path = ../../../../../CouponTracker/Sources/Features/Tracker/Coupons/AddCouponView.swift; sourceTree = "<group>"; };
 		08BAFF15C5A312EC3B5AADE9 /* AddCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardViewModel.swift; sourceTree = "<group>"; };
 		09C179A9A8213044AEA3F19D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0ACADBD6E3A2135985B05675 /* PeriodMetricsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodMetricsTests.swift; sourceTree = "<group>"; };
-		20517F53F17D4326B05BBD2C /* AppLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLoggerTests.swift; sourceTree = "<group>"; };
-		PROG1234567890ABCDEF0001 /* ProgressCardViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCardViewTests.swift; sourceTree = "<group>"; };
 		0E44E4BA948F880DE0C5B3F8 /* CardRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRepository.swift; sourceTree = "<group>"; };
+		111E29DCDEBF1ADDC0AFB28A /* SubscriptionDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionDetailView.swift; path = ../../../../../CouponTracker/Sources/Features/Tracker/Subscriptions/SubscriptionDetailView.swift; sourceTree = "<group>"; };
 		11C15127D4C99E82B62A03D5 /* ValueBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueBreakdownView.swift; sourceTree = "<group>"; };
 		158BA166DDD21F994ABD1264 /* CouponTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponTrackerApp.swift; sourceTree = "<group>"; };
 		19C6DD7AD95A6E571F847AD7 /* PeriodCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodCarouselView.swift; sourceTree = "<group>"; };
 		1B08DA0205E97EF15432F2B9 /* WalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletView.swift; sourceTree = "<group>"; };
 		1C6B2483BF90BC941C23A8BA /* CardRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRepositoryTests.swift; sourceTree = "<group>"; };
+		20517F53F17D4326B05BBD2C /* AppLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLoggerTests.swift; sourceTree = "<group>"; };
 		2066C06E79C96578C98F6363 /* FINAL_FIX_SUMMARY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = FINAL_FIX_SUMMARY.md; sourceTree = "<group>"; };
+		244A00B547D68D30426942C2 /* CouponListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CouponListView.swift; path = ../../../../../CouponTracker/Sources/Features/Tracker/Coupons/CouponListView.swift; sourceTree = "<group>"; };
 		254736E578BB0838D073A454 /* Benefit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Benefit.swift; sourceTree = "<group>"; };
 		25F5B883213EBE804A6883F3 /* BenefitCategoryChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitCategoryChartView.swift; sourceTree = "<group>"; };
+		2B7C930759E1B33DA42401F5 /* SubscriptionDetailViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionDetailViewModel.swift; path = ../../../../../CouponTracker/Sources/Features/Tracker/Subscriptions/SubscriptionDetailViewModel.swift; sourceTree = "<group>"; };
 		2DF03C19FBA3D646774548F9 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		323F84B427FFD695595C99FC /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		3C98BD262E549B9F4734262E /* DateExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionsTests.swift; sourceTree = "<group>"; };
 		3DC0FF0204993475F229EDB8 /* RUNTIME_FIX.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = RUNTIME_FIX.md; sourceTree = "<group>"; };
+		3DDAE7469B24643AFB4BA288 /* SubscriptionListView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionListView.swift; path = ../../../../../CouponTracker/Sources/Features/Tracker/Subscriptions/SubscriptionListView.swift; sourceTree = "<group>"; };
 		4501261DC61C2E532545564C /* AchievementRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementRing.swift; sourceTree = "<group>"; };
 		493928B6E9787E43E89C29E6 /* CardRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRepositoryProtocol.swift; sourceTree = "<group>"; };
+		4AC61998E37C292B6085AD59 /* TrackerTabView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TrackerTabView.swift; path = ../../CouponTracker/Sources/Features/Tracker/TrackerTabView.swift; sourceTree = "<group>"; };
 		4F2FD609865F055DEB7B6714 /* CouponTracker.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = CouponTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		512EB62DAFE6DC3D6B9B4A66 /* CardComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardComponent.swift; sourceTree = "<group>"; };
 		53FA40E55CA33962C9EF9BFE /* AddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardView.swift; sourceTree = "<group>"; };
 		54C25932E958C53791B73F07 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
-		APPM1234567890ABCDEF0001 /* AppearanceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceMode.swift; sourceTree = "<group>"; };
+		56746CFA55C44669A3DB79C6 /* DashboardInsightResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardInsightResolver.swift; sourceTree = "<group>"; };
 		5B6DB495CDEB980D66DEA2DA /* CardTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTemplate.swift; sourceTree = "<group>"; };
 		63CB676B1164CCD02FF1FAE6 /* BenefitCategoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitCategoryTests.swift; sourceTree = "<group>"; };
-		3C98BD262E549B9F4734262E /* DateExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionsTests.swift; sourceTree = "<group>"; };
-		BEXT1234567890ABCDEF0001 /* BenefitExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitExtensionsTests.swift; sourceTree = "<group>"; };
 		65E27E98ED6155FCFFFE5BC8 /* AddCardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardViewModelTests.swift; sourceTree = "<group>"; };
-		9E5F3C8A2B4D7E61F8A93C50 /* SearchableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableTests.swift; sourceTree = "<group>"; };
 		66C57E2A90D204E9A753C0D4 /* PreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewData.swift; sourceTree = "<group>"; };
 		677CF1D787A44E95E6FE4CCE /* NotificationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtensions.swift; sourceTree = "<group>"; };
-		EFC3A8AB2D257641EA51D9DB /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
-		SWDT1234567890ABCDEF0001 /* SwiftDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataHelpers.swift; sourceTree = "<group>"; };
 		67CE154AC2CDCDE9A679FC4D /* CardRecommendationServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRecommendationServiceProtocol.swift; sourceTree = "<group>"; };
 		6C01E57DBC2A3D58AAF19036 /* CardDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDatabase.swift; sourceTree = "<group>"; };
 		6C0303E5DBAE98375C21EF5A /* TemplateLoaderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateLoaderProtocol.swift; sourceTree = "<group>"; };
@@ -187,81 +195,95 @@
 		785DA21781A8E085EFC3AF67 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		79FB60319F7D76FFA9BDE491 /* ExpiringBenefitsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiringBenefitsSectionView.swift; sourceTree = "<group>"; };
 		7C01581804BC57F6FBCB986C /* DisplayAdapters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayAdapters.swift; sourceTree = "<group>"; };
+		8006797F462714AF24ED7BC4 /* SubscriptionListViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionListViewModel.swift; path = ../../../../../CouponTracker/Sources/Features/Tracker/Subscriptions/SubscriptionListViewModel.swift; sourceTree = "<group>"; };
 		80F6D85957FAA3FBFCB27BC0 /* MonthlyProgressCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyProgressCardView.swift; sourceTree = "<group>"; };
 		84408477EA6713CBEC771E1E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		8771D99E6BB132CFE1820DFC /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
-		8D4E2F6A9C1B5E73D8A92F40 /* Searchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Searchable.swift; sourceTree = "<group>"; };
 		897779E2EA378051D5F88E6A /* CardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
+		89789120215BEBDFD23507D8 /* CouponDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CouponDetailView.swift; path = ../../../../../CouponTracker/Sources/Features/Tracker/Coupons/CouponDetailView.swift; sourceTree = "<group>"; };
 		8B6383CA5E10AAD87DC0E954 /* BenefitRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitRepositoryTests.swift; sourceTree = "<group>"; };
+		8D4E2F6A9C1B5E73D8A92F40 /* Searchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Searchable.swift; sourceTree = "<group>"; };
 		8E088EEE7CA79D56546D0BD6 /* CardDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailViewModel.swift; sourceTree = "<group>"; };
 		9A163AE2E6DB027C2AE0F01C /* UserCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCard.swift; sourceTree = "<group>"; };
+		9E5F3C8A2B4D7E61F8A93C50 /* SearchableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableTests.swift; sourceTree = "<group>"; };
 		A8FFD8A7AF5039F906788DFF /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		A929208E7A5A5DB85A0FF0C9 /* BenefitEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitEnums.swift; sourceTree = "<group>"; };
+		APLG1234567890ABCDEF0001 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
+		APPM1234567890ABCDEF0001 /* AppearanceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceMode.swift; sourceTree = "<group>"; };
 		B24BDA735B8D5D2DD925B2BE /* BenefitRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitRepository.swift; sourceTree = "<group>"; };
+		B3AB21E0D3ED2185EF73C7AE /* AddCouponViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AddCouponViewModel.swift; path = ../../../../../CouponTracker/Sources/Features/Tracker/Coupons/AddCouponViewModel.swift; sourceTree = "<group>"; };
 		BB10862F4F8818953D61F492 /* BenefitRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitRepositoryProtocol.swift; sourceTree = "<group>"; };
 		BBA34E9FFE4F2FCA182A9454 /* AppIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntegrationTests.swift; sourceTree = "<group>"; };
 		BBB29D4EF00881B19387445C /* BenefitTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitTemplate.swift; sourceTree = "<group>"; };
+		BBCS1234567890ABCDEF0001 /* BenefitsByCardSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitsByCardSection.swift; sourceTree = "<group>"; };
+		BBUS1234567890ABCDEF0001 /* BenefitsByUrgencySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitsByUrgencySection.swift; sourceTree = "<group>"; };
 		BC767331D1E6D963FD0680D8 /* CardRecommendationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRecommendationService.swift; sourceTree = "<group>"; };
 		BEACB256F90E748CD5091166 /* BenefitRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitRowView.swift; sourceTree = "<group>"; };
+		BENF1234567890ABCDEF0001 /* BenefitExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitExtensions.swift; sourceTree = "<group>"; };
+		BEXT1234567890ABCDEF0001 /* BenefitExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitExtensionsTests.swift; sourceTree = "<group>"; };
+		BRBS1234567890ABCDEF0001 /* BenefitRowButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitRowButtonStyle.swift; sourceTree = "<group>"; };
+		BRCF1234567890ABCDEF0001 /* BenefitRowConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitRowConfiguration.swift; sourceTree = "<group>"; };
+		BRCFTEST567890ABCDEF0001 /* BenefitRowConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitRowConfigurationTests.swift; sourceTree = "<group>"; };
+		BRPV1234567890ABCDEF0001 /* BenefitRowView+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BenefitRowView+Previews.swift"; sourceTree = "<group>"; };
+		BSEC1234567890ABCDEF0001 /* BenefitSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitSection.swift; sourceTree = "<group>"; };
+		BSPILL234567890ABCDEF0001 /* BenefitSummaryPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitSummaryPill.swift; sourceTree = "<group>"; };
+		BSS01234567890ABCDEF0001 /* BenefitStateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitStateService.swift; sourceTree = "<group>"; };
+		BSSP1234567890ABCDEF0001 /* BenefitStateServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitStateServiceProtocol.swift; sourceTree = "<group>"; };
+		BSST1234567890ABCDEF0001 /* BenefitStateServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitStateServiceTests.swift; sourceTree = "<group>"; };
 		C1EC2BD7A2EA7B8E9F114B0D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C283F73B0DC58B1294B3E812 /* CouponTrackerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CouponTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C78364C9F06766DFE9ABBBE7 /* InsightBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightBannerView.swift; sourceTree = "<group>"; };
 		C7BBBEE6568878E3759D4396 /* BUILD_INSTRUCTIONS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = BUILD_INSTRUCTIONS.md; sourceTree = "<group>"; };
+		CATB1234567890ABCDEF0001 /* CategoryBenefitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBenefitsView.swift; sourceTree = "<group>"; };
 		CBCE67853C0BAFAF38C72AFD /* ExpiringBenefitsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiringBenefitsListView.swift; sourceTree = "<group>"; };
+		COUP1234567890ABCDEF0001 /* Coupon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coupon.swift; sourceTree = "<group>"; };
+		CPCE1234567890ABCDEF0001 /* CouponEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponEnums.swift; sourceTree = "<group>"; };
+		CREP1234567890ABCDEF0001 /* CouponRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponRepository.swift; sourceTree = "<group>"; };
+		CRPP1234567890ABCDEF0001 /* CouponRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponRepositoryProtocol.swift; sourceTree = "<group>"; };
+		CRSP1234567890ABCDEF0001 /* CardROIServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardROIServiceProtocol.swift; sourceTree = "<group>"; };
+		CRSS1234567890ABCDEF0001 /* CardROIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardROIService.swift; sourceTree = "<group>"; };
+		CSTK1234567890ABCDEF0001 /* CardStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStackView.swift; sourceTree = "<group>"; };
 		D338CF4B53BD34A68F1105A2 /* MarkUndoCycleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkUndoCycleTests.swift; sourceTree = "<group>"; };
 		D3E008C59E2FCEC28A03D01C /* NotificationServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationServiceTests.swift; sourceTree = "<group>"; };
-		SWDTEST1234567890ABCDE01 /* SwiftDataHelpersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataHelpersTests.swift; sourceTree = "<group>"; };
 		D6F2A2BB6B4ACAB75E27EDC4 /* CardTemplates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CardTemplates.json; sourceTree = "<group>"; };
 		D72CCEF3837F986E75B3F53A /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
+		DFB7997A8A797BEDB0E3BA21 /* CouponListViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CouponListViewModel.swift; path = ../../../../../CouponTracker/Sources/Features/Tracker/Coupons/CouponListViewModel.swift; sourceTree = "<group>"; };
+		DFC84C44D504468F82BF66EE /* DashboardInsightResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardInsightResolverTests.swift; sourceTree = "<group>"; };
 		E0EB86AF3ADF159DA31C433B /* ValueSummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueSummaryCard.swift; sourceTree = "<group>"; };
 		E63E2CD59514C3BA886C1E18 /* RecommendationSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationSearchView.swift; sourceTree = "<group>"; };
 		E75C9AC8BE3EA27BA966BEA2 /* DisplayProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayProtocols.swift; sourceTree = "<group>"; };
+		E9BC799C54818DC38A68347C /* CouponDetailViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CouponDetailViewModel.swift; path = ../../../../../CouponTracker/Sources/Features/Tracker/Coupons/CouponDetailViewModel.swift; sourceTree = "<group>"; };
+		EB3FCF3722D13259B4B5A7D6 /* AddSubscriptionViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AddSubscriptionViewModel.swift; path = ../../../../../CouponTracker/Sources/Features/Tracker/Subscriptions/AddSubscriptionViewModel.swift; sourceTree = "<group>"; };
+		EDCS1234567890ABCDEF0001 /* EditCardSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardSheet.swift; sourceTree = "<group>"; };
+		EFC3A8AB2D257641EA51D9DB /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
+		EXPD1234567890ABCDEF0001 /* ExpandedBenefitDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedBenefitDetail.swift; sourceTree = "<group>"; };
+		F0D9776B5CED46992F818254 /* AddSubscriptionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AddSubscriptionView.swift; path = ../../../../../CouponTracker/Sources/Features/Tracker/Subscriptions/AddSubscriptionView.swift; sourceTree = "<group>"; };
 		F79D4B8197EDD2CA84B373EF /* AccomplishmentRingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccomplishmentRingsView.swift; sourceTree = "<group>"; };
 		FAF161B5EA56A3CF548D511B /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
 		FCC84562864B46CAA4C71D9A /* BenefitUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitUsage.swift; sourceTree = "<group>"; };
-		COUP1234567890ABCDEF0001 /* Coupon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coupon.swift; sourceTree = "<group>"; };
-		CPCE1234567890ABCDEF0001 /* CouponEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponEnums.swift; sourceTree = "<group>"; };
-		SUBS1234567890ABCDEF0001 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
-		SBSE1234567890ABCDEF0001 /* SubscriptionEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionEnums.swift; sourceTree = "<group>"; };
-		SBPY1234567890ABCDEF0001 /* SubscriptionPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPayment.swift; sourceTree = "<group>"; };
 		FE8C84A7E9481EC950763438 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		MOCK1234567890ABCDEF0001 /* SharedMockRepositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedMockRepositories.swift; sourceTree = "<group>"; };
-		BENF1234567890ABCDEF0001 /* BenefitExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitExtensions.swift; sourceTree = "<group>"; };
-		BSSP1234567890ABCDEF0001 /* BenefitStateServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitStateServiceProtocol.swift; sourceTree = "<group>"; };
-		BSS01234567890ABCDEF0001 /* BenefitStateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitStateService.swift; sourceTree = "<group>"; };
-		BSST1234567890ABCDEF0001 /* BenefitStateServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitStateServiceTests.swift; sourceTree = "<group>"; };
-		BSEC1234567890ABCDEF0001 /* BenefitSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitSection.swift; sourceTree = "<group>"; };
-		BSPILL234567890ABCDEF0001 /* BenefitSummaryPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitSummaryPill.swift; sourceTree = "<group>"; };
-		CSTK1234567890ABCDEF0001 /* CardStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStackView.swift; sourceTree = "<group>"; };
-		EXPD1234567890ABCDEF0001 /* ExpandedBenefitDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedBenefitDetail.swift; sourceTree = "<group>"; };
-		WLST1234567890ABCDEF0001 /* WalletListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletListView.swift; sourceTree = "<group>"; };
-		LNCH1234567890ABCDEF0001 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "LaunchScreen/LaunchScreen.storyboard"; sourceTree = "<group>"; };
-		BRPV1234567890ABCDEF0001 /* BenefitRowView+Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BenefitRowView+Previews.swift"; sourceTree = "<group>"; };
-		BRCF1234567890ABCDEF0001 /* BenefitRowConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitRowConfiguration.swift; sourceTree = "<group>"; };
-		BRBS1234567890ABCDEF0001 /* BenefitRowButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitRowButtonStyle.swift; sourceTree = "<group>"; };
-		SBRV1234567890ABCDEF0001 /* SwipeableBenefitRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableBenefitRowView.swift; sourceTree = "<group>"; };
-		LDVW1234567890ABCDEF0001 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
-		STCD1234567890ABCDEF0001 /* StatCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCard.swift; sourceTree = "<group>"; };
-		EDCS1234567890ABCDEF0001 /* EditCardSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardSheet.swift; sourceTree = "<group>"; };
 		HTBV1234567890ABCDEF0001 /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
-		WTBV1234567890ABCDEF0001 /* WalletTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTabView.swift; sourceTree = "<group>"; };
-		BRCFTEST567890ABCDEF0001 /* BenefitRowConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitRowConfigurationTests.swift; sourceTree = "<group>"; };
-		TABVTEST567890ABCDEF0001 /* TabViewActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewActionsTests.swift; sourceTree = "<group>"; };
-		APLG1234567890ABCDEF0001 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
-		CATB1234567890ABCDEF0001 /* CategoryBenefitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBenefitsView.swift; sourceTree = "<group>"; };
+		LDVW1234567890ABCDEF0001 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		LNCH1234567890ABCDEF0001 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		MOCK1234567890ABCDEF0001 /* SharedMockRepositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedMockRepositories.swift; sourceTree = "<group>"; };
 		PERB1234567890ABCDEF0001 /* PeriodBenefitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodBenefitsView.swift; sourceTree = "<group>"; };
-		BBCS1234567890ABCDEF0001 /* BenefitsByCardSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitsByCardSection.swift; sourceTree = "<group>"; };
-		BBUS1234567890ABCDEF0001 /* BenefitsByUrgencySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenefitsByUrgencySection.swift; sourceTree = "<group>"; };
-		SRPP1234567890ABCDEF0001 /* SubscriptionRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRepositoryProtocol.swift; sourceTree = "<group>"; };
-		CRPP1234567890ABCDEF0001 /* CouponRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponRepositoryProtocol.swift; sourceTree = "<group>"; };
+		PROG1234567890ABCDEF0001 /* ProgressCardViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCardViewTests.swift; sourceTree = "<group>"; };
+		SBPY1234567890ABCDEF0001 /* SubscriptionPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPayment.swift; sourceTree = "<group>"; };
+		SBRV1234567890ABCDEF0001 /* SwipeableBenefitRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableBenefitRowView.swift; sourceTree = "<group>"; };
+		SBSE1234567890ABCDEF0001 /* SubscriptionEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionEnums.swift; sourceTree = "<group>"; };
 		SREP1234567890ABCDEF0001 /* SubscriptionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRepository.swift; sourceTree = "<group>"; };
-		CREP1234567890ABCDEF0001 /* CouponRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponRepository.swift; sourceTree = "<group>"; };
-		STPL1234567890ABCDEF0001 /* SubscriptionTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTemplate.swift; sourceTree = "<group>"; };
-		STJN1234567890ABCDEF0001 /* SubscriptionTemplates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SubscriptionTemplates.json; sourceTree = "<group>"; };
+		SRPP1234567890ABCDEF0001 /* SubscriptionRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionRepositoryProtocol.swift; sourceTree = "<group>"; };
 		SSSP1234567890ABCDEF0001 /* SubscriptionStateServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionStateServiceProtocol.swift; sourceTree = "<group>"; };
 		SSSS1234567890ABCDEF0001 /* SubscriptionStateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionStateService.swift; sourceTree = "<group>"; };
-		CRSP1234567890ABCDEF0001 /* CardROIServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardROIServiceProtocol.swift; sourceTree = "<group>"; };
-		CRSS1234567890ABCDEF0001 /* CardROIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardROIService.swift; sourceTree = "<group>"; };
+		STCD1234567890ABCDEF0001 /* StatCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCard.swift; sourceTree = "<group>"; };
+		STJN1234567890ABCDEF0001 /* SubscriptionTemplates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SubscriptionTemplates.json; sourceTree = "<group>"; };
+		STPL1234567890ABCDEF0001 /* SubscriptionTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTemplate.swift; sourceTree = "<group>"; };
+		SUBS1234567890ABCDEF0001 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
+		SWDT1234567890ABCDEF0001 /* SwiftDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataHelpers.swift; sourceTree = "<group>"; };
+		SWDTEST1234567890ABCDE01 /* SwiftDataHelpersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataHelpersTests.swift; sourceTree = "<group>"; };
+		TABVTEST567890ABCDEF0001 /* TabViewActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewActionsTests.swift; sourceTree = "<group>"; };
+		WLST1234567890ABCDEF0001 /* WalletListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletListView.swift; sourceTree = "<group>"; };
+		WTBV1234567890ABCDEF0001 /* WalletTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTabView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -277,6 +299,14 @@
 				72ED49A42D2834D3DBD86566 /* UserPreferences.swift */,
 			);
 			path = Entities;
+			sourceTree = "<group>";
+		};
+		0629ACDE3388652B698E8BF2 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				5DF35E638E501A279D398EFD /* Tracker */,
+			);
+			name = Features;
 			sourceTree = "<group>";
 		};
 		142049CCD74F6B53E8A2C436 /* Features */ = {
@@ -330,12 +360,28 @@
 			path = CouponTracker/Resources/Data;
 			sourceTree = "<group>";
 		};
+		2EDFA05AC00EE7DD30948137 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				0629ACDE3388652B698E8BF2 /* Features */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
 		2F09030C5B961B575EDC5E72 /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				E3E8F7C810D348EB6FA81C8D /* Views */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		44011C4F9CAE8D3D50F5259F /* CouponTracker */ = {
+			isa = PBXGroup;
+			children = (
+				2EDFA05AC00EE7DD30948137 /* Sources */,
+			);
+			name = CouponTracker;
 			sourceTree = "<group>";
 		};
 		450DC2A09050CCBEE577B8BE /* Components */ = {
@@ -401,6 +447,7 @@
 				B9C273555DA2AA3F104C3922 /* Resources */,
 				C49B0113100A97AC24109306 /* Sources */,
 				DADB1B0724849DFA7D910116 /* Products */,
+				44011C4F9CAE8D3D50F5259F /* CouponTracker */,
 			);
 			sourceTree = "<group>";
 		};
@@ -425,6 +472,20 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		58F7301E30A3887DDFFE6909 /* Subscriptions */ = {
+			isa = PBXGroup;
+			children = (
+				8006797F462714AF24ED7BC4 /* SubscriptionListViewModel.swift */,
+				2B7C930759E1B33DA42401F5 /* SubscriptionDetailViewModel.swift */,
+				EB3FCF3722D13259B4B5A7D6 /* AddSubscriptionViewModel.swift */,
+				3DDAE7469B24643AFB4BA288 /* SubscriptionListView.swift */,
+				111E29DCDEBF1ADDC0AFB28A /* SubscriptionDetailView.swift */,
+				F0D9776B5CED46992F818254 /* AddSubscriptionView.swift */,
+			);
+			name = Subscriptions;
+			path = Features/Tracker/Subscriptions;
+			sourceTree = "<group>";
+		};
 		5A86EFA8191D7201B92B25F7 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -438,6 +499,17 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		5DF35E638E501A279D398EFD /* Tracker */ = {
+			isa = PBXGroup;
+			children = (
+				58F7301E30A3887DDFFE6909 /* Subscriptions */,
+				69116F897A7C668A45FE994C /* Coupons */,
+				4AC61998E37C292B6085AD59 /* TrackerTabView.swift */,
+			);
+			name = Tracker;
+			path = Features/Tracker;
+			sourceTree = "<group>";
+		};
 		6851B4C983EDE7A48BDB05EC /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -446,6 +518,20 @@
 				C5EA5C2417D0C3953D8C1148 /* Templates */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		69116F897A7C668A45FE994C /* Coupons */ = {
+			isa = PBXGroup;
+			children = (
+				DFB7997A8A797BEDB0E3BA21 /* CouponListViewModel.swift */,
+				E9BC799C54818DC38A68347C /* CouponDetailViewModel.swift */,
+				B3AB21E0D3ED2185EF73C7AE /* AddCouponViewModel.swift */,
+				244A00B547D68D30426942C2 /* CouponListView.swift */,
+				89789120215BEBDFD23507D8 /* CouponDetailView.swift */,
+				0435834B39BD131448DCD1D4 /* AddCouponView.swift */,
+			);
+			name = Coupons;
+			path = Features/Tracker/Coupons;
 			sourceTree = "<group>";
 		};
 		72AA599F8438F5E890965842 /* Storage */ = {
@@ -477,15 +563,6 @@
 				B964B7A48151451DBD9CBAF7 /* Protocols */,
 			);
 			path = Core;
-			sourceTree = "<group>";
-		};
-		CORECOMP123456789ABCGRP1 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				LDVW1234567890ABCDEF0001 /* LoadingView.swift */,
-				STCD1234567890ABCDEF0001 /* StatCard.swift */,
-			);
-			path = Components;
 			sourceTree = "<group>";
 		};
 		B964B7A48151451DBD9CBAF7 /* Protocols */ = {
@@ -551,6 +628,15 @@
 				STPL1234567890ABCDEF0001 /* SubscriptionTemplate.swift */,
 			);
 			path = Templates;
+			sourceTree = "<group>";
+		};
+		CORECOMP123456789ABCGRP1 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				LDVW1234567890ABCDEF0001 /* LoadingView.swift */,
+				STCD1234567890ABCDEF0001 /* StatCard.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		DADB1B0724849DFA7D910116 /* Products */ = {
@@ -625,8 +711,6 @@
 				308D3DA6FF4BBD53190B6834 /* PBXTargetDependency */,
 			);
 			name = CouponTrackerTests;
-			packageProductDependencies = (
-			);
 			productName = CouponTrackerTests;
 			productReference = C283F73B0DC58B1294B3E812 /* CouponTrackerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -643,8 +727,6 @@
 			dependencies = (
 			);
 			name = CouponTracker;
-			packageProductDependencies = (
-			);
 			productName = CouponTracker;
 			productReference = 4F2FD609865F055DEB7B6714 /* CouponTracker.app */;
 			productType = "com.apple.product-type.application";
@@ -669,6 +751,7 @@
 			mainGroup = 4D58A4E0391A7DDFDF05E564;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
+			productRefGroup = DADB1B0724849DFA7D910116 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -818,6 +901,19 @@
 				SSSS1234567890ABCDEF0002 /* SubscriptionStateService.swift in Sources */,
 				CRSP1234567890ABCDEF0002 /* CardROIServiceProtocol.swift in Sources */,
 				CRSS1234567890ABCDEF0002 /* CardROIService.swift in Sources */,
+				3F168B37ED1CE49A728864CC /* TrackerTabView.swift in Sources */,
+				8C3BA8ECC5C45B6D4B2FC589 /* SubscriptionListViewModel.swift in Sources */,
+				46A68A92AF0B8299A1B697A2 /* SubscriptionDetailViewModel.swift in Sources */,
+				C49AA7178D6289FA1B96E4DE /* AddSubscriptionViewModel.swift in Sources */,
+				4989C98E43B9751A39A23D8E /* SubscriptionListView.swift in Sources */,
+				2AEE61DC2072E451E0600C84 /* SubscriptionDetailView.swift in Sources */,
+				3024FA0CF3B739043DE6A223 /* AddSubscriptionView.swift in Sources */,
+				6287044CC2C76E1B5C4C80E4 /* CouponListViewModel.swift in Sources */,
+				6D9B1946CB459C8C3CC6E924 /* CouponDetailViewModel.swift in Sources */,
+				AA3CDC2C321D9236EAEDFC7C /* AddCouponViewModel.swift in Sources */,
+				901E61605421DAF1E3C00262 /* CouponListView.swift in Sources */,
+				B62EF8A04094C1BE673C1FED /* CouponDetailView.swift in Sources */,
+				C5ECEEADCF75D452F8BD58F4 /* AddCouponView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -985,7 +1081,10 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.coupontracker.app;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1005,7 +1104,10 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.coupontracker.app;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;

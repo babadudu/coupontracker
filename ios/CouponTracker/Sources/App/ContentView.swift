@@ -99,12 +99,14 @@ struct MainTabView: View {
     enum Tab: String, CaseIterable {
         case home = "Home"
         case wallet = "Wallet"
+        case tracker = "Tracker"
         case settings = "Settings"
 
         var iconName: String {
             switch self {
             case .home: return "house.fill"
             case .wallet: return "creditcard.fill"
+            case .tracker: return "repeat.circle.fill"
             case .settings: return "gearshape.fill"
             }
         }
@@ -127,6 +129,12 @@ struct MainTabView: View {
                     Label(Tab.wallet.rawValue, systemImage: Tab.wallet.iconName)
                 }
                 .tag(Tab.wallet)
+
+            TrackerTabView()
+                .tabItem {
+                    Label(Tab.tracker.rawValue, systemImage: Tab.tracker.iconName)
+                }
+                .tag(Tab.tracker)
 
             SettingsTabView()
                 .tabItem {

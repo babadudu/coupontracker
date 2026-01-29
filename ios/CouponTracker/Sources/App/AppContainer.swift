@@ -38,6 +38,8 @@ final class AppContainer {
 
     private var _cardRepository: CardRepositoryProtocol?
     private var _benefitRepository: BenefitRepositoryProtocol?
+    private var _subscriptionRepository: SubscriptionRepositoryProtocol?
+    private var _couponRepository: CouponRepositoryProtocol?
     private var _templateLoader: TemplateLoader?
 
     /// Repository for card operations (conforms to CardRepositoryProtocol)
@@ -54,6 +56,22 @@ final class AppContainer {
             _benefitRepository = BenefitRepository(modelContext: modelContext)
         }
         return _benefitRepository!
+    }
+
+    /// Repository for subscription operations
+    var subscriptionRepository: SubscriptionRepositoryProtocol {
+        if _subscriptionRepository == nil {
+            _subscriptionRepository = SubscriptionRepository(modelContext: modelContext)
+        }
+        return _subscriptionRepository!
+    }
+
+    /// Repository for coupon operations
+    var couponRepository: CouponRepositoryProtocol {
+        if _couponRepository == nil {
+            _couponRepository = CouponRepository(modelContext: modelContext)
+        }
+        return _couponRepository!
     }
 
     /// Template loader for card templates from bundled JSON
@@ -139,7 +157,10 @@ final class AppContainer {
             UserCard.self,
             Benefit.self,
             BenefitUsage.self,
-            UserPreferences.self
+            UserPreferences.self,
+            Subscription.self,
+            SubscriptionPayment.self,
+            Coupon.self
         ])
 
         let configuration = ModelConfiguration(
@@ -218,7 +239,10 @@ extension AppContainer {
             UserCard.self,
             Benefit.self,
             BenefitUsage.self,
-            UserPreferences.self
+            UserPreferences.self,
+            Subscription.self,
+            SubscriptionPayment.self,
+            Coupon.self
         ])
 
         let configuration = ModelConfiguration(

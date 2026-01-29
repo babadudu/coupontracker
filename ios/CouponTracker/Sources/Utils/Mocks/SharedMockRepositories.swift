@@ -209,6 +209,104 @@ final class MockTemplateLoader: TemplateLoaderProtocol {
     }
 }
 
+// MARK: - Mock Subscription Repository
+
+/// Reusable mock subscription repository for SwiftUI previews and unit tests.
+@MainActor
+final class MockSubscriptionRepository: SubscriptionRepositoryProtocol {
+    var subscriptions: [Subscription] = []
+    var shouldThrowError = false
+
+    func getAllSubscriptions() throws -> [Subscription] {
+        if shouldThrowError { throw MockError.operationFailed }
+        return subscriptions.sorted { $0.nextRenewalDate < $1.nextRenewalDate }
+    }
+
+    func getSubscription(by id: UUID) throws -> Subscription? {
+        if shouldThrowError { throw MockError.operationFailed }
+        return subscriptions.first { $0.id == id }
+    }
+
+    func getActiveSubscriptions() throws -> [Subscription] {
+        if shouldThrowError { throw MockError.operationFailed }
+        return subscriptions.filter { $0.isActive }
+    }
+
+    func getSubscriptions(for cardId: UUID) throws -> [Subscription] {
+        if shouldThrowError { throw MockError.operationFailed }
+        return subscriptions.filter { $0.userCard?.id == cardId }
+    }
+
+    func getSubscriptionsRenewingSoon(within days: Int) throws -> [Subscription] {
+        if shouldThrowError { throw MockError.operationFailed }
+        return subscriptions.filter { $0.daysUntilRenewal <= days && $0.isActive }
+    }
+
+    func addSubscription(_ subscription: Subscription) throws {
+        if shouldThrowError { throw MockError.operationFailed }
+        subscriptions.append(subscription)
+    }
+
+    func updateSubscription(_ subscription: Subscription) throws {
+        if shouldThrowError { throw MockError.operationFailed }
+        subscription.markAsUpdated()
+    }
+
+    func deleteSubscription(_ subscription: Subscription) throws {
+        if shouldThrowError { throw MockError.operationFailed }
+        subscriptions.removeAll { $0.id == subscription.id }
+    }
+}
+
+// MARK: - Mock Coupon Repository
+
+/// Reusable mock coupon repository for SwiftUI previews and unit tests.
+@MainActor
+final class MockCouponRepository: CouponRepositoryProtocol {
+    var coupons: [Coupon] = []
+    var shouldThrowError = false
+
+    func getAllCoupons() throws -> [Coupon] {
+        if shouldThrowError { throw MockError.operationFailed }
+        return coupons.sorted { $0.expirationDate < $1.expirationDate }
+    }
+
+    func getCoupon(by id: UUID) throws -> Coupon? {
+        if shouldThrowError { throw MockError.operationFailed }
+        return coupons.first { $0.id == id }
+    }
+
+    func getValidCoupons() throws -> [Coupon] {
+        if shouldThrowError { throw MockError.operationFailed }
+        return coupons.filter { $0.isValid }
+    }
+
+    func getCouponsExpiringSoon(within days: Int) throws -> [Coupon] {
+        if shouldThrowError { throw MockError.operationFailed }
+        return coupons.filter { $0.daysUntilExpiration <= days && $0.isValid }
+    }
+
+    func getCoupons(by category: CouponCategory) throws -> [Coupon] {
+        if shouldThrowError { throw MockError.operationFailed }
+        return coupons.filter { $0.category == category }
+    }
+
+    func addCoupon(_ coupon: Coupon) throws {
+        if shouldThrowError { throw MockError.operationFailed }
+        coupons.append(coupon)
+    }
+
+    func updateCoupon(_ coupon: Coupon) throws {
+        if shouldThrowError { throw MockError.operationFailed }
+        coupon.markAsUpdated()
+    }
+
+    func deleteCoupon(_ coupon: Coupon) throws {
+        if shouldThrowError { throw MockError.operationFailed }
+        coupons.removeAll { $0.id == coupon.id }
+    }
+}
+
 // MARK: - Mock Data Factory
 
 /// Factory for creating common mock data scenarios
@@ -312,6 +410,128 @@ enum MockDataFactory {
         card2.benefits = [benefit3]
 
         return [card1, card2]
+    }
+}
+
+// MARK: - Mock Subscription Factory
+
+/// Factory for creating mock subscription data
+enum MockSubscriptionFactory {
+
+    @MainActor
+    static func makeSampleSubscriptions() -> [Subscription] {
+        let calendar = Calendar.current
+        let today = Date()
+
+        // Netflix - renewing in 5 days
+        let netflix = Subscription(
+            name: "Netflix",
+            price: 15.99,
+            frequency: .monthly,
+            category: .streaming,
+            startDate: calendar.date(byAdding: .month, value: -6, to: today) ?? today,
+            nextRenewalDate: calendar.date(byAdding: .day, value: 5, to: today) ?? today,
+            isActive: true,
+            iconName: "play.tv.fill"
+        )
+
+        // Spotify - renewing in 12 days
+        let spotify = Subscription(
+            name: "Spotify",
+            price: 10.99,
+            frequency: .monthly,
+            category: .streaming,
+            startDate: calendar.date(byAdding: .month, value: -3, to: today) ?? today,
+            nextRenewalDate: calendar.date(byAdding: .day, value: 12, to: today) ?? today,
+            isActive: true,
+            iconName: "music.note"
+        )
+
+        // Adobe CC - annual, canceled
+        let adobe = Subscription(
+            name: "Adobe Creative Cloud",
+            price: 599.88,
+            frequency: .annual,
+            category: .software,
+            startDate: calendar.date(byAdding: .year, value: -1, to: today) ?? today,
+            nextRenewalDate: calendar.date(byAdding: .month, value: 2, to: today) ?? today,
+            isActive: false,
+            iconName: "paintbrush.fill"
+        )
+
+        // Gym - past due
+        let gym = Subscription(
+            name: "Planet Fitness",
+            price: 24.99,
+            frequency: .monthly,
+            category: .fitness,
+            startDate: calendar.date(byAdding: .month, value: -12, to: today) ?? today,
+            nextRenewalDate: calendar.date(byAdding: .day, value: -2, to: today) ?? today,
+            isActive: true,
+            iconName: "figure.run"
+        )
+
+        return [netflix, spotify, adobe, gym]
+    }
+}
+
+// MARK: - Mock Coupon Factory
+
+/// Factory for creating mock coupon data
+enum MockCouponFactory {
+
+    @MainActor
+    static func makeSampleCoupons() -> [Coupon] {
+        let calendar = Calendar.current
+        let today = Date()
+
+        // Target - expiring in 2 days
+        let target = Coupon(
+            name: "Target 20% Off",
+            couponDescription: "20% off any single item",
+            expirationDate: calendar.date(byAdding: .day, value: 2, to: today) ?? today,
+            category: .shopping,
+            value: nil,
+            merchant: "Target",
+            code: "TARGET20",
+            reminderEnabled: true
+        )
+
+        // Restaurant - expiring in 10 days
+        let restaurant = Coupon(
+            name: "$10 Off Dinner",
+            couponDescription: "Valid for orders over $40",
+            expirationDate: calendar.date(byAdding: .day, value: 10, to: today) ?? today,
+            category: .dining,
+            value: 10,
+            merchant: "Olive Garden",
+            code: nil,
+            reminderEnabled: true
+        )
+
+        // Amazon - used
+        let amazon = Coupon(
+            name: "Amazon $5 Credit",
+            expirationDate: calendar.date(byAdding: .day, value: 30, to: today) ?? today,
+            category: .shopping,
+            value: 5,
+            merchant: "Amazon",
+            code: "AMZN5OFF",
+            isUsed: true,
+            usedDate: calendar.date(byAdding: .day, value: -3, to: today)
+        )
+
+        // Movie - expired
+        let movie = Coupon(
+            name: "Free Popcorn",
+            expirationDate: calendar.date(byAdding: .day, value: -5, to: today) ?? today,
+            category: .entertainment,
+            value: nil,
+            merchant: "AMC Theaters",
+            code: "POPCORN2026"
+        )
+
+        return [target, restaurant, amazon, movie]
     }
 }
 
