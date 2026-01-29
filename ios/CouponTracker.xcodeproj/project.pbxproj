@@ -123,6 +123,10 @@
 		CREP1234567890ABCDEF0002 /* CouponRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CREP1234567890ABCDEF0001 /* CouponRepository.swift */; };
 		STPL1234567890ABCDEF0002 /* SubscriptionTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = STPL1234567890ABCDEF0001 /* SubscriptionTemplate.swift */; };
 		STJN1234567890ABCDEF0002 /* SubscriptionTemplates.json in Resources */ = {isa = PBXBuildFile; fileRef = STJN1234567890ABCDEF0001 /* SubscriptionTemplates.json */; };
+		SSSP1234567890ABCDEF0002 /* SubscriptionStateServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = SSSP1234567890ABCDEF0001 /* SubscriptionStateServiceProtocol.swift */; };
+		SSSS1234567890ABCDEF0002 /* SubscriptionStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = SSSS1234567890ABCDEF0001 /* SubscriptionStateService.swift */; };
+		CRSP1234567890ABCDEF0002 /* CardROIServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CRSP1234567890ABCDEF0001 /* CardROIServiceProtocol.swift */; };
+		CRSS1234567890ABCDEF0002 /* CardROIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CRSS1234567890ABCDEF0001 /* CardROIService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -254,6 +258,10 @@
 		CREP1234567890ABCDEF0001 /* CouponRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponRepository.swift; sourceTree = "<group>"; };
 		STPL1234567890ABCDEF0001 /* SubscriptionTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTemplate.swift; sourceTree = "<group>"; };
 		STJN1234567890ABCDEF0001 /* SubscriptionTemplates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SubscriptionTemplates.json; sourceTree = "<group>"; };
+		SSSP1234567890ABCDEF0001 /* SubscriptionStateServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionStateServiceProtocol.swift; sourceTree = "<group>"; };
+		SSSS1234567890ABCDEF0001 /* SubscriptionStateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionStateService.swift; sourceTree = "<group>"; };
+		CRSP1234567890ABCDEF0001 /* CardROIServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardROIServiceProtocol.swift; sourceTree = "<group>"; };
+		CRSS1234567890ABCDEF0001 /* CardROIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardROIService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -422,7 +430,9 @@
 			children = (
 				BSS01234567890ABCDEF0001 /* BenefitStateService.swift */,
 				BC767331D1E6D963FD0680D8 /* CardRecommendationService.swift */,
+				CRSS1234567890ABCDEF0001 /* CardROIService.swift */,
 				785DA21781A8E085EFC3AF67 /* NotificationService.swift */,
+				SSSS1234567890ABCDEF0001 /* SubscriptionStateService.swift */,
 				72AA599F8438F5E890965842 /* Storage */,
 			);
 			path = Services;
@@ -485,11 +495,13 @@
 				BSSP1234567890ABCDEF0001 /* BenefitStateServiceProtocol.swift */,
 				67CE154AC2CDCDE9A679FC4D /* CardRecommendationServiceProtocol.swift */,
 				493928B6E9787E43E89C29E6 /* CardRepositoryProtocol.swift */,
+				CRSP1234567890ABCDEF0001 /* CardROIServiceProtocol.swift */,
 				CRPP1234567890ABCDEF0001 /* CouponRepositoryProtocol.swift */,
 				E75C9AC8BE3EA27BA966BEA2 /* DisplayProtocols.swift */,
 				8771D99E6BB132CFE1820DFC /* Repository.swift */,
 				8D4E2F6A9C1B5E73D8A92F40 /* Searchable.swift */,
 				SRPP1234567890ABCDEF0001 /* SubscriptionRepositoryProtocol.swift */,
+				SSSP1234567890ABCDEF0001 /* SubscriptionStateServiceProtocol.swift */,
 				6C0303E5DBAE98375C21EF5A /* TemplateLoaderProtocol.swift */,
 			);
 			path = Protocols;
@@ -802,6 +814,10 @@
 				SREP1234567890ABCDEF0002 /* SubscriptionRepository.swift in Sources */,
 				CREP1234567890ABCDEF0002 /* CouponRepository.swift in Sources */,
 				STPL1234567890ABCDEF0002 /* SubscriptionTemplate.swift in Sources */,
+				SSSP1234567890ABCDEF0002 /* SubscriptionStateServiceProtocol.swift in Sources */,
+				SSSS1234567890ABCDEF0002 /* SubscriptionStateService.swift in Sources */,
+				CRSP1234567890ABCDEF0002 /* CardROIServiceProtocol.swift in Sources */,
+				CRSS1234567890ABCDEF0002 /* CardROIService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

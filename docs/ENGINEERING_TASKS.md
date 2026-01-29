@@ -16,9 +16,9 @@
 
 | Status | Count | Tasks |
 |--------|-------|-------|
-| ✅ Completed | 9 | T-401, T-402, T-403, T-404, T-405, T-406, T-407, T-408, T-409 |
+| ✅ Completed | 12 | T-401 through T-412 |
 | ⚠️ In Progress | 0 | — |
-| ⏳ Pending | 9 | T-410 through T-418 |
+| ⏳ Pending | 6 | T-413 through T-418 |
 
 ### 🚀 App Store Readiness: COMPLETED
 - Push notification entitlements
@@ -626,10 +626,10 @@ PHASE 2: DATA LAYER (Depends on Phase 1)          ✅ COMPLETED
 ├── T-408: SubscriptionTemplate + JSON            ✅
 └── T-409: CardRepository Updates (subscriptions) ✅
 
-PHASE 3: SERVICES (Depends on Phase 2)
-├── T-410: SubscriptionStateService               ⏳
-├── T-411: CardROIService                         ⏳
-└── T-412: NotificationService Extensions         ⏳
+PHASE 3: SERVICES (Depends on Phase 2)             ✅ COMPLETED
+├── T-410: SubscriptionStateService               ✅
+├── T-411: CardROIService                         ✅
+└── T-412: NotificationService Extensions         ✅
 
 PHASE 4: UI LAYER (Depends on Phase 3)
 ├── T-413: TrackerTabView + Navigation            ⏳

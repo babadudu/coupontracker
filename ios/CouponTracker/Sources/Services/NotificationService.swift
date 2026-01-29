@@ -16,11 +16,17 @@ import os
 /// Notification category identifiers and action types
 enum NotificationCategory {
     static let benefitExpiring = "BENEFIT_EXPIRING"
+    static let subscriptionRenewing = "SUBSCRIPTION_RENEWING"
+    static let couponExpiring = "COUPON_EXPIRING"
+    static let annualFeeReminder = "ANNUAL_FEE_REMINDER"
 
     enum Action: String {
         case markUsed = "MARK_USED"
         case snooze1Day = "SNOOZE_1D"
         case snooze3Days = "SNOOZE_3D"
+        case viewSubscription = "VIEW_SUBSCRIPTION"
+        case viewCoupon = "VIEW_COUPON"
+        case viewCard = "VIEW_CARD"
     }
 }
 
@@ -57,6 +63,15 @@ final class NotificationService: NSObject {
 
     /// Called when user taps notification to open app
     var onOpenBenefit: ((UUID) -> Void)?
+
+    /// Called when user taps subscription notification
+    var onOpenSubscription: ((UUID) -> Void)?
+
+    /// Called when user taps coupon notification
+    var onOpenCoupon: ((UUID) -> Void)?
+
+    /// Called when user taps annual fee notification
+    var onOpenCard: ((UUID) -> Void)?
 
     // MARK: - Initialization
 
@@ -218,6 +233,226 @@ final class NotificationService: NSObject {
         center.add(request)
     }
 
+    // MARK: - Subscription Notifications
+
+    /// Schedules a notification for subscription renewal.
+    ///
+    /// - Parameters:
+    ///   - subscription: The subscription to schedule notification for
+    ///   - preferences: User preferences containing notification settings
+    func scheduleSubscriptionRenewalNotification(
+        for subscription: Subscription,
+        preferences: UserPreferences
+    ) async {
+        guard await checkAuthorizationStatus() else { return }
+        guard preferences.notificationsEnabled else { return }
+        guard subscription.isActive && subscription.reminderEnabled else { return }
+
+        let daysRemaining = subscription.daysUntilRenewal
+        guard daysRemaining >= 0 && daysRemaining <= subscription.reminderDaysBefore else { return }
+
+        let content = UNMutableNotificationContent()
+        content.title = "Subscription Renewing Soon"
+        content.body = "\(subscription.name) renews in \(daysRemaining) days - \(subscription.formattedPrice)"
+        content.sound = .default
+        content.categoryIdentifier = NotificationCategory.subscriptionRenewing
+        content.userInfo = [
+            "subscriptionId": subscription.id.uuidString,
+            "type": "subscription_renewal"
+        ]
+
+        // Schedule for reminder days before renewal
+        let notificationDate = Calendar.current.date(
+            byAdding: .day,
+            value: -subscription.reminderDaysBefore,
+            to: subscription.nextRenewalDate
+        ) ?? subscription.nextRenewalDate
+
+        guard notificationDate >= Date() else { return }
+
+        var dateComponents = Calendar.current.dateComponents(
+            [.year, .month, .day],
+            from: notificationDate
+        )
+        dateComponents.hour = preferences.preferredReminderHour
+        dateComponents.minute = preferences.preferredReminderMinute
+
+        let trigger = UNCalendarNotificationTrigger(
+            dateMatching: dateComponents,
+            repeats: false
+        )
+
+        let identifier = subscriptionNotificationId(for: subscription)
+        let request = UNNotificationRequest(
+            identifier: identifier,
+            content: content,
+            trigger: trigger
+        )
+
+        subscription.scheduledNotificationId = identifier
+        try? await center.add(request)
+    }
+
+    /// Cancels notifications for a subscription.
+    func cancelSubscriptionNotification(for subscription: Subscription) {
+        let identifier = subscriptionNotificationId(for: subscription)
+        center.removePendingNotificationRequests(withIdentifiers: [identifier])
+        center.removeDeliveredNotifications(withIdentifiers: [identifier])
+        subscription.scheduledNotificationId = nil
+    }
+
+    private func subscriptionNotificationId(for subscription: Subscription) -> String {
+        "subscription_\(subscription.id.uuidString)"
+    }
+
+    // MARK: - Coupon Notifications
+
+    /// Schedules a notification for coupon expiration.
+    ///
+    /// - Parameters:
+    ///   - coupon: The coupon to schedule notification for
+    ///   - preferences: User preferences containing notification settings
+    func scheduleCouponExpirationNotification(
+        for coupon: Coupon,
+        preferences: UserPreferences
+    ) async {
+        guard await checkAuthorizationStatus() else { return }
+        guard preferences.notificationsEnabled else { return }
+        guard !coupon.isUsed && coupon.reminderEnabled else { return }
+
+        let daysRemaining = coupon.daysUntilExpiration
+        guard daysRemaining >= 0 && daysRemaining <= coupon.reminderDaysBefore else { return }
+
+        let content = UNMutableNotificationContent()
+        content.title = "Coupon Expiring Soon"
+
+        let valueText = coupon.formattedValue.map { " - \($0)" } ?? ""
+        content.body = "\(coupon.name) expires in \(daysRemaining) days\(valueText)"
+        content.sound = .default
+        content.categoryIdentifier = NotificationCategory.couponExpiring
+        content.userInfo = [
+            "couponId": coupon.id.uuidString,
+            "type": "coupon_expiration"
+        ]
+
+        // Schedule for reminder days before expiration
+        let notificationDate = Calendar.current.date(
+            byAdding: .day,
+            value: -coupon.reminderDaysBefore,
+            to: coupon.expirationDate
+        ) ?? coupon.expirationDate
+
+        guard notificationDate >= Date() else { return }
+
+        var dateComponents = Calendar.current.dateComponents(
+            [.year, .month, .day],
+            from: notificationDate
+        )
+        dateComponents.hour = preferences.preferredReminderHour
+        dateComponents.minute = preferences.preferredReminderMinute
+
+        let trigger = UNCalendarNotificationTrigger(
+            dateMatching: dateComponents,
+            repeats: false
+        )
+
+        let identifier = couponNotificationId(for: coupon)
+        let request = UNNotificationRequest(
+            identifier: identifier,
+            content: content,
+            trigger: trigger
+        )
+
+        coupon.scheduledNotificationId = identifier
+        try? await center.add(request)
+    }
+
+    /// Cancels notifications for a coupon.
+    func cancelCouponNotification(for coupon: Coupon) {
+        let identifier = couponNotificationId(for: coupon)
+        center.removePendingNotificationRequests(withIdentifiers: [identifier])
+        center.removeDeliveredNotifications(withIdentifiers: [identifier])
+        coupon.scheduledNotificationId = nil
+    }
+
+    private func couponNotificationId(for coupon: Coupon) -> String {
+        "coupon_\(coupon.id.uuidString)"
+    }
+
+    // MARK: - Annual Fee Notifications
+
+    /// Schedules a notification for annual fee reminder.
+    ///
+    /// - Parameters:
+    ///   - card: The card to schedule notification for
+    ///   - cardName: Display name for the card
+    ///   - preferences: User preferences containing notification settings
+    func scheduleAnnualFeeNotification(
+        for card: UserCard,
+        cardName: String,
+        preferences: UserPreferences
+    ) async {
+        guard await checkAuthorizationStatus() else { return }
+        guard preferences.notificationsEnabled else { return }
+        guard card.annualFee > 0, let feeDate = card.annualFeeDate else { return }
+
+        let daysRemaining = card.daysUntilAnnualFee
+        guard daysRemaining >= 0 && daysRemaining <= card.feeReminderDaysBefore else { return }
+
+        let content = UNMutableNotificationContent()
+        content.title = "Annual Fee Coming Up"
+        content.body = "\(cardName) - \(card.formattedAnnualFee) due in \(daysRemaining) days"
+        content.sound = .default
+        content.categoryIdentifier = NotificationCategory.annualFeeReminder
+        content.userInfo = [
+            "cardId": card.id.uuidString,
+            "type": "annual_fee"
+        ]
+
+        // Schedule for reminder days before fee date
+        let notificationDate = Calendar.current.date(
+            byAdding: .day,
+            value: -card.feeReminderDaysBefore,
+            to: feeDate
+        ) ?? feeDate
+
+        guard notificationDate >= Date() else { return }
+
+        var dateComponents = Calendar.current.dateComponents(
+            [.year, .month, .day],
+            from: notificationDate
+        )
+        dateComponents.hour = preferences.preferredReminderHour
+        dateComponents.minute = preferences.preferredReminderMinute
+
+        let trigger = UNCalendarNotificationTrigger(
+            dateMatching: dateComponents,
+            repeats: false
+        )
+
+        let identifier = annualFeeNotificationId(for: card)
+        let request = UNNotificationRequest(
+            identifier: identifier,
+            content: content,
+            trigger: trigger
+        )
+
+        card.feeReminderNotificationId = identifier
+        try? await center.add(request)
+    }
+
+    /// Cancels annual fee notification for a card.
+    func cancelAnnualFeeNotification(for card: UserCard) {
+        let identifier = annualFeeNotificationId(for: card)
+        center.removePendingNotificationRequests(withIdentifiers: [identifier])
+        center.removeDeliveredNotifications(withIdentifiers: [identifier])
+        card.feeReminderNotificationId = nil
+    }
+
+    private func annualFeeNotificationId(for card: UserCard) -> String {
+        "annual_fee_\(card.id.uuidString)"
+    }
+
     // MARK: - Cancellation
 
     /// Cancels all notifications for a specific benefit.
@@ -356,6 +591,7 @@ final class NotificationService: NSObject {
 
     /// Sets up notification action categories.
     private func setupNotificationCategories() {
+        // Benefit expiring category
         let markUsedAction = UNNotificationAction(
             identifier: NotificationCategory.Action.markUsed.rawValue,
             title: "Mark as Used",
@@ -374,14 +610,61 @@ final class NotificationService: NSObject {
             options: []
         )
 
-        let category = UNNotificationCategory(
+        let benefitCategory = UNNotificationCategory(
             identifier: NotificationCategory.benefitExpiring,
             actions: [markUsedAction, snooze1DayAction, snooze3DaysAction],
             intentIdentifiers: [],
             options: [.customDismissAction]
         )
 
-        center.setNotificationCategories([category])
+        // Subscription renewing category
+        let viewSubscriptionAction = UNNotificationAction(
+            identifier: NotificationCategory.Action.viewSubscription.rawValue,
+            title: "View Details",
+            options: [.foreground]
+        )
+
+        let subscriptionCategory = UNNotificationCategory(
+            identifier: NotificationCategory.subscriptionRenewing,
+            actions: [viewSubscriptionAction, snooze1DayAction],
+            intentIdentifiers: [],
+            options: [.customDismissAction]
+        )
+
+        // Coupon expiring category
+        let viewCouponAction = UNNotificationAction(
+            identifier: NotificationCategory.Action.viewCoupon.rawValue,
+            title: "View Coupon",
+            options: [.foreground]
+        )
+
+        let couponCategory = UNNotificationCategory(
+            identifier: NotificationCategory.couponExpiring,
+            actions: [viewCouponAction, snooze1DayAction],
+            intentIdentifiers: [],
+            options: [.customDismissAction]
+        )
+
+        // Annual fee reminder category
+        let viewCardAction = UNNotificationAction(
+            identifier: NotificationCategory.Action.viewCard.rawValue,
+            title: "View Card",
+            options: [.foreground]
+        )
+
+        let annualFeeCategory = UNNotificationCategory(
+            identifier: NotificationCategory.annualFeeReminder,
+            actions: [viewCardAction, snooze1DayAction],
+            intentIdentifiers: [],
+            options: [.customDismissAction]
+        )
+
+        center.setNotificationCategories([
+            benefitCategory,
+            subscriptionCategory,
+            couponCategory,
+            annualFeeCategory
+        ])
     }
 }
 
@@ -404,30 +687,98 @@ extension NotificationService: UNUserNotificationCenterDelegate {
         didReceive response: UNNotificationResponse
     ) async {
         let userInfo = response.notification.request.content.userInfo
+        let notificationType = userInfo["type"] as? String ?? "benefit"
 
+        await MainActor.run {
+            switch notificationType {
+            case "subscription_renewal":
+                handleSubscriptionNotification(response: response, userInfo: userInfo)
+            case "coupon_expiration":
+                handleCouponNotification(response: response, userInfo: userInfo)
+            case "annual_fee":
+                handleAnnualFeeNotification(response: response, userInfo: userInfo)
+            default:
+                handleBenefitNotification(response: response, userInfo: userInfo)
+            }
+        }
+    }
+
+    // MARK: - Notification Response Handlers
+
+    private func handleBenefitNotification(
+        response: UNNotificationResponse,
+        userInfo: [AnyHashable: Any]
+    ) {
         guard let benefitIdString = userInfo["benefitId"] as? String,
               let benefitId = UUID(uuidString: benefitIdString) else {
             return
         }
 
-        await MainActor.run {
-            switch response.actionIdentifier {
-            case NotificationCategory.Action.markUsed.rawValue:
-                onMarkAsUsed?(benefitId)
+        switch response.actionIdentifier {
+        case NotificationCategory.Action.markUsed.rawValue:
+            onMarkAsUsed?(benefitId)
+        case NotificationCategory.Action.snooze1Day.rawValue:
+            onSnooze?(benefitId, 1)
+        case NotificationCategory.Action.snooze3Days.rawValue:
+            onSnooze?(benefitId, 3)
+        case UNNotificationDefaultActionIdentifier:
+            onOpenBenefit?(benefitId)
+        default:
+            break
+        }
+    }
 
-            case NotificationCategory.Action.snooze1Day.rawValue:
-                onSnooze?(benefitId, 1)
+    private func handleSubscriptionNotification(
+        response: UNNotificationResponse,
+        userInfo: [AnyHashable: Any]
+    ) {
+        guard let subscriptionIdString = userInfo["subscriptionId"] as? String,
+              let subscriptionId = UUID(uuidString: subscriptionIdString) else {
+            return
+        }
 
-            case NotificationCategory.Action.snooze3Days.rawValue:
-                onSnooze?(benefitId, 3)
+        switch response.actionIdentifier {
+        case NotificationCategory.Action.viewSubscription.rawValue,
+             UNNotificationDefaultActionIdentifier:
+            onOpenSubscription?(subscriptionId)
+        default:
+            break
+        }
+    }
 
-            case UNNotificationDefaultActionIdentifier:
-                // User tapped notification body - open benefit
-                onOpenBenefit?(benefitId)
+    private func handleCouponNotification(
+        response: UNNotificationResponse,
+        userInfo: [AnyHashable: Any]
+    ) {
+        guard let couponIdString = userInfo["couponId"] as? String,
+              let couponId = UUID(uuidString: couponIdString) else {
+            return
+        }
 
-            default:
-                break
-            }
+        switch response.actionIdentifier {
+        case NotificationCategory.Action.viewCoupon.rawValue,
+             UNNotificationDefaultActionIdentifier:
+            onOpenCoupon?(couponId)
+        default:
+            break
+        }
+    }
+
+    private func handleAnnualFeeNotification(
+        response: UNNotificationResponse,
+        userInfo: [AnyHashable: Any]
+    ) {
+        guard let cardIdString = userInfo["cardId"] as? String,
+              let cardId = UUID(uuidString: cardIdString) else {
+            return
+        }
+
+        switch response.actionIdentifier {
+        case NotificationCategory.Action.viewCard.rawValue,
+             UNNotificationDefaultActionIdentifier:
+            onOpenCard?(cardId)
+        default:
+            break
         }
     }
 }
