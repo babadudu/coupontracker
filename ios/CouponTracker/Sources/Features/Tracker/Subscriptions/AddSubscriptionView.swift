@@ -234,6 +234,9 @@ struct AddSubscriptionView: View {
                         Text(frequency.displayName).tag(frequency)
                     }
                 }
+                .onChange(of: viewModel.customFrequency) { _, newValue in
+                    viewModel.onFrequencyChanged(to: newValue)
+                }
 
                 Picker("Category", selection: $viewModel.customCategory) {
                     ForEach(SubscriptionCategory.allCases) { category in

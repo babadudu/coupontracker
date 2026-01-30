@@ -11,7 +11,11 @@
       "category": "streaming",
       "iconName": "play.rectangle.fill",
       "websiteUrl": "https://netflix.com",
-      "description": "Video streaming service"
+      "description": "Video streaming service",
+      "frequencyPrices": {
+        "monthly": 15.49,
+        "annual": 155.88
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000002",
@@ -21,7 +25,11 @@
       "category": "streaming",
       "iconName": "music.note",
       "websiteUrl": "https://spotify.com",
-      "description": "Music streaming service"
+      "description": "Music streaming service",
+      "frequencyPrices": {
+        "monthly": 11.99,
+        "annual": 119.99
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000003",
@@ -31,7 +39,11 @@
       "category": "streaming",
       "iconName": "sparkles.tv.fill",
       "websiteUrl": "https://disneyplus.com",
-      "description": "Disney, Pixar, Marvel, Star Wars streaming"
+      "description": "Disney, Pixar, Marvel, Star Wars streaming",
+      "frequencyPrices": {
+        "monthly": 13.99,
+        "annual": 139.99
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000004",
@@ -41,7 +53,11 @@
       "category": "streaming",
       "iconName": "shippingbox.fill",
       "websiteUrl": "https://amazon.com/prime",
-      "description": "Shopping, streaming, and delivery benefits"
+      "description": "Shopping, streaming, and delivery benefits",
+      "frequencyPrices": {
+        "monthly": 14.99,
+        "annual": 139.00
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000005",
@@ -51,7 +67,11 @@
       "category": "streaming",
       "iconName": "play.rectangle.fill",
       "websiteUrl": "https://youtube.com/premium",
-      "description": "Ad-free YouTube and YouTube Music"
+      "description": "Ad-free YouTube and YouTube Music",
+      "frequencyPrices": {
+        "monthly": 13.99,
+        "annual": 139.99
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000006",
@@ -61,7 +81,11 @@
       "category": "streaming",
       "iconName": "music.note",
       "websiteUrl": "https://apple.com/apple-music",
-      "description": "Apple music streaming service"
+      "description": "Apple music streaming service",
+      "frequencyPrices": {
+        "monthly": 10.99,
+        "annual": 109.00
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000007",
@@ -71,7 +95,11 @@
       "category": "streaming",
       "iconName": "play.tv.fill",
       "websiteUrl": "https://max.com",
-      "description": "HBO, Warner Bros, DC streaming"
+      "description": "HBO, Warner Bros, DC streaming",
+      "frequencyPrices": {
+        "monthly": 15.99,
+        "annual": 149.99
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000008",
@@ -81,7 +109,11 @@
       "category": "streaming",
       "iconName": "play.tv.fill",
       "websiteUrl": "https://hulu.com",
-      "description": "TV shows and movies streaming"
+      "description": "TV shows and movies streaming",
+      "frequencyPrices": {
+        "monthly": 17.99,
+        "annual": 179.99
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000009",
@@ -91,7 +123,11 @@
       "category": "software",
       "iconName": "paintbrush.fill",
       "websiteUrl": "https://adobe.com/creativecloud",
-      "description": "Photoshop, Illustrator, Premiere Pro and more"
+      "description": "Photoshop, Illustrator, Premiere Pro and more",
+      "frequencyPrices": {
+        "monthly": 59.99,
+        "annual": 599.88
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000010",
@@ -101,7 +137,11 @@
       "category": "software",
       "iconName": "doc.text.fill",
       "websiteUrl": "https://microsoft.com/microsoft-365",
-      "description": "Office apps and cloud storage"
+      "description": "Office apps and cloud storage",
+      "frequencyPrices": {
+        "monthly": 9.99,
+        "annual": 99.99
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000011",
@@ -111,7 +151,11 @@
       "category": "software",
       "iconName": "externaldrive.fill.badge.icloud",
       "websiteUrl": "https://dropbox.com",
-      "description": "Cloud storage and file sync"
+      "description": "Cloud storage and file sync",
+      "frequencyPrices": {
+        "monthly": 11.99,
+        "annual": 119.88
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000012",
@@ -141,7 +185,11 @@
       "category": "software",
       "iconName": "doc.richtext.fill",
       "websiteUrl": "https://notion.so",
-      "description": "All-in-one workspace for notes and docs"
+      "description": "All-in-one workspace for notes and docs",
+      "frequencyPrices": {
+        "monthly": 10.00,
+        "annual": 96.00
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000015",
@@ -201,7 +249,12 @@
       "category": "gaming",
       "iconName": "gamecontroller.fill",
       "websiteUrl": "https://playstation.com/ps-plus",
-      "description": "PlayStation online gaming and monthly games"
+      "description": "PlayStation online gaming and monthly games",
+      "frequencyPrices": {
+        "monthly": 9.99,
+        "quarterly": 24.99,
+        "annual": 79.99
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000021",
@@ -211,7 +264,11 @@
       "category": "gaming",
       "iconName": "gamecontroller.fill",
       "websiteUrl": "https://xbox.com/game-pass",
-      "description": "Xbox games library and online play"
+      "description": "Xbox games library and online play",
+      "frequencyPrices": {
+        "monthly": 16.99,
+        "annual": 179.99
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000022",
@@ -221,7 +278,11 @@
       "category": "gaming",
       "iconName": "gamecontroller.fill",
       "websiteUrl": "https://nintendo.com/switch/online",
-      "description": "Nintendo online gaming and classic games"
+      "description": "Nintendo online gaming and classic games",
+      "frequencyPrices": {
+        "monthly": 3.99,
+        "annual": 19.99
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000023",
@@ -291,7 +352,11 @@
       "category": "streaming",
       "iconName": "appletv.fill",
       "websiteUrl": "https://tv.apple.com",
-      "description": "Apple original content streaming"
+      "description": "Apple original content streaming",
+      "frequencyPrices": {
+        "monthly": 9.99,
+        "annual": 99.00
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000030",
@@ -331,7 +396,11 @@
       "category": "fitness",
       "iconName": "figure.run",
       "websiteUrl": "https://onepeloton.com",
-      "description": "Fitness classes and workouts"
+      "description": "Fitness classes and workouts",
+      "frequencyPrices": {
+        "monthly": 12.99,
+        "annual": 129.00
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000034",
@@ -341,7 +410,11 @@
       "category": "fitness",
       "iconName": "figure.mixed.cardio",
       "websiteUrl": "https://apple.com/apple-fitness-plus",
-      "description": "Apple workout and fitness service"
+      "description": "Apple workout and fitness service",
+      "frequencyPrices": {
+        "monthly": 9.99,
+        "annual": 79.99
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000035",
@@ -351,7 +424,11 @@
       "category": "fitness",
       "iconName": "leaf.fill",
       "websiteUrl": "https://calm.com",
-      "description": "Meditation and sleep app"
+      "description": "Meditation and sleep app",
+      "frequencyPrices": {
+        "monthly": 14.99,
+        "annual": 69.99
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000036",
@@ -361,7 +438,11 @@
       "category": "fitness",
       "iconName": "brain.head.profile",
       "websiteUrl": "https://headspace.com",
-      "description": "Meditation and mindfulness app"
+      "description": "Meditation and mindfulness app",
+      "frequencyPrices": {
+        "monthly": 12.99,
+        "annual": 69.99
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000037",
@@ -371,7 +452,11 @@
       "category": "software",
       "iconName": "key.fill",
       "websiteUrl": "https://1password.com",
-      "description": "Password manager"
+      "description": "Password manager",
+      "frequencyPrices": {
+        "monthly": 2.99,
+        "annual": 35.88
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000038",
@@ -381,7 +466,11 @@
       "category": "utilities",
       "iconName": "network.badge.shield.half.filled",
       "websiteUrl": "https://nordvpn.com",
-      "description": "VPN and privacy service"
+      "description": "VPN and privacy service",
+      "frequencyPrices": {
+        "monthly": 12.99,
+        "annual": 59.88
+      }
     },
     {
       "id": "A0000001-0001-0001-0001-000000000039",
@@ -401,7 +490,11 @@
       "category": "software",
       "iconName": "chevron.left.forwardslash.chevron.right",
       "websiteUrl": "https://github.com/features/copilot",
-      "description": "AI-powered code completion"
+      "description": "AI-powered code completion",
+      "frequencyPrices": {
+        "monthly": 10.00,
+        "annual": 100.00
+      }
     }
   ]
 }

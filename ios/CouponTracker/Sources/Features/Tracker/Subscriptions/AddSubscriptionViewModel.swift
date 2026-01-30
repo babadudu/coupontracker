@@ -128,9 +128,23 @@ final class AddSubscriptionViewModel {
     func selectTemplate(_ template: SubscriptionTemplate) {
         selectedTemplate = template
         customName = template.name
-        customPrice = "\(template.defaultPrice)"
         customFrequency = template.frequency
         customCategory = template.category
+        // Use frequency-aware pricing
+        if let price = template.price(for: template.frequency) {
+            customPrice = "\(price)"
+        } else {
+            customPrice = "\(template.defaultPrice)"
+        }
+    }
+
+    /// Updates the price when frequency changes (only for template-based subscriptions)
+    /// - Parameter newFrequency: The newly selected frequency
+    func onFrequencyChanged(to newFrequency: SubscriptionFrequency) {
+        guard let template = selectedTemplate else { return }
+        if let price = template.price(for: newFrequency) {
+            customPrice = "\(price)"
+        }
     }
 
     /// Clears template selection for custom entry
