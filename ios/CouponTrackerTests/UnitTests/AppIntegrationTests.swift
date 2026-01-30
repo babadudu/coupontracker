@@ -274,11 +274,13 @@ final class AppIntegrationTests: XCTestCase {
         let calendar = Calendar.current
         let today = Date()
 
-        // Set varying expiration dates on benefits
-        if card.benefits.count >= 2 {
-            card.benefits[0].currentPeriodEnd = calendar.date(byAdding: .day, value: 3, to: today)!
-            card.benefits[1].currentPeriodEnd = calendar.date(byAdding: .day, value: 30, to: today)!
+        // First, set ALL benefits to expire far in the future (beyond 7 days)
+        for benefit in card.benefits {
+            benefit.currentPeriodEnd = calendar.date(byAdding: .day, value: 30, to: today)!
         }
+
+        // Then set only the first benefit to expire within 7 days
+        card.benefits[0].currentPeriodEnd = calendar.date(byAdding: .day, value: 3, to: today)!
         try modelContext.save()
 
         // When - Query expiring within 7 days

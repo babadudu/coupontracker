@@ -257,8 +257,9 @@ final class DateExtensionsTests: XCTestCase {
 
     func testIsTodaySameDayDifferentTime() {
         let calendar = Calendar.current
-        let now = Date()
-        let laterToday = calendar.date(byAdding: .hour, value: 5, to: now)!
+        // Use start of today + 5 hours to avoid crossing midnight
+        let startOfToday = calendar.startOfDay(for: Date())
+        let laterToday = calendar.date(byAdding: .hour, value: 5, to: startOfToday)!
 
         XCTAssertTrue(laterToday.isToday, "Later time on the same day should still be today")
     }

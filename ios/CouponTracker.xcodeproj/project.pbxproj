@@ -26,6 +26,7 @@
 		3024FA0CF3B739043DE6A223 /* AddSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D9776B5CED46992F818254 /* AddSubscriptionView.swift */; };
 		304F02ACE4B476BF70466D3B /* TemplateLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0245D0C77F9013564A0ABDDE /* TemplateLoader.swift */; };
 		30C9E95FD1DA539FFDA89FB6 /* CardRecommendationServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67CE154AC2CDCDE9A679FC4D /* CardRecommendationServiceProtocol.swift */; };
+		3137B77BD0BD6B9A342EC7C5 /* SubscriptionTemplateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDBF841270DED4386D4322C /* SubscriptionTemplateTests.swift */; };
 		31F9A8B7E2C6D4F93BA71E52 /* Searchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4E2F6A9C1B5E73D8A92F40 /* Searchable.swift */; };
 		33DDFDB70545A448BCC969DD /* AddCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BAFF15C5A312EC3B5AADE9 /* AddCardViewModel.swift */; };
 		38B444A49EFA559A921092C5 /* AddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FA40E55CA33962C9EF9BFE /* AddCardView.swift */; };
@@ -39,9 +40,6 @@
 		4989C98E43B9751A39A23D8E /* SubscriptionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDAE7469B24643AFB4BA288 /* SubscriptionListView.swift */; };
 		4BADBB08DCC4657AC8F4EE04 /* CardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E44E4BA948F880DE0C5B3F8 /* CardRepository.swift */; };
 		4C031D2EBACCF72F431319D0 /* InsightBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78364C9F06766DFE9ABBBE7 /* InsightBannerView.swift */; };
-		SUBW1234567890ABCDEF0002 /* SubscriptionWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SUBW1234567890ABCDEF0001 /* SubscriptionWidgetView.swift */; };
-		CPWV1234567890ABCDEF0002 /* CouponWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CPWV1234567890ABCDEF0001 /* CouponWidgetView.swift */; };
-		CROC1234567890ABCDEF0002 /* CardROICard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CROC1234567890ABCDEF0001 /* CardROICard.swift */; };
 		536E1DAE098D9E9531338E25 /* RecommendationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63E2CD59514C3BA886C1E18 /* RecommendationSearchView.swift */; };
 		55F44CFA7F698F068904D049 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C179A9A8213044AEA3F19D /* ContentView.swift */; };
 		577BC5ADC6B660C2151E21B8 /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897779E2EA378051D5F88E6A /* CardDetailView.swift */; };
@@ -94,7 +92,9 @@
 		CATB1234567890ABCDEF0002 /* CategoryBenefitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CATB1234567890ABCDEF0001 /* CategoryBenefitsView.swift */; };
 		COUP1234567890ABCDEF0002 /* Coupon.swift in Sources */ = {isa = PBXBuildFile; fileRef = COUP1234567890ABCDEF0001 /* Coupon.swift */; };
 		CPCE1234567890ABCDEF0002 /* CouponEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = CPCE1234567890ABCDEF0001 /* CouponEnums.swift */; };
+		CPWV1234567890ABCDEF0002 /* CouponWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CPWV1234567890ABCDEF0001 /* CouponWidgetView.swift */; };
 		CREP1234567890ABCDEF0002 /* CouponRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CREP1234567890ABCDEF0001 /* CouponRepository.swift */; };
+		CROC1234567890ABCDEF0002 /* CardROICard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CROC1234567890ABCDEF0001 /* CardROICard.swift */; };
 		CRPP1234567890ABCDEF0002 /* CouponRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CRPP1234567890ABCDEF0001 /* CouponRepositoryProtocol.swift */; };
 		CRSP1234567890ABCDEF0002 /* CardROIServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CRSP1234567890ABCDEF0001 /* CardROIServiceProtocol.swift */; };
 		CRSS1234567890ABCDEF0002 /* CardROIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CRSS1234567890ABCDEF0001 /* CardROIService.swift */; };
@@ -119,6 +119,7 @@
 		F76B24B529C471E8D4896947 /* WalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B08DA0205E97EF15432F2B9 /* WalletView.swift */; };
 		F8AAAB08C32E291E3E8FF089 /* ExpiringBenefitsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FB60319F7D76FFA9BDE491 /* ExpiringBenefitsSectionView.swift */; };
 		F96488E52C33477965DB3843 /* RUNTIME_FIX.md in Resources */ = {isa = PBXBuildFile; fileRef = 3DC0FF0204993475F229EDB8 /* RUNTIME_FIX.md */; };
+		FBA972C16909FA8817A89872 /* AddSubscriptionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D742F4FAAF16385DDBE200F /* AddSubscriptionViewModelTests.swift */; };
 		HTBV1234567890ABCDEF0002 /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = HTBV1234567890ABCDEF0001 /* HomeTabView.swift */; };
 		LDVW1234567890ABCDEF0002 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = LDVW1234567890ABCDEF0001 /* LoadingView.swift */; };
 		LNCH1234567890ABCDEF0002 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = LNCH1234567890ABCDEF0001 /* LaunchScreen.storyboard */; };
@@ -136,6 +137,7 @@
 		STJN1234567890ABCDEF0002 /* SubscriptionTemplates.json in Resources */ = {isa = PBXBuildFile; fileRef = STJN1234567890ABCDEF0001 /* SubscriptionTemplates.json */; };
 		STPL1234567890ABCDEF0002 /* SubscriptionTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = STPL1234567890ABCDEF0001 /* SubscriptionTemplate.swift */; };
 		SUBS1234567890ABCDEF0002 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = SUBS1234567890ABCDEF0001 /* Subscription.swift */; };
+		SUBW1234567890ABCDEF0002 /* SubscriptionWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SUBW1234567890ABCDEF0001 /* SubscriptionWidgetView.swift */; };
 		SWDT1234567890ABCDEF0002 /* SwiftDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = SWDT1234567890ABCDEF0001 /* SwiftDataHelpers.swift */; };
 		SWDTEST1234567890ABCDE02 /* SwiftDataHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = SWDTEST1234567890ABCDE01 /* SwiftDataHelpersTests.swift */; };
 		TABVTEST567890ABCDEF0002 /* TabViewActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = TABVTEST567890ABCDEF0001 /* TabViewActionsTests.swift */; };
@@ -159,6 +161,7 @@
 		08BAFF15C5A312EC3B5AADE9 /* AddCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardViewModel.swift; sourceTree = "<group>"; };
 		09C179A9A8213044AEA3F19D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0ACADBD6E3A2135985B05675 /* PeriodMetricsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodMetricsTests.swift; sourceTree = "<group>"; };
+		0D742F4FAAF16385DDBE200F /* AddSubscriptionViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddSubscriptionViewModelTests.swift; sourceTree = "<group>"; };
 		0E44E4BA948F880DE0C5B3F8 /* CardRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRepository.swift; sourceTree = "<group>"; };
 		111E29DCDEBF1ADDC0AFB28A /* SubscriptionDetailView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SubscriptionDetailView.swift; path = ../../../../../CouponTracker/Sources/Features/Tracker/Subscriptions/SubscriptionDetailView.swift; sourceTree = "<group>"; };
 		11C15127D4C99E82B62A03D5 /* ValueBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueBreakdownView.swift; sourceTree = "<group>"; };
@@ -180,6 +183,7 @@
 		4501261DC61C2E532545564C /* AchievementRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementRing.swift; sourceTree = "<group>"; };
 		493928B6E9787E43E89C29E6 /* CardRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRepositoryProtocol.swift; sourceTree = "<group>"; };
 		4AC61998E37C292B6085AD59 /* TrackerTabView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TrackerTabView.swift; path = ../../CouponTracker/Sources/Features/Tracker/TrackerTabView.swift; sourceTree = "<group>"; };
+		4BDBF841270DED4386D4322C /* SubscriptionTemplateTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SubscriptionTemplateTests.swift; sourceTree = "<group>"; };
 		4F2FD609865F055DEB7B6714 /* CouponTracker.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = CouponTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		512EB62DAFE6DC3D6B9B4A66 /* CardComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardComponent.swift; sourceTree = "<group>"; };
 		53FA40E55CA33962C9EF9BFE /* AddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardView.swift; sourceTree = "<group>"; };
@@ -236,15 +240,14 @@
 		C1EC2BD7A2EA7B8E9F114B0D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C283F73B0DC58B1294B3E812 /* CouponTrackerTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CouponTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C78364C9F06766DFE9ABBBE7 /* InsightBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightBannerView.swift; sourceTree = "<group>"; };
-		SUBW1234567890ABCDEF0001 /* SubscriptionWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionWidgetView.swift; sourceTree = "<group>"; };
-		CPWV1234567890ABCDEF0001 /* CouponWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponWidgetView.swift; sourceTree = "<group>"; };
-		CROC1234567890ABCDEF0001 /* CardROICard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardROICard.swift; sourceTree = "<group>"; };
 		C7BBBEE6568878E3759D4396 /* BUILD_INSTRUCTIONS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = BUILD_INSTRUCTIONS.md; sourceTree = "<group>"; };
 		CATB1234567890ABCDEF0001 /* CategoryBenefitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBenefitsView.swift; sourceTree = "<group>"; };
 		CBCE67853C0BAFAF38C72AFD /* ExpiringBenefitsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpiringBenefitsListView.swift; sourceTree = "<group>"; };
 		COUP1234567890ABCDEF0001 /* Coupon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coupon.swift; sourceTree = "<group>"; };
 		CPCE1234567890ABCDEF0001 /* CouponEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponEnums.swift; sourceTree = "<group>"; };
+		CPWV1234567890ABCDEF0001 /* CouponWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponWidgetView.swift; sourceTree = "<group>"; };
 		CREP1234567890ABCDEF0001 /* CouponRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponRepository.swift; sourceTree = "<group>"; };
+		CROC1234567890ABCDEF0001 /* CardROICard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardROICard.swift; sourceTree = "<group>"; };
 		CRPP1234567890ABCDEF0001 /* CouponRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponRepositoryProtocol.swift; sourceTree = "<group>"; };
 		CRSP1234567890ABCDEF0001 /* CardROIServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardROIServiceProtocol.swift; sourceTree = "<group>"; };
 		CRSS1234567890ABCDEF0001 /* CardROIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardROIService.swift; sourceTree = "<group>"; };
@@ -285,6 +288,7 @@
 		STJN1234567890ABCDEF0001 /* SubscriptionTemplates.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SubscriptionTemplates.json; sourceTree = "<group>"; };
 		STPL1234567890ABCDEF0001 /* SubscriptionTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTemplate.swift; sourceTree = "<group>"; };
 		SUBS1234567890ABCDEF0001 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
+		SUBW1234567890ABCDEF0001 /* SubscriptionWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionWidgetView.swift; sourceTree = "<group>"; };
 		SWDT1234567890ABCDEF0001 /* SwiftDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataHelpers.swift; sourceTree = "<group>"; };
 		SWDTEST1234567890ABCDE01 /* SwiftDataHelpersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataHelpersTests.swift; sourceTree = "<group>"; };
 		TABVTEST567890ABCDEF0001 /* TabViewActionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewActionsTests.swift; sourceTree = "<group>"; };
@@ -444,6 +448,8 @@
 				9E5F3C8A2B4D7E61F8A93C50 /* SearchableTests.swift */,
 				SWDTEST1234567890ABCDE01 /* SwiftDataHelpersTests.swift */,
 				TABVTEST567890ABCDEF0001 /* TabViewActionsTests.swift */,
+				4BDBF841270DED4386D4322C /* SubscriptionTemplateTests.swift */,
+				0D742F4FAAF16385DDBE200F /* AddSubscriptionViewModelTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -812,6 +818,8 @@
 				F18D4368B1254B7EA4DDFB19 /* DashboardInsightResolverTests.swift in Sources */,
 				BRCFTEST567890ABCDEF0002 /* BenefitRowConfigurationTests.swift in Sources */,
 				TABVTEST567890ABCDEF0002 /* TabViewActionsTests.swift in Sources */,
+				3137B77BD0BD6B9A342EC7C5 /* SubscriptionTemplateTests.swift in Sources */,
+				FBA972C16909FA8817A89872 /* AddSubscriptionViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
